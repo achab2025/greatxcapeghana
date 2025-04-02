@@ -26,7 +26,7 @@ const Login = () => {
         
         toast({
           title: "Login successful",
-          description: "Welcome to Three House Haven management system."
+          description: "Welcome to Great Xcape Ghana Ltd. management system."
         });
         
         navigate("/");
@@ -42,17 +42,17 @@ const Login = () => {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-50">
-      <div className="w-full max-w-md">
-        <Card className="shadow-lg">
+    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-blue-900 to-purple-800 animate-gradient-xy">
+      <div className="w-full max-w-md animate-fade-in">
+        <Card className="shadow-xl backdrop-blur-sm bg-white/10 border border-white/20">
           <CardHeader className="space-y-1 text-center">
-            <CardTitle className="text-2xl font-bold">Three House Haven</CardTitle>
-            <CardDescription>Hotel Management System</CardDescription>
+            <CardTitle className="text-3xl font-bold text-white animate-fade-down">Great Xcape Ghana Ltd.</CardTitle>
+            <CardDescription className="text-gray-200">Hotel Management System</CardDescription>
           </CardHeader>
           <CardContent>
             <form onSubmit={handleLogin} className="space-y-4">
               <div className="space-y-2">
-                <Label htmlFor="username">Username</Label>
+                <Label htmlFor="username" className="text-gray-200">Username</Label>
                 <div className="relative">
                   <div className="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none text-gray-400">
                     <UserIcon size={16} />
@@ -62,14 +62,14 @@ const Login = () => {
                     placeholder="Username"
                     value={username}
                     onChange={(e) => setUsername(e.target.value)}
-                    className="pl-10"
+                    className="pl-10 bg-white/20 border-white/10 text-white placeholder:text-gray-300"
                     required
                   />
                 </div>
               </div>
               
               <div className="space-y-2">
-                <Label htmlFor="password">Password</Label>
+                <Label htmlFor="password" className="text-gray-200">Password</Label>
                 <div className="relative">
                   <div className="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none text-gray-400">
                     <LockIcon size={16} />
@@ -80,7 +80,7 @@ const Login = () => {
                     placeholder="Password"
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
-                    className="pl-10"
+                    className="pl-10 bg-white/20 border-white/10 text-white placeholder:text-gray-300"
                     required
                   />
                 </div>
@@ -88,13 +88,13 @@ const Login = () => {
               
               <Button
                 type="submit"
-                className="w-full"
+                className="w-full bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 transition-all duration-300 shadow-lg"
                 disabled={isLoading}
               >
                 {isLoading ? "Logging in..." : "Login"}
               </Button>
               
-              <div className="text-sm text-center text-gray-500 mt-4">
+              <div className="text-sm text-center text-gray-300 mt-4 animate-pulse">
                 <p>Default credentials: admin / admin</p>
               </div>
             </form>

@@ -24,7 +24,7 @@ const Sidebar = () => {
   return (
     <div className="h-screen w-64 bg-sidebar border-r border-border fixed left-0 top-0">
       <div className="p-6">
-        <h2 className="text-xl font-semibold text-primary">Three House Haven</h2>
+        <h2 className="text-xl font-semibold text-primary">Great Xcape Ghana Ltd.</h2>
         <p className="text-sm text-muted-foreground">Management System</p>
       </div>
       <nav className="mt-6">
@@ -60,7 +60,7 @@ const Sidebar = () => {
       
       <div className="absolute bottom-4 left-0 right-0 p-4">
         <div className="text-xs text-muted-foreground text-center">
-          <p>Three House Haven</p>
+          <p>Great Xcape Ghana Ltd.</p>
           <p>Version 1.0</p>
         </div>
       </div>
