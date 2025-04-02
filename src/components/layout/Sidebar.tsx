@@ -1,7 +1,17 @@
 
 import React from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
-import { HomeIcon, CalendarIcon, UsersIcon, CreditCardIcon, LogOutIcon } from 'lucide-react';
+import { 
+  HomeIcon, 
+  CalendarIcon, 
+  UsersIcon, 
+  CreditCardIcon, 
+  LogOutIcon,
+  BarChart2Icon,
+  MessageSquareIcon,
+  SettingsIcon,
+  BedIcon,
+} from 'lucide-react';
 import { Button } from '@/components/ui/button';
 
 const Sidebar = () => {
@@ -10,10 +20,13 @@ const Sidebar = () => {
   
   const menuItems = [
     { path: '/', icon: <HomeIcon size={20} />, title: 'Dashboard' },
-    { path: '/houses', icon: <HomeIcon size={20} />, title: 'Houses' },
-    { path: '/bookings', icon: <CalendarIcon size={20} />, title: 'Bookings' },
-    { path: '/guests', icon: <UsersIcon size={20} />, title: 'Guests' },
-    { path: '/payments', icon: <CreditCardIcon size={20} />, title: 'Payments' },
+    { path: '/bookings', icon: <CalendarIcon size={20} />, title: 'Bookings Management' },
+    { path: '/rooms', icon: <BedIcon size={20} />, title: 'Room & Pricing' },
+    { path: '/guests', icon: <UsersIcon size={20} />, title: 'Users & Guests' },
+    { path: '/payments', icon: <CreditCardIcon size={20} />, title: 'Payment & Transactions' },
+    { path: '/reports', icon: <BarChart2Icon size={20} />, title: 'Reports & Analytics' },
+    { path: '/messages', icon: <MessageSquareIcon size={20} />, title: 'Messages & Inquiries' },
+    { path: '/settings', icon: <SettingsIcon size={20} />, title: 'Settings' },
   ];
 
   const handleLogout = () => {
@@ -30,7 +43,7 @@ const Sidebar = () => {
       <nav className="mt-6">
         <ul className="space-y-2 px-4">
           {menuItems.map((item) => (
-            <li key={item.path}>
+            <li key={item.path} className="transition-all duration-200 hover:translate-x-1">
               <Link
                 to={item.path}
                 className={`flex items-center p-3 text-sm font-medium rounded-md transition-colors ${
@@ -50,7 +63,7 @@ const Sidebar = () => {
       <div className="absolute bottom-16 left-0 right-0 p-4">
         <Button 
           variant="outline" 
-          className="w-full flex items-center justify-center"
+          className="w-full flex items-center justify-center transition-all duration-200 hover:bg-destructive hover:text-destructive-foreground"
           onClick={handleLogout}
         >
           <LogOutIcon size={16} className="mr-2" />

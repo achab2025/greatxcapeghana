@@ -13,6 +13,12 @@ import NotFound from "./pages/NotFound";
 import Login from "./pages/Login";
 import ProtectedRoute from "./components/layout/ProtectedRoute";
 
+// Placeholder pages for new routes
+import Rooms from "./pages/Rooms";
+import Reports from "./pages/Reports";
+import Messages from "./pages/Messages";
+import Settings from "./pages/Settings";
+
 const queryClient = new QueryClient();
 
 const App = () => (
@@ -30,15 +36,21 @@ const App = () => (
             </ProtectedRoute>
           } />
           
-          <Route path="/houses" element={
-            <ProtectedRoute>
-              <Houses />
-            </ProtectedRoute>
-          } />
-          
           <Route path="/bookings" element={
             <ProtectedRoute>
               <Bookings />
+            </ProtectedRoute>
+          } />
+          
+          <Route path="/rooms" element={
+            <ProtectedRoute>
+              <Rooms />
+            </ProtectedRoute>
+          } />
+          
+          <Route path="/houses" element={
+            <ProtectedRoute>
+              <Houses />
             </ProtectedRoute>
           } />
           
@@ -51,6 +63,24 @@ const App = () => (
           <Route path="/payments" element={
             <ProtectedRoute>
               <Payments />
+            </ProtectedRoute>
+          } />
+          
+          <Route path="/reports" element={
+            <ProtectedRoute>
+              <Reports />
+            </ProtectedRoute>
+          } />
+          
+          <Route path="/messages" element={
+            <ProtectedRoute>
+              <Messages />
+            </ProtectedRoute>
+          } />
+          
+          <Route path="/settings" element={
+            <ProtectedRoute>
+              <Settings />
             </ProtectedRoute>
           } />
           

@@ -5,7 +5,37 @@ import StatusCard from '@/components/dashboard/StatusCard';
 import BookingSummary from '@/components/dashboard/BookingSummary';
 import RecentBookings from '@/components/dashboard/RecentBookings';
 import { bookings, dashboardSummary } from '@/data/mockData';
-import { HomeIcon, CalendarIcon, DollarSignIcon, UserIcon } from 'lucide-react';
+import { 
+  HomeIcon, 
+  CalendarIcon, 
+  DollarSignIcon, 
+  UserIcon, 
+  BarChart2Icon, 
+  TrendingUpIcon,
+  MessageSquareIcon 
+} from 'lucide-react';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts';
+
+const revenueData = [
+  { name: 'Jan', revenue: 4000 },
+  { name: 'Feb', revenue: 3000 },
+  { name: 'Mar', revenue: 5000 },
+  { name: 'Apr', revenue: 7000 },
+  { name: 'May', revenue: 6000 },
+  { name: 'Jun', revenue: 8000 },
+  { name: 'Jul', revenue: 9000 },
+];
+
+const occupancyData = [
+  { name: 'Jan', rate: 65 },
+  { name: 'Feb', rate: 60 },
+  { name: 'Mar', rate: 80 },
+  { name: 'Apr', rate: 85 },
+  { name: 'May', rate: 75 },
+  { name: 'Jun', rate: 90 },
+  { name: 'Jul', rate: 95 },
+];
 
 const Index = () => {
   return (
@@ -13,12 +43,12 @@ const Index = () => {
       <Sidebar />
       
       <div className="flex-1 ml-64 p-8">
-        <div className="mb-8">
+        <div className="mb-8 animate-fade-in">
           <h1 className="text-3xl font-bold">Dashboard</h1>
-          <p className="text-muted-foreground">Welcome to the Three House Haven management system.</p>
+          <p className="text-muted-foreground">Welcome to the Great Xcape Ghana Ltd. management system.</p>
         </div>
         
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8 animate-fade-in">
           <StatusCard
             title="Total Bookings"
             value={dashboardSummary.totalBookings}
@@ -26,9 +56,10 @@ const Index = () => {
             trend={{ value: 12, isPositive: true }}
           />
           <StatusCard
-            title="Available Houses"
-            value={dashboardSummary.availableHouses}
+            title="Occupancy Rate"
+            value={`${dashboardSummary.occupancyRate}%`}
             icon={<HomeIcon size={24} />}
+            trend={{ value: 5, isPositive: true }}
           />
           <StatusCard
             title="Pending Payments"
@@ -48,17 +79,121 @@ const Index = () => {
           />
         </div>
         
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-8">
+          <div className="lg:col-span-2">
+            <Card className="animate-fade-in">
+              <CardHeader>
+                <CardTitle>Revenue Trends</CardTitle>
+              </CardHeader>
+              <CardContent className="h-80">
+                <ResponsiveContainer width="100%" height="100%">
+                  <LineChart
+                    data={revenueData}
+                    margin={{ top: 5, right: 30, left: 20, bottom: 5 }}
+                  >
+                    <CartesianGrid strokeDasharray="3 3" />
+                    <XAxis dataKey="name" />
+                    <YAxis />
+                    <Tooltip />
+                    <Line type="monotone" dataKey="revenue" stroke="#8884d8" activeDot={{ r: 8 }} />
+                  </LineChart>
+                </ResponsiveContainer>
+              </CardContent>
+            </Card>
+          </div>
+          <div>
+            <Card className="animate-fade-in h-full">
+              <CardHeader>
+                <CardTitle>Occupancy Rate</CardTitle>
+              </CardHeader>
+              <CardContent className="h-72">
+                <ResponsiveContainer width="100%" height="100%">
+                  <LineChart
+                    data={occupancyData}
+                    margin={{ top: 5, right: 20, left: 0, bottom: 5 }}
+                  >
+                    <CartesianGrid strokeDasharray="3 3" />
+                    <XAxis dataKey="name" />
+                    <YAxis />
+                    <Tooltip />
+                    <Line type="monotone" dataKey="rate" stroke="#82ca9d" />
+                  </LineChart>
+                </ResponsiveContainer>
+              </CardContent>
+            </Card>
+          </div>
+        </div>
+        
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
           <div className="lg:col-span-2">
             <RecentBookings bookings={bookings} />
           </div>
           <div>
-            <BookingSummary 
-              totalBookings={dashboardSummary.totalBookings}
-              completedBookings={1}
-              upcomingBookings={2}
-              cancelledBookings={0}
-            />
+            <Card className="mb-6 animate-fade-in">
+              <CardHeader>
+                <CardTitle className="flex items-center">
+                  <CalendarIcon className="mr-2" size={18} />
+                  Upcoming Check-ins
+                </CardTitle>
+              </CardHeader>
+              <CardContent>
+                <div className="space-y-4">
+                  {bookings.slice(0, 3).map((booking) => (
+                    <div key={`checkin-${booking.id}`} className="flex items-center space-x-3 border-b pb-2 last:border-0">
+                      <div className="bg-blue-100 text-blue-700 p-2 rounded-full">
+                        <UserIcon size={16} />
+                      </div>
+                      <div>
+                        <p className="font-medium text-sm">{booking.guestName}</p>
+                        <p className="text-xs text-muted-foreground">
+                          {new Date(booking.checkInDate).toLocaleDateString()}
+                        </p>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </CardContent>
+            </Card>
+            
+            <Card className="animate-fade-in">
+              <CardHeader>
+                <CardTitle className="flex items-center">
+                  <MessageSquareIcon className="mr-2" size={18} />
+                  Recent Messages
+                </CardTitle>
+              </CardHeader>
+              <CardContent>
+                <div className="space-y-4">
+                  <div className="flex items-start space-x-3 border-b pb-2">
+                    <div className="bg-green-100 text-green-700 p-2 rounded-full">
+                      <UserIcon size={16} />
+                    </div>
+                    <div>
+                      <p className="font-medium text-sm">John Smith</p>
+                      <p className="text-xs text-muted-foreground">Is early check-in possible?</p>
+                    </div>
+                  </div>
+                  <div className="flex items-start space-x-3 border-b pb-2">
+                    <div className="bg-purple-100 text-purple-700 p-2 rounded-full">
+                      <UserIcon size={16} />
+                    </div>
+                    <div>
+                      <p className="font-medium text-sm">Sarah Johnson</p>
+                      <p className="text-xs text-muted-foreground">Need extra towels please.</p>
+                    </div>
+                  </div>
+                  <div className="flex items-start space-x-3">
+                    <div className="bg-amber-100 text-amber-700 p-2 rounded-full">
+                      <UserIcon size={16} />
+                    </div>
+                    <div>
+                      <p className="font-medium text-sm">Alex Lee</p>
+                      <p className="text-xs text-muted-foreground">Requesting airport shuttle.</p>
+                    </div>
+                  </div>
+                </div>
+              </CardContent>
+            </Card>
           </div>
         </div>
       </div>
