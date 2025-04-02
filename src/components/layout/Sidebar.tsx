@@ -1,10 +1,12 @@
 
 import React from 'react';
-import { Link, useLocation } from 'react-router-dom';
-import { HomeIcon, CalendarIcon, UsersIcon, CreditCardIcon } from 'lucide-react';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
+import { HomeIcon, CalendarIcon, UsersIcon, CreditCardIcon, LogOutIcon } from 'lucide-react';
+import { Button } from '@/components/ui/button';
 
 const Sidebar = () => {
   const location = useLocation();
+  const navigate = useNavigate();
   
   const menuItems = [
     { path: '/', icon: <HomeIcon size={20} />, title: 'Dashboard' },
@@ -13,6 +15,11 @@ const Sidebar = () => {
     { path: '/guests', icon: <UsersIcon size={20} />, title: 'Guests' },
     { path: '/payments', icon: <CreditCardIcon size={20} />, title: 'Payments' },
   ];
+
+  const handleLogout = () => {
+    localStorage.removeItem("isAuthenticated");
+    navigate('/login');
+  };
 
   return (
     <div className="h-screen w-64 bg-sidebar border-r border-border fixed left-0 top-0">
@@ -39,6 +46,18 @@ const Sidebar = () => {
           ))}
         </ul>
       </nav>
+      
+      <div className="absolute bottom-16 left-0 right-0 p-4">
+        <Button 
+          variant="outline" 
+          className="w-full flex items-center justify-center"
+          onClick={handleLogout}
+        >
+          <LogOutIcon size={16} className="mr-2" />
+          Log Out
+        </Button>
+      </div>
+      
       <div className="absolute bottom-4 left-0 right-0 p-4">
         <div className="text-xs text-muted-foreground text-center">
           <p>Three House Haven</p>
