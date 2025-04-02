@@ -1,12 +1,16 @@
+
 export interface Booking {
   id: string;
+  guestId: string;
   guestName: string;
+  houseId: string;
   houseName: string;
-  checkInDate: Date;
-  checkOutDate: Date;
+  checkInDate: string;
+  checkOutDate: string;
   totalAmount: number;
   bookingStatus: string;
   paymentStatus: string;
+  createdAt?: string;
 }
 
 export interface DashboardSummary {
@@ -21,4 +25,36 @@ export interface DashboardSummary {
     current: number;
     previous: number;
   };
+}
+
+export interface House {
+  id: string;
+  name: string;
+  description: string;
+  maxOccupancy: number;
+  pricePerNight: number;
+  amenities: string[];
+  status: string;
+  imageUrl: string;
+}
+
+export interface Guest {
+  id: string;
+  firstName: string;
+  lastName: string;
+  email: string;
+  phone: string;
+  address: string;
+  bookingHistory: string[];
+}
+
+export interface Payment {
+  id: string;
+  bookingId: string;
+  amount: number;
+  paymentDate: string;
+  paymentMethod: string;
+  status: string;
+  guestName: string;
+  houseName: string;
 }

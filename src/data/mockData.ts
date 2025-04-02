@@ -160,8 +160,11 @@ export const payments: Payment[] = [
 export const dashboardSummary: DashboardSummary = {
   totalBookings: 4,
   availableHouses: 1,
-  occupiedHouses: 1,
+  occupancyRate: 66,
   pendingPayments: 2,
+  completedBookings: 1,
+  pendingBookings: 0,
+  upcomingBookings: 3,
   revenue: {
     current: 2875,
     previous: 1850
