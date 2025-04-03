@@ -17,7 +17,7 @@ interface BookingFormProps {
 }
 
 const BookingForm = ({ booking, onSubmit, onCancel }: BookingFormProps) => {
-  const { form, availableHouses, handleSubmit } = useBookingForm(booking, onSubmit);
+  const { form, availableHouses, handleSubmit } = useBookingForm(onSubmit, booking);
 
   return (
     <Form {...form}>

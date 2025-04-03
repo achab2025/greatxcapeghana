@@ -4,7 +4,7 @@ import { useForm } from "react-hook-form";
 import { Booking, House } from '@/lib/types';
 import { houses, guests } from '@/data/mockData';
 
-export const useBookingForm = (booking?: Booking, onSubmit: (data: any) => void) => {
+export const useBookingForm = (onSubmit: (data: any) => void, booking?: Booking) => {
   const [availableHouses, setAvailableHouses] = useState<House[]>([]);
 
   const form = useForm({
