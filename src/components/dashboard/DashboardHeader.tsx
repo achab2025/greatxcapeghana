@@ -10,7 +10,7 @@ const DashboardHeader = ({ title, subtitle }: DashboardHeaderProps) => {
   return (
     <div className="mb-8 animate-fade-in">
       <h1 className="text-3xl font-bold text-white">{title}</h1>
-      <p className="text-white/70">{subtitle}</p>
+      <p className="text-white/80">{subtitle}</p>
     </div>
   );
 };

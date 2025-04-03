@@ -9,7 +9,7 @@ import { bookings, dashboardSummary } from '@/data/mockData';
 
 const Dashboard = () => {
   return (
-    <div className="flex-1 ml-64 p-8 z-10">
+    <div className="w-full p-8 z-10">
       <DashboardHeader 
         title="Dashboard" 
         subtitle="Welcome to the Great Xcape Ghana Ltd. management system." 

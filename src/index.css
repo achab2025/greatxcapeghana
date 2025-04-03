@@ -98,6 +98,7 @@
 
   body {
     @apply bg-background text-foreground;
+    overflow-x: hidden;
   }
 }
 
@@ -117,6 +118,14 @@
   
   .hover-card {
     @apply transition-all duration-300 hover:translate-y-[-5px];
+  }
+  
+  .nav-slide-in {
+    animation: navSlideIn 0.4s ease-out forwards;
+  }
+  
+  .menu-hover {
+    @apply relative overflow-hidden before:absolute before:bottom-0 before:left-0 before:h-[2px] before:w-full before:origin-right before:scale-x-0 before:bg-white before:transition-transform before:duration-300 hover:before:origin-left hover:before:scale-x-100;
   }
 }
 
@@ -151,5 +160,27 @@
   }
   100% {
     background-position: 0% 0%;
+  }
+}
+
+@keyframes navSlideIn {
+  0% {
+    transform: translateY(-100%);
+    opacity: 0;
+  }
+  100% {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+@keyframes slide-down {
+  from {
+    transform: translateY(-10px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
   }
 }
