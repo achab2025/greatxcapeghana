@@ -1,6 +1,6 @@
 
-import React, { useEffect } from 'react';
-import { Navigate, useLocation } from 'react-router-dom';
+import React, { useEffect } from "react";
+import { Navigate } from "react-router-dom";
 
 interface ProtectedRouteProps {
   children: React.ReactNode;
@@ -8,13 +8,12 @@ interface ProtectedRouteProps {
 
 const ProtectedRoute = ({ children }: ProtectedRouteProps) => {
   const isAuthenticated = localStorage.getItem("isAuthenticated") === "true";
-  const location = useLocation();
-  
+
+  // If user is not authenticated, redirect to login page
   if (!isAuthenticated) {
-    // Redirect to login page but save the current location
-    return <Navigate to="/login" state={{ from: location }} replace />;
+    return <Navigate to="/login" />;
   }
-  
+
   return <>{children}</>;
 };
 

@@ -35,21 +35,14 @@
 
     --radius: 0.5rem;
 
-    --sidebar-background: 0 0% 98%;
-
-    --sidebar-foreground: 240 5.3% 26.1%;
-
-    --sidebar-primary: 240 5.9% 10%;
-
-    --sidebar-primary-foreground: 0 0% 98%;
-
-    --sidebar-accent: 240 4.8% 95.9%;
-
-    --sidebar-accent-foreground: 240 5.9% 10%;
-
-    --sidebar-border: 220 13% 91%;
-
-    --sidebar-ring: 217.2 91.2% 59.8%;
+    --sidebar-background: 83 60% 15%;
+    --sidebar-foreground: 83 10% 95%;
+    --sidebar-primary: 83 60% 25%;
+    --sidebar-primary-foreground: 83 10% 98%;
+    --sidebar-accent: 83 20% 20%;
+    --sidebar-accent-foreground: 83 10% 95%;
+    --sidebar-border: 83 15% 20%;
+    --sidebar-ring: 83 60% 40%;
   }
 
   .dark {
@@ -80,14 +73,14 @@
     --border: 217.2 32.6% 17.5%;
     --input: 217.2 32.6% 17.5%;
     --ring: 212.7 26.8% 83.9%;
-    --sidebar-background: 240 5.9% 10%;
-    --sidebar-foreground: 240 4.8% 95.9%;
-    --sidebar-primary: 224.3 76.3% 48%;
-    --sidebar-primary-foreground: 0 0% 100%;
-    --sidebar-accent: 240 3.7% 15.9%;
-    --sidebar-accent-foreground: 240 4.8% 95.9%;
-    --sidebar-border: 240 3.7% 15.9%;
-    --sidebar-ring: 217.2 91.2% 59.8%;
+    --sidebar-background: 83 30% 8%;
+    --sidebar-foreground: 83 10% 95%;
+    --sidebar-primary: 83 30% 20%;
+    --sidebar-primary-foreground: 83 10% 98%;
+    --sidebar-accent: 83 20% 12%;
+    --sidebar-accent-foreground: 83 10% 95%;
+    --sidebar-border: 83 15% 15%;
+    --sidebar-ring: 83 30% 30%;
   }
 }
 
@@ -117,6 +110,14 @@
   
   .hover-card {
     @apply transition-all duration-300 hover:translate-y-[-5px];
+  }
+
+  .glassmorphism {
+    @apply backdrop-blur-sm bg-white/10 border border-white/20;
+  }
+
+  .olive-gradient {
+    @apply bg-gradient-to-br from-[#303307] to-[#45491a];
   }
 }
 
@@ -152,4 +153,33 @@
   100% {
     background-position: 0% 0%;
   }
+}
+
+/* Floating animation for background elements */
+@keyframes float {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+}
+
+.animate-float {
+  animation: float 6s ease-in-out infinite;
+}
+
+/* Swirl pattern for backgrounds */
+.swirl-pattern {
+  background-image: linear-gradient(
+    45deg, 
+    rgba(255, 255, 255, 0.05) 25%, 
+    transparent 25%, 
+    transparent 50%, 
+    rgba(255, 255, 255, 0.05) 50%, 
+    rgba(255, 255, 255, 0.05) 75%, 
+    transparent 75%, 
+    transparent
+  );
+  background-size: 4px 4px;
 }

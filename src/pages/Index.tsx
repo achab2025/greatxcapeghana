@@ -36,6 +36,9 @@ const occupancyData = [
 ];
 
 const Index = () => {
+  // Get user role
+  const userRole = localStorage.getItem("userRole") || "user";
+  
   return (
     <div className="flex min-h-screen bg-[#303307] animate-gradient-xy">
       <div className="absolute inset-0 bg-gradient-to-br from-[#303307] to-[#45491a] opacity-80 -z-10"></div>
@@ -47,7 +50,9 @@ const Index = () => {
       
       <div className="flex-1 ml-64 p-8 z-10">
         <div className="mb-8 animate-fade-in">
-          <h1 className="text-3xl font-bold text-white">Dashboard</h1>
+          <h1 className="text-3xl font-bold text-white">
+            {userRole === "admin" ? "Admin Dashboard" : "User Dashboard"}
+          </h1>
           <p className="text-white/70">Welcome to the Great Xcape Ghana Ltd. management system.</p>
         </div>
         
