@@ -39,98 +39,53 @@ const Index = () => {
   const userRole = localStorage.getItem("userRole") || "user";
   
   return (
-    <div className="flex flex-col min-h-screen bg-gradient-to-br from-white/20 to-gray-100/20 backdrop-blur-sm relative overflow-hidden">
-      {/* Animated background elements */}
-      <div className="absolute inset-0">
-        <div className="absolute inset-0 bg-gradient-to-br from-white/10 to-gray-100/20 opacity-80"></div>
-        <div className="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTQ0MCIgaGVpZ2h0PSI3NjAiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGcgZmlsbD0ibm9uZSIgZmlsbC1ydWxlPSJldmVub2RkIj48cmVjdCBmaWxsPSIjNDU0OTFhIiB3aWR0aD0iMTQ0MCIgaGVpZ2h0PSI3NjAiLz48Y2lyY2xlIGZpbGwtb3BhY2l0eT0iLjA1IiBmaWxsPSIjRkZGIiBjeD0iMzMwIiBjeT0iNDU1IiByPSIyNDAiLz48Y2lyY2xlIGZpbGwtb3BhY2l0eT0iLjA1IiBmaWxsPSIjRkZGIiBjeD0iMTExOCIgY3k9IjI5MSIgcj0iMTcwIi8+PC9nPjwvc3ZnPg==')] bg-cover opacity-10 mix-blend-overlay animate-pulse"></div>
-      </div>
-      
-      {/* Floating particles with enhanced animations */}
-      <div className="absolute inset-0 overflow-hidden">
-        {[...Array(30)].map((_, i) => (
-          <div 
-            key={i}
-            className="absolute rounded-full bg-olive/20 animate-float"
-            style={{
-              width: `${Math.random() * 25 + 5}px`,
-              height: `${Math.random() * 25 + 5}px`,
-              top: `${Math.random() * 100}%`,
-              left: `${Math.random() * 100}%`,
-              animationDelay: `${Math.random() * 5}s`,
-              animationDuration: `${Math.random() * 10 + 5}s`,
-              opacity: Math.random() * 0.6 + 0.2,
-              filter: `blur(${Math.random() * 2}px)`,
-              transform: `rotate(${Math.random() * 360}deg)`,
-            }}
-          ></div>
-        ))}
-      </div>
-      
-      {/* Animated geometric shapes */}
-      <div className="absolute inset-0 overflow-hidden pointer-events-none">
-        <div className="absolute top-1/4 left-1/4 w-64 h-64 bg-primary/5 rounded-full mix-blend-overlay animate-pulse-soft" 
-             style={{ animationDelay: '1s', filter: 'blur(50px)' }}></div>
-        <div className="absolute bottom-1/4 right-1/3 w-80 h-80 bg-accent/5 rounded-full mix-blend-overlay animate-pulse-soft" 
-             style={{ animationDelay: '2s', filter: 'blur(60px)' }}></div>
-        <div className="absolute top-1/3 right-1/4 w-56 h-56 bg-olive-light/5 rounded-full mix-blend-overlay animate-pulse-soft" 
-             style={{ animationDelay: '0s', filter: 'blur(40px)' }}></div>
-      </div>
-      
-      <div className="flex-1 p-8 z-10 text-white">
-        <div className="mb-8 animate-fade-in">
-          <h1 className="text-3xl font-bold">
+    <div className="flex flex-col min-h-screen bg-white">
+      <div className="flex-1 p-8 z-10">
+        <div className="mb-8">
+          <h1 className="text-3xl font-bold text-primary">
             {userRole === "admin" ? "Admin Dashboard" : "User Dashboard"}
           </h1>
-          <p className="text-white/70">Welcome to the Great Xcape Ghana Ltd. management system.</p>
+          <p className="text-muted-foreground">Welcome to the Great Xcape Ghana Ltd. management system.</p>
         </div>
         
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
-          <div className="animate-fade-in" style={{animationDelay: "0.1s"}}>
-            <StatusCard
-              title="Total Bookings"
-              value={dashboardSummary.totalBookings}
-              icon={<CalendarIcon size={24} />}
-              trend={{ value: 12, isPositive: true }}
-              bgClass="bg-white/10 backdrop-blur-sm border border-white/20 hover:bg-white/20 transition-all duration-300"
-            />
-          </div>
-          <div className="animate-fade-in" style={{animationDelay: "0.2s"}}>
-            <StatusCard
-              title="Occupancy Rate"
-              value={`${dashboardSummary.occupancyRate}%`}
-              icon={<HomeIcon size={24} />}
-              trend={{ value: 5, isPositive: true }}
-              bgClass="bg-white/10 backdrop-blur-sm border border-white/20 hover:bg-white/20 transition-all duration-300"
-            />
-          </div>
-          <div className="animate-fade-in" style={{animationDelay: "0.3s"}}>
-            <StatusCard
-              title="Pending Payments"
-              value={`$${dashboardSummary.pendingPayments}`}
-              icon={<DollarSignIcon size={24} />}
-              trend={{ value: 5, isPositive: false }}
-              bgClass="bg-white/10 backdrop-blur-sm border border-white/20 hover:bg-white/20 transition-all duration-300"
-            />
-          </div>
-          <div className="animate-fade-in" style={{animationDelay: "0.4s"}}>
-            <StatusCard
-              title="Monthly Revenue"
-              value={`$${dashboardSummary.revenue.current}`}
-              icon={<DollarSignIcon size={24} />}
-              trend={{ 
-                value: Math.round((dashboardSummary.revenue.current - dashboardSummary.revenue.previous) / 
-                dashboardSummary.revenue.previous * 100), 
-                isPositive: dashboardSummary.revenue.current > dashboardSummary.revenue.previous 
-              }}
-              bgClass="bg-white/10 backdrop-blur-sm border border-white/20 hover:bg-white/20 transition-all duration-300"
-            />
-          </div>
+          <StatusCard
+            title="Total Bookings"
+            value={dashboardSummary.totalBookings}
+            icon={<CalendarIcon size={24} />}
+            trend={{ value: 12, isPositive: true }}
+            bgClass="bg-white shadow-md border border-gray-100 hover:shadow-lg transition-all duration-300"
+          />
+          <StatusCard
+            title="Occupancy Rate"
+            value={`${dashboardSummary.occupancyRate}%`}
+            icon={<HomeIcon size={24} />}
+            trend={{ value: 5, isPositive: true }}
+            bgClass="bg-white shadow-md border border-gray-100 hover:shadow-lg transition-all duration-300"
+          />
+          <StatusCard
+            title="Pending Payments"
+            value={`$${dashboardSummary.pendingPayments}`}
+            icon={<DollarSignIcon size={24} />}
+            trend={{ value: 5, isPositive: false }}
+            bgClass="bg-white shadow-md border border-gray-100 hover:shadow-lg transition-all duration-300"
+          />
+          <StatusCard
+            title="Monthly Revenue"
+            value={`$${dashboardSummary.revenue.current}`}
+            icon={<DollarSignIcon size={24} />}
+            trend={{ 
+              value: Math.round((dashboardSummary.revenue.current - dashboardSummary.revenue.previous) / 
+              dashboardSummary.revenue.previous * 100), 
+              isPositive: dashboardSummary.revenue.current > dashboardSummary.revenue.previous 
+            }}
+            bgClass="bg-white shadow-md border border-gray-100 hover:shadow-lg transition-all duration-300"
+          />
         </div>
         
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-8">
-          <div className="lg:col-span-2 animate-fade-in" style={{animationDelay: "0.5s"}}>
-            <Card className="bg-white/10 backdrop-blur-sm border border-white/20 text-white">
+          <div className="lg:col-span-2">
+            <Card className="border shadow-md hover:shadow-lg transition-all duration-300">
               <CardHeader>
                 <CardTitle>Revenue Trends</CardTitle>
               </CardHeader>
@@ -140,18 +95,18 @@ const Index = () => {
                     data={revenueData}
                     margin={{ top: 5, right: 30, left: 20, bottom: 5 }}
                   >
-                    <CartesianGrid strokeDasharray="3 3" stroke="rgba(255,255,255,0.1)" />
-                    <XAxis dataKey="name" stroke="rgba(255,255,255,0.7)" />
-                    <YAxis stroke="rgba(255,255,255,0.7)" />
-                    <Tooltip contentStyle={{ backgroundColor: "rgba(0, 0, 0, 0.8)", color: "#fff", border: "1px solid rgba(255,255,255,0.2)" }} />
-                    <Line type="monotone" dataKey="revenue" stroke="#8FE98B" strokeWidth={2} dot={{ fill: "#8FE98B" }} activeDot={{ r: 8 }} />
+                    <CartesianGrid strokeDasharray="3 3" stroke="rgba(0,0,0,0.1)" />
+                    <XAxis dataKey="name" stroke="rgba(0,0,0,0.7)" />
+                    <YAxis stroke="rgba(0,0,0,0.7)" />
+                    <Tooltip contentStyle={{ backgroundColor: "white", color: "#000", border: "1px solid rgba(0,0,0,0.1)" }} />
+                    <Line type="monotone" dataKey="revenue" stroke="#4a5213" strokeWidth={2} dot={{ fill: "#4a5213" }} activeDot={{ r: 8 }} />
                   </LineChart>
                 </ResponsiveContainer>
               </CardContent>
             </Card>
           </div>
-          <div className="animate-fade-in" style={{animationDelay: "0.6s"}}>
-            <Card className="bg-white/10 backdrop-blur-sm border border-white/20 text-white h-full">
+          <div>
+            <Card className="border shadow-md hover:shadow-lg transition-all duration-300 h-full">
               <CardHeader>
                 <CardTitle>Occupancy Rate</CardTitle>
               </CardHeader>
@@ -161,11 +116,11 @@ const Index = () => {
                     data={occupancyData}
                     margin={{ top: 5, right: 20, left: 0, bottom: 5 }}
                   >
-                    <CartesianGrid strokeDasharray="3 3" stroke="rgba(255,255,255,0.1)" />
-                    <XAxis dataKey="name" stroke="rgba(255,255,255,0.7)" />
-                    <YAxis stroke="rgba(255,255,255,0.7)" />
-                    <Tooltip contentStyle={{ backgroundColor: "rgba(0, 0, 0, 0.8)", color: "#fff", border: "1px solid rgba(255,255,255,0.2)" }} />
-                    <Line type="monotone" dataKey="rate" stroke="#B4E973" strokeWidth={2} dot={{ fill: "#B4E973" }} />
+                    <CartesianGrid strokeDasharray="3 3" stroke="rgba(0,0,0,0.1)" />
+                    <XAxis dataKey="name" stroke="rgba(0,0,0,0.7)" />
+                    <YAxis stroke="rgba(0,0,0,0.7)" />
+                    <Tooltip contentStyle={{ backgroundColor: "white", color: "#000", border: "1px solid rgba(0,0,0,0.1)" }} />
+                    <Line type="monotone" dataKey="rate" stroke="#5e6a13" strokeWidth={2} dot={{ fill: "#5e6a13" }} />
                   </LineChart>
                 </ResponsiveContainer>
               </CardContent>
@@ -174,11 +129,11 @@ const Index = () => {
         </div>
         
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-          <div className="lg:col-span-2 animate-fade-in" style={{animationDelay: "0.7s"}}>
+          <div className="lg:col-span-2">
             <RecentBookings bookings={bookings} />
           </div>
-          <div className="animate-fade-in" style={{animationDelay: "0.8s"}}>
-            <Card className="mb-6 bg-white/10 backdrop-blur-sm border border-white/20 text-white hover:bg-white/15 transition-all duration-300">
+          <div>
+            <Card className="mb-6 border shadow-md hover:shadow-lg transition-all duration-300">
               <CardHeader>
                 <CardTitle className="flex items-center">
                   <CalendarIcon className="mr-2" size={18} />
@@ -188,13 +143,13 @@ const Index = () => {
               <CardContent>
                 <div className="space-y-4">
                   {bookings.slice(0, 3).map((booking) => (
-                    <div key={`checkin-${booking.id}`} className="flex items-center space-x-3 border-b border-white/10 pb-2 last:border-0">
-                      <div className="bg-white/10 text-white p-2 rounded-full">
-                        <UserIcon size={16} />
+                    <div key={`checkin-${booking.id}`} className="flex items-center space-x-3 border-b border-gray-100 pb-2 last:border-0">
+                      <div className="bg-primary/10 p-2 rounded-full">
+                        <UserIcon size={16} className="text-primary" />
                       </div>
                       <div>
-                        <p className="font-medium text-sm text-white">{booking.guestName}</p>
-                        <p className="text-xs text-white/70">
+                        <p className="font-medium text-sm">{booking.guestName}</p>
+                        <p className="text-xs text-muted-foreground">
                           {new Date(booking.checkInDate).toLocaleDateString()}
                         </p>
                       </div>
@@ -204,7 +159,7 @@ const Index = () => {
               </CardContent>
             </Card>
             
-            <Card className="bg-white/10 backdrop-blur-sm border border-white/20 text-white hover:bg-white/15 transition-all duration-300">
+            <Card className="border shadow-md hover:shadow-lg transition-all duration-300">
               <CardHeader>
                 <CardTitle className="flex items-center">
                   <MessageSquareIcon className="mr-2" size={18} />
@@ -213,31 +168,31 @@ const Index = () => {
               </CardHeader>
               <CardContent>
                 <div className="space-y-4">
-                  <div className="flex items-start space-x-3 border-b border-white/10 pb-2">
-                    <div className="bg-white/10 text-white p-2 rounded-full">
-                      <UserIcon size={16} />
+                  <div className="flex items-start space-x-3 border-b border-gray-100 pb-2">
+                    <div className="bg-primary/10 p-2 rounded-full">
+                      <UserIcon size={16} className="text-primary" />
                     </div>
                     <div>
-                      <p className="font-medium text-sm text-white">John Smith</p>
-                      <p className="text-xs text-white/70">Is early check-in possible?</p>
+                      <p className="font-medium text-sm">John Smith</p>
+                      <p className="text-xs text-muted-foreground">Is early check-in possible?</p>
                     </div>
                   </div>
-                  <div className="flex items-start space-x-3 border-b border-white/10 pb-2">
-                    <div className="bg-white/10 text-white p-2 rounded-full">
-                      <UserIcon size={16} />
+                  <div className="flex items-start space-x-3 border-b border-gray-100 pb-2">
+                    <div className="bg-primary/10 p-2 rounded-full">
+                      <UserIcon size={16} className="text-primary" />
                     </div>
                     <div>
-                      <p className="font-medium text-sm text-white">Sarah Johnson</p>
-                      <p className="text-xs text-white/70">Need extra towels please.</p>
+                      <p className="font-medium text-sm">Sarah Johnson</p>
+                      <p className="text-xs text-muted-foreground">Need extra towels please.</p>
                     </div>
                   </div>
                   <div className="flex items-start space-x-3">
-                    <div className="bg-white/10 text-white p-2 rounded-full">
-                      <UserIcon size={16} />
+                    <div className="bg-primary/10 p-2 rounded-full">
+                      <UserIcon size={16} className="text-primary" />
                     </div>
                     <div>
-                      <p className="font-medium text-sm text-white">Alex Lee</p>
-                      <p className="text-xs text-white/70">Requesting airport shuttle.</p>
+                      <p className="font-medium text-sm">Alex Lee</p>
+                      <p className="text-xs text-muted-foreground">Requesting airport shuttle.</p>
                     </div>
                   </div>
                 </div>
