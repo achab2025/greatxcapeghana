@@ -53,6 +53,15 @@ export default {
 					DEFAULT: 'hsl(var(--card))',
 					foreground: 'hsl(var(--card-foreground))'
 				},
+				navbar: {
+					DEFAULT: 'hsl(var(--navbar-background))',
+					foreground: 'hsl(var(--navbar-foreground))',
+					primary: 'hsl(var(--navbar-primary))',
+					'primary-foreground': 'hsl(var(--navbar-primary-foreground))',
+					accent: 'hsl(var(--navbar-accent))',
+					'accent-foreground': 'hsl(var(--navbar-accent-foreground))',
+					border: 'hsl(var(--navbar-border))',
+				},
 				sidebar: {
 					DEFAULT: 'hsl(var(--sidebar-background))',
 					foreground: 'hsl(var(--sidebar-foreground))',

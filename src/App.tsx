@@ -12,6 +12,7 @@ import Payments from "./pages/Payments";
 import NotFound from "./pages/NotFound";
 import Login from "./pages/Login";
 import ProtectedRoute from "./components/layout/ProtectedRoute";
+import TopNavbar from "./components/layout/TopNavbar";
 
 // Placeholder pages for new routes
 import Rooms from "./pages/Rooms";
