@@ -20,76 +20,131 @@ import Reports from "./pages/Reports";
 import Messages from "./pages/Messages";
 import Settings from "./pages/Settings";
 
-const queryClient = new QueryClient();
+// Create a new QueryClient instance
+const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: {
+      retry: false,
+      refetchOnWindowFocus: false,
+    },
+  },
+});
 
-const App = () => (
-  <QueryClientProvider client={queryClient}>
-    <TooltipProvider>
-      <Toaster />
-      <Sonner />
-      <BrowserRouter>
-        <Routes>
-          <Route path="/login" element={<Login />} />
-          
-          <Route path="/" element={
-            <ProtectedRoute>
-              <Index />
-            </ProtectedRoute>
-          } />
-          
-          <Route path="/bookings" element={
-            <ProtectedRoute>
-              <Bookings />
-            </ProtectedRoute>
-          } />
-          
-          <Route path="/rooms" element={
-            <ProtectedRoute>
-              <Rooms />
-            </ProtectedRoute>
-          } />
-          
-          <Route path="/houses" element={
-            <ProtectedRoute>
-              <Houses />
-            </ProtectedRoute>
-          } />
-          
-          <Route path="/guests" element={
-            <ProtectedRoute>
-              <Guests />
-            </ProtectedRoute>
-          } />
-          
-          <Route path="/payments" element={
-            <ProtectedRoute>
-              <Payments />
-            </ProtectedRoute>
-          } />
-          
-          <Route path="/reports" element={
-            <ProtectedRoute>
-              <Reports />
-            </ProtectedRoute>
-          } />
-          
-          <Route path="/messages" element={
-            <ProtectedRoute>
-              <Messages />
-            </ProtectedRoute>
-          } />
-          
-          <Route path="/settings" element={
-            <ProtectedRoute>
-              <Settings />
-            </ProtectedRoute>
-          } />
-          
-          <Route path="*" element={<NotFound />} />
-        </Routes>
-      </BrowserRouter>
-    </TooltipProvider>
-  </QueryClientProvider>
-);
+const App = () => {
+  return (
+    <BrowserRouter>
+      <QueryClientProvider client={queryClient}>
+        <TooltipProvider>
+          <Routes>
+            <Route path="/login" element={<Login />} />
+            
+            <Route path="/" element={
+              <ProtectedRoute>
+                <div className="flex flex-col min-h-screen">
+                  <TopNavbar />
+                  <div className="flex-grow">
+                    <Index />
+                  </div>
+                </div>
+              </ProtectedRoute>
+            } />
+            
+            <Route path="/bookings" element={
+              <ProtectedRoute>
+                <div className="flex flex-col min-h-screen">
+                  <TopNavbar />
+                  <div className="flex-grow">
+                    <Bookings />
+                  </div>
+                </div>
+              </ProtectedRoute>
+            } />
+            
+            <Route path="/rooms" element={
+              <ProtectedRoute>
+                <div className="flex flex-col min-h-screen">
+                  <TopNavbar />
+                  <div className="flex-grow">
+                    <Rooms />
+                  </div>
+                </div>
+              </ProtectedRoute>
+            } />
+            
+            <Route path="/houses" element={
+              <ProtectedRoute>
+                <div className="flex flex-col min-h-screen">
+                  <TopNavbar />
+                  <div className="flex-grow">
+                    <Houses />
+                  </div>
+                </div>
+              </ProtectedRoute>
+            } />
+            
+            <Route path="/guests" element={
+              <ProtectedRoute>
+                <div className="flex flex-col min-h-screen">
+                  <TopNavbar />
+                  <div className="flex-grow">
+                    <Guests />
+                  </div>
+                </div>
+              </ProtectedRoute>
+            } />
+            
+            <Route path="/payments" element={
+              <ProtectedRoute>
+                <div className="flex flex-col min-h-screen">
+                  <TopNavbar />
+                  <div className="flex-grow">
+                    <Payments />
+                  </div>
+                </div>
+              </ProtectedRoute>
+            } />
+            
+            <Route path="/reports" element={
+              <ProtectedRoute>
+                <div className="flex flex-col min-h-screen">
+                  <TopNavbar />
+                  <div className="flex-grow">
+                    <Reports />
+                  </div>
+                </div>
+              </ProtectedRoute>
+            } />
+            
+            <Route path="/messages" element={
+              <ProtectedRoute>
+                <div className="flex flex-col min-h-screen">
+                  <TopNavbar />
+                  <div className="flex-grow">
+                    <Messages />
+                  </div>
+                </div>
+              </ProtectedRoute>
+            } />
+            
+            <Route path="/settings" element={
+              <ProtectedRoute>
+                <div className="flex flex-col min-h-screen">
+                  <TopNavbar />
+                  <div className="flex-grow">
+                    <Settings />
+                  </div>
+                </div>
+              </ProtectedRoute>
+            } />
+            
+            <Route path="*" element={<NotFound />} />
+          </Routes>
+          <Toaster />
+          <Sonner />
+        </TooltipProvider>
+      </QueryClientProvider>
+    </BrowserRouter>
+  );
+};
 
 export default App;
