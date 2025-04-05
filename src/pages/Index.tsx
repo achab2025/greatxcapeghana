@@ -1,6 +1,5 @@
 
 import React from 'react';
-import TopNavbar from '@/components/layout/TopNavbar';
 import StatusCard from '@/components/dashboard/StatusCard';
 import BookingSummary from '@/components/dashboard/BookingSummary';
 import RecentBookings from '@/components/dashboard/RecentBookings';
@@ -40,13 +39,43 @@ const Index = () => {
   const userRole = localStorage.getItem("userRole") || "user";
   
   return (
-    <div className="flex flex-col min-h-screen bg-[#303307] animate-gradient-xy">
-      <div className="absolute inset-0 bg-gradient-to-br from-[#303307] to-[#45491a] opacity-80 -z-10"></div>
-      <div className="absolute inset-0 -z-10">
+    <div className="flex flex-col min-h-screen bg-gradient-to-br from-white/20 to-gray-100/20 backdrop-blur-sm relative overflow-hidden">
+      {/* Animated background elements */}
+      <div className="absolute inset-0">
+        <div className="absolute inset-0 bg-gradient-to-br from-[#303307] to-[#45491a] opacity-80 -z-10"></div>
         <div className="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTQ0MCIgaGVpZ2h0PSI3NjAiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGcgZmlsbD0ibm9uZSIgZmlsbC1ydWxlPSJldmVub2RkIj48cmVjdCBmaWxsPSIjNDU0OTFhIiB3aWR0aD0iMTQ0MCIgaGVpZ2h0PSI3NjAiLz48Y2lyY2xlIGZpbGwtb3BhY2l0eT0iLjA1IiBmaWxsPSIjRkZGIiBjeD0iMzMwIiBjeT0iNDU1IiByPSIyNDAiLz48Y2lyY2xlIGZpbGwtb3BhY2l0eT0iLjA1IiBmaWxsPSIjRkZGIiBjeD0iMTExOCIgY3k9IjI5MSIgcj0iMTcwIi8+PC9nPjwvc3ZnPg==')] bg-cover opacity-10 mix-blend-overlay animate-pulse"></div>
       </div>
       
-      <TopNavbar />
+      {/* Floating particles with enhanced animations */}
+      <div className="absolute inset-0 overflow-hidden">
+        {[...Array(30)].map((_, i) => (
+          <div 
+            key={i}
+            className="absolute rounded-full bg-olive/20 animate-float"
+            style={{
+              width: `${Math.random() * 25 + 5}px`,
+              height: `${Math.random() * 25 + 5}px`,
+              top: `${Math.random() * 100}%`,
+              left: `${Math.random() * 100}%`,
+              animationDelay: `${Math.random() * 5}s`,
+              animationDuration: `${Math.random() * 10 + 5}s`,
+              opacity: Math.random() * 0.6 + 0.2,
+              filter: `blur(${Math.random() * 2}px)`,
+              transform: `rotate(${Math.random() * 360}deg)`,
+            }}
+          ></div>
+        ))}
+      </div>
+      
+      {/* Animated geometric shapes */}
+      <div className="absolute inset-0 overflow-hidden pointer-events-none">
+        <div className="absolute top-1/4 left-1/4 w-64 h-64 bg-primary/5 rounded-full mix-blend-overlay animate-pulse-soft" 
+             style={{ animationDelay: '1s', filter: 'blur(50px)' }}></div>
+        <div className="absolute bottom-1/4 right-1/3 w-80 h-80 bg-accent/5 rounded-full mix-blend-overlay animate-pulse-soft" 
+             style={{ animationDelay: '2s', filter: 'blur(60px)' }}></div>
+        <div className="absolute top-1/3 right-1/4 w-56 h-56 bg-olive-light/5 rounded-full mix-blend-overlay animate-pulse-soft" 
+             style={{ animationDelay: '0s', filter: 'blur(40px)' }}></div>
+      </div>
       
       <div className="flex-1 p-8 z-10">
         <div className="mb-8 animate-fade-in">
