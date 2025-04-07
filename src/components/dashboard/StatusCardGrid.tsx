@@ -16,21 +16,21 @@ const StatusCardGrid = ({ dashboardSummary }: StatusCardGridProps) => {
         value={dashboardSummary.totalBookings}
         icon={<CalendarIcon size={24} />}
         trend={{ value: 12, isPositive: true }}
-        bgClass="bg-white shadow-md border border-gray-100 hover:shadow-lg transition-all duration-300"
+        bgClass="bg-gradient-to-br from-blue-500 to-blue-600 shadow-md border border-blue-400 hover:shadow-lg transition-all duration-300"
       />
       <StatusCard
         title="Occupancy Rate"
         value={`${dashboardSummary.occupancyRate}%`}
         icon={<HomeIcon size={24} />}
         trend={{ value: 5, isPositive: true }}
-        bgClass="bg-white shadow-md border border-gray-100 hover:shadow-lg transition-all duration-300"
+        bgClass="bg-gradient-to-br from-emerald-500 to-emerald-600 shadow-md border border-emerald-400 hover:shadow-lg transition-all duration-300"
       />
       <StatusCard
         title="Pending Payments"
         value={`$${dashboardSummary.pendingPayments}`}
         icon={<DollarSignIcon size={24} />}
         trend={{ value: 5, isPositive: false }}
-        bgClass="bg-white shadow-md border border-gray-100 hover:shadow-lg transition-all duration-300"
+        bgClass="bg-gradient-to-br from-amber-500 to-amber-600 shadow-md border border-amber-400 hover:shadow-lg transition-all duration-300"
       />
       <StatusCard
         title="Monthly Revenue"
@@ -41,7 +41,7 @@ const StatusCardGrid = ({ dashboardSummary }: StatusCardGridProps) => {
           dashboardSummary.revenue.previous * 100), 
           isPositive: dashboardSummary.revenue.current > dashboardSummary.revenue.previous 
         }}
-        bgClass="bg-white shadow-md border border-gray-100 hover:shadow-lg transition-all duration-300"
+        bgClass="bg-gradient-to-br from-indigo-500 to-indigo-600 shadow-md border border-indigo-400 hover:shadow-lg transition-all duration-300"
       />
     </div>
   );
