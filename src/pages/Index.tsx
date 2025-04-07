@@ -40,7 +40,7 @@ const Index = () => {
   const userRole = localStorage.getItem("userRole") || "user";
   
   return (
-    <div className="flex flex-col min-h-screen bg-slate-50">
+    <div className="flex flex-col min-h-screen bg-gradient-to-br from-olive-light/10 to-olive/10">
       <div className="flex-1 p-8 z-10">
         <DashboardHeader userRole={userRole} />
         

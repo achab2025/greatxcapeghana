@@ -21,17 +21,14 @@ const Guests = () => {
   } = useGuestManagement();
 
   return (
-    <div className="flex flex-col min-h-screen bg-gradient-to-br from-slate-50 to-white relative overflow-hidden">
-      {/* Subtle background pattern */}
-      <div className="absolute inset-0 bg-grid-pattern opacity-[0.02] pointer-events-none"></div>
-      
+    <div className="flex flex-col min-h-screen bg-gradient-to-br from-olive-light/10 to-olive/10 relative">
       <div className="flex-1 p-8 z-10">
         <div className="max-w-7xl mx-auto">
-          <div className="animate-fade-down" style={{animationDelay: "0.1s"}}>
+          <div>
             <GuestHeader onCreateGuest={handleCreateGuest} />
           </div>
           
-          <div className="bg-white rounded-xl shadow-sm border border-slate-100 p-6 mt-8 animate-fade-in" style={{animationDelay: "0.2s"}}>
+          <div className="bg-white rounded-xl shadow-md border border-olive/10 p-6 mt-8">
             <GuestTable 
               guests={guestsList}
               onViewGuest={handleViewGuest}
