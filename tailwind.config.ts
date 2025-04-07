@@ -78,6 +78,12 @@ export default {
 					dark: '#303307'
 				}
 			},
+			backgroundImage: {
+				'grid-pattern': 'linear-gradient(to right, #e2e8f0 1px, transparent 1px), linear-gradient(to bottom, #e2e8f0 1px, transparent 1px)',
+			},
+			backgroundSize: {
+				'grid-pattern': '20px 20px',
+			},
 			borderRadius: {
 				lg: 'var(--radius)',
 				md: 'calc(var(--radius) - 2px)',

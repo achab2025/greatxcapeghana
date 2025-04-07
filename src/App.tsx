@@ -1,4 +1,3 @@
-
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
@@ -35,112 +34,114 @@ const App = () => {
     <BrowserRouter>
       <QueryClientProvider client={queryClient}>
         <TooltipProvider>
-          <Routes>
-            <Route path="/login" element={<Login />} />
-            
-            <Route path="/" element={
-              <ProtectedRoute>
-                <div className="flex flex-col min-h-screen">
-                  <TopNavbar />
-                  <div className="flex-grow">
-                    <Index />
+          <div className="bg-slate-50 min-h-screen">
+            <Routes>
+              <Route path="/login" element={<Login />} />
+              
+              <Route path="/" element={
+                <ProtectedRoute>
+                  <div className="flex flex-col min-h-screen">
+                    <TopNavbar />
+                    <div className="flex-grow">
+                      <Index />
+                    </div>
                   </div>
-                </div>
-              </ProtectedRoute>
-            } />
-            
-            <Route path="/bookings" element={
-              <ProtectedRoute>
-                <div className="flex flex-col min-h-screen">
-                  <TopNavbar />
-                  <div className="flex-grow">
-                    <Bookings />
+                </ProtectedRoute>
+              } />
+              
+              <Route path="/bookings" element={
+                <ProtectedRoute>
+                  <div className="flex flex-col min-h-screen">
+                    <TopNavbar />
+                    <div className="flex-grow">
+                      <Bookings />
+                    </div>
                   </div>
-                </div>
-              </ProtectedRoute>
-            } />
-            
-            <Route path="/rooms" element={
-              <ProtectedRoute>
-                <div className="flex flex-col min-h-screen">
-                  <TopNavbar />
-                  <div className="flex-grow">
-                    <Rooms />
+                </ProtectedRoute>
+              } />
+              
+              <Route path="/rooms" element={
+                <ProtectedRoute>
+                  <div className="flex flex-col min-h-screen">
+                    <TopNavbar />
+                    <div className="flex-grow">
+                      <Rooms />
+                    </div>
                   </div>
-                </div>
-              </ProtectedRoute>
-            } />
-            
-            <Route path="/houses" element={
-              <ProtectedRoute>
-                <div className="flex flex-col min-h-screen">
-                  <TopNavbar />
-                  <div className="flex-grow">
-                    <Houses />
+                </ProtectedRoute>
+              } />
+              
+              <Route path="/houses" element={
+                <ProtectedRoute>
+                  <div className="flex flex-col min-h-screen">
+                    <TopNavbar />
+                    <div className="flex-grow">
+                      <Houses />
+                    </div>
                   </div>
-                </div>
-              </ProtectedRoute>
-            } />
-            
-            <Route path="/guests" element={
-              <ProtectedRoute>
-                <div className="flex flex-col min-h-screen">
-                  <TopNavbar />
-                  <div className="flex-grow">
-                    <Guests />
+                </ProtectedRoute>
+              } />
+              
+              <Route path="/guests" element={
+                <ProtectedRoute>
+                  <div className="flex flex-col min-h-screen">
+                    <TopNavbar />
+                    <div className="flex-grow">
+                      <Guests />
+                    </div>
                   </div>
-                </div>
-              </ProtectedRoute>
-            } />
-            
-            <Route path="/payments" element={
-              <ProtectedRoute>
-                <div className="flex flex-col min-h-screen">
-                  <TopNavbar />
-                  <div className="flex-grow">
-                    <Payments />
+                </ProtectedRoute>
+              } />
+              
+              <Route path="/payments" element={
+                <ProtectedRoute>
+                  <div className="flex flex-col min-h-screen">
+                    <TopNavbar />
+                    <div className="flex-grow">
+                      <Payments />
+                    </div>
                   </div>
-                </div>
-              </ProtectedRoute>
-            } />
-            
-            <Route path="/reports" element={
-              <ProtectedRoute>
-                <div className="flex flex-col min-h-screen">
-                  <TopNavbar />
-                  <div className="flex-grow">
-                    <Reports />
+                </ProtectedRoute>
+              } />
+              
+              <Route path="/reports" element={
+                <ProtectedRoute>
+                  <div className="flex flex-col min-h-screen">
+                    <TopNavbar />
+                    <div className="flex-grow">
+                      <Reports />
+                    </div>
                   </div>
-                </div>
-              </ProtectedRoute>
-            } />
-            
-            <Route path="/messages" element={
-              <ProtectedRoute>
-                <div className="flex flex-col min-h-screen">
-                  <TopNavbar />
-                  <div className="flex-grow">
-                    <Messages />
+                </ProtectedRoute>
+              } />
+              
+              <Route path="/messages" element={
+                <ProtectedRoute>
+                  <div className="flex flex-col min-h-screen">
+                    <TopNavbar />
+                    <div className="flex-grow">
+                      <Messages />
+                    </div>
                   </div>
-                </div>
-              </ProtectedRoute>
-            } />
-            
-            <Route path="/settings" element={
-              <ProtectedRoute>
-                <div className="flex flex-col min-h-screen">
-                  <TopNavbar />
-                  <div className="flex-grow">
-                    <Settings />
+                </ProtectedRoute>
+              } />
+              
+              <Route path="/settings" element={
+                <ProtectedRoute>
+                  <div className="flex flex-col min-h-screen">
+                    <TopNavbar />
+                    <div className="flex-grow">
+                      <Settings />
+                    </div>
                   </div>
-                </div>
-              </ProtectedRoute>
-            } />
-            
-            <Route path="*" element={<NotFound />} />
-          </Routes>
-          <Toaster />
-          <Sonner />
+                </ProtectedRoute>
+              } />
+              
+              <Route path="*" element={<NotFound />} />
+            </Routes>
+            <Toaster />
+            <Sonner />
+          </div>
         </TooltipProvider>
       </QueryClientProvider>
     </BrowserRouter>

@@ -17,11 +17,8 @@ import {
 import { Button } from '@/components/ui/button';
 import {
   NavigationMenu,
-  NavigationMenuContent,
   NavigationMenuItem,
-  NavigationMenuLink,
   NavigationMenuList,
-  NavigationMenuTrigger,
 } from "@/components/ui/navigation-menu";
 import { cn } from '@/lib/utils';
 
@@ -53,10 +50,12 @@ const TopNavbar = () => {
   return (
     <>
       {/* Desktop Navigation */}
-      <div className="bg-primary text-primary-foreground shadow-md fixed w-full top-0 z-50">
+      <div className="bg-white border-b border-slate-200 shadow-sm fixed w-full top-0 z-50">
         <div className="container mx-auto flex items-center justify-between py-3 px-4">
           <div className="flex items-center">
-            <h2 className="text-xl font-semibold text-primary-foreground mr-8">Great Xcape Ghana</h2>
+            <h2 className="text-xl font-bold bg-gradient-to-r from-indigo-600 to-violet-600 bg-clip-text text-transparent mr-8">
+              Great Xcape Ghana
+            </h2>
             
             <NavigationMenu className="hidden md:flex">
               <NavigationMenuList>
@@ -67,8 +66,8 @@ const TopNavbar = () => {
                       className={cn(
                         "flex items-center gap-2 px-4 py-2 text-sm font-medium rounded-md transition-colors",
                         location.pathname === item.path
-                          ? "bg-accent text-accent-foreground"
-                          : "hover:bg-accent/50 hover:text-accent-foreground"
+                          ? "bg-indigo-50 text-indigo-600"
+                          : "text-slate-600 hover:bg-slate-50 hover:text-indigo-600"
                       )}
                     >
                       {item.icon}
@@ -83,7 +82,7 @@ const TopNavbar = () => {
           <div className="hidden md:block">
             <Button 
               variant="ghost" 
-              className="text-primary-foreground hover:bg-accent hover:text-accent-foreground"
+              className="text-slate-600 hover:bg-slate-50 hover:text-indigo-600"
               onClick={handleLogout}
             >
               <LogOutIcon size={16} className="mr-2" />
@@ -95,7 +94,7 @@ const TopNavbar = () => {
           <div className="md:hidden">
             <Button 
               variant="ghost"
-              className="text-primary-foreground" 
+              className="text-slate-600" 
               onClick={toggleMobileMenu}
             >
               {mobileMenuOpen ? <XIcon size={24} /> : <MenuIcon size={24} />}
@@ -106,7 +105,7 @@ const TopNavbar = () => {
       
       {/* Mobile Navigation Menu */}
       {mobileMenuOpen && (
-        <div className="md:hidden fixed inset-0 z-40 pt-16 bg-background">
+        <div className="md:hidden fixed inset-0 z-40 pt-16 bg-white">
           <div className="p-4 overflow-y-auto">
             <ul className="space-y-2">
               {menuItems.map((item) => (
@@ -115,8 +114,8 @@ const TopNavbar = () => {
                     to={item.path}
                     className={`flex items-center p-3 text-sm font-medium rounded-md transition-colors ${
                       location.pathname === item.path
-                        ? 'bg-primary text-primary-foreground'
-                        : 'text-muted-foreground hover:bg-accent hover:text-accent-foreground'
+                        ? 'bg-indigo-50 text-indigo-600'
+                        : 'text-slate-600 hover:bg-slate-50 hover:text-indigo-600'
                     }`}
                     onClick={() => setMobileMenuOpen(false)}
                   >
@@ -128,7 +127,7 @@ const TopNavbar = () => {
               <li className="pt-4 mt-4 border-t">
                 <Button 
                   variant="ghost" 
-                  className="w-full flex items-center justify-center transition-colors hover:bg-destructive hover:text-destructive-foreground"
+                  className="w-full flex items-center justify-center transition-colors text-slate-600 hover:bg-rose-50 hover:text-rose-600"
                   onClick={handleLogout}
                 >
                   <LogOutIcon size={16} className="mr-2" />
