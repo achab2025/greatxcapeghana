@@ -16,13 +16,13 @@ interface StatusCardProps {
 const StatusCard = ({ title, value, icon, trend, bgClass }: StatusCardProps) => {
   return (
     <div className={cn(
-      "p-6 rounded-xl shadow-md hover:shadow-lg transition-all duration-300 hover:translate-y-[-5px] border border-slate-100",
-      bgClass || "bg-gradient-to-br from-white to-slate-50"
+      "p-6 rounded-xl shadow-md hover:shadow-lg transition-all duration-300 hover:translate-y-[-5px] border border-olive/20",
+      bgClass || "bg-white"
     )}>
       <div className="flex justify-between items-center">
         <div>
-          <h3 className="text-sm font-medium text-slate-500">{title}</h3>
-          <p className="text-2xl font-bold mt-1 text-slate-800">{value}</p>
+          <h3 className="text-sm font-medium text-olive-dark/70">{title}</h3>
+          <p className="text-2xl font-bold mt-1 text-olive-dark">{value}</p>
           {trend && (
             <div className="flex items-center mt-1 text-xs">
               <span className={cn(
@@ -31,14 +31,14 @@ const StatusCard = ({ title, value, icon, trend, bgClass }: StatusCardProps) => 
               )}>
                 {trend.isPositive ? '↑' : '↓'} {Math.abs(trend.value)}%
               </span>
-              <span className="text-slate-500 ml-1">vs last month</span>
+              <span className="text-olive-dark/50 ml-1">vs last month</span>
             </div>
           )}
         </div>
         <div className={cn(
           "p-3 rounded-full text-white",
-          trend?.isPositive ? "bg-gradient-to-br from-indigo-500 to-violet-500" : 
-                            "bg-gradient-to-br from-indigo-600 to-violet-600"
+          trend?.isPositive ? "bg-gradient-to-br from-olive to-olive-light" : 
+                            "bg-gradient-to-br from-olive-dark to-olive"
         )}>
           {icon}
         </div>

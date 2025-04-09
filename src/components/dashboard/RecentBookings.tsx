@@ -13,7 +13,7 @@ const RecentBookings = ({ bookings }: RecentBookingsProps) => {
   const getStatusBadge = (status: string) => {
     switch(status) {
       case 'confirmed':
-        return <Badge className="bg-blue-500 hover:bg-blue-600 text-white">Confirmed</Badge>;
+        return <Badge className="bg-olive hover:bg-olive-dark text-white">Confirmed</Badge>;
       case 'completed':
         return <Badge className="bg-emerald-500 hover:bg-emerald-600 text-white">Completed</Badge>;
       case 'canceled':
@@ -37,26 +37,25 @@ const RecentBookings = ({ bookings }: RecentBookingsProps) => {
   };
 
   return (
-    <Card className="border border-slate-200 shadow-md hover:shadow-lg transition-all duration-300">
-      <CardHeader className="bg-gradient-to-r from-indigo-50 to-blue-50 border-b border-slate-200">
-        <CardTitle className="text-indigo-700">Recent Bookings</CardTitle>
+    <Card className="border border-olive/20 shadow-md hover:shadow-lg transition-all duration-300">
+      <CardHeader className="bg-gradient-to-r from-olive-light/10 to-olive/10 border-b border-olive/20">
+        <CardTitle className="text-olive-dark">Recent Bookings</CardTitle>
       </CardHeader>
       <CardContent className="bg-white p-4">
         <div className="space-y-4">
-          {bookings.map((booking, index) => (
+          {bookings.map((booking) => (
             <div 
               key={booking.id} 
-              className="flex items-start p-3 border border-slate-200 rounded-lg hover:bg-slate-50 transition-all duration-300"
-              style={{ animationDelay: `${0.1 * index}s` }}
+              className="flex items-start p-3 border border-olive/20 rounded-lg hover:bg-olive/5 transition-all duration-300"
             >
-              <div className="p-2 rounded-full bg-indigo-100 text-indigo-600 mr-3">
+              <div className="p-2 rounded-full bg-olive/10 text-olive-dark mr-3">
                 <CalendarIcon size={18} />
               </div>
               <div className="flex-1">
                 <div className="flex justify-between items-start">
                   <div>
-                    <p className="font-medium text-sm text-slate-800">{booking.guestName}</p>
-                    <p className="text-xs text-slate-500">{booking.houseName}</p>
+                    <p className="font-medium text-sm text-olive-dark">{booking.guestName}</p>
+                    <p className="text-xs text-olive-dark/60">{booking.houseName}</p>
                   </div>
                   <div className="flex flex-col items-end space-y-1">
                     {getStatusBadge(booking.bookingStatus)}
@@ -64,10 +63,10 @@ const RecentBookings = ({ bookings }: RecentBookingsProps) => {
                   </div>
                 </div>
                 <div className="flex justify-between mt-2 text-xs">
-                  <p className="text-slate-500">
+                  <p className="text-olive-dark/60">
                     {new Date(booking.checkInDate).toLocaleDateString()} - {new Date(booking.checkOutDate).toLocaleDateString()}
                   </p>
-                  <p className="font-semibold text-slate-800">${booking.totalAmount}</p>
+                  <p className="font-semibold text-olive-dark">${booking.totalAmount}</p>
                 </div>
               </div>
             </div>
