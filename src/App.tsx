@@ -1,3 +1,4 @@
+
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
@@ -14,7 +15,6 @@ import ProtectedRoute from "./components/layout/ProtectedRoute";
 import TopNavbar from "./components/layout/TopNavbar";
 
 // Placeholder pages for new routes
-import Rooms from "./pages/Rooms";
 import Reports from "./pages/Reports";
 import Messages from "./pages/Messages";
 import Settings from "./pages/Settings";
@@ -55,17 +55,6 @@ const App = () => {
                     <TopNavbar />
                     <div className="flex-grow">
                       <Bookings />
-                    </div>
-                  </div>
-                </ProtectedRoute>
-              } />
-              
-              <Route path="/rooms" element={
-                <ProtectedRoute>
-                  <div className="flex flex-col min-h-screen">
-                    <TopNavbar />
-                    <div className="flex-grow">
-                      <Rooms />
                     </div>
                   </div>
                 </ProtectedRoute>

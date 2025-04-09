@@ -112,7 +112,7 @@ const Login = () => {
         <Card className="shadow-2xl backdrop-blur-md bg-white/50 border border-white/30 animate-fade-in">
           <CardHeader className="space-y-1 text-center">
             <CardTitle className="text-3xl font-bold text-olive-dark animate-fade-down">Great Xcape Ghana Ltd.</CardTitle>
-            <CardDescription className="text-olive-dark/80">Hotel Management System</CardDescription>
+            <CardDescription className="text-olive-dark/80">Management System</CardDescription>
           </CardHeader>
           <CardContent>
             <Tabs value={activeTab} onValueChange={handleTabChange} className="w-full">

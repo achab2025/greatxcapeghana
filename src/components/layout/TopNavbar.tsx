@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { 
@@ -10,7 +9,6 @@ import {
   BarChart2Icon,
   MessageSquareIcon,
   SettingsIcon,
-  BedIcon,
   MenuIcon,
   XIcon
 } from 'lucide-react';
@@ -30,7 +28,7 @@ const TopNavbar = () => {
   const menuItems = [
     { path: '/', icon: <HomeIcon size={18} />, title: 'Dashboard' },
     { path: '/bookings', icon: <CalendarIcon size={18} />, title: 'Bookings' },
-    { path: '/rooms', icon: <BedIcon size={18} />, title: 'Rooms' },
+    { path: '/houses', icon: <HomeIcon size={18} />, title: 'Houses' },
     { path: '/guests', icon: <UsersIcon size={18} />, title: 'Guests' },
     { path: '/payments', icon: <CreditCardIcon size={18} />, title: 'Payments' },
     { path: '/reports', icon: <BarChart2Icon size={18} />, title: 'Reports' },
