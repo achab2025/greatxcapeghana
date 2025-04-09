@@ -1,4 +1,3 @@
-
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
@@ -44,7 +43,21 @@ const App = () => {
                   <div className="flex flex-col min-h-screen">
                     <TopNavbar />
                     <div className="flex-grow">
-                      {localStorage.getItem("userRole") === "user" ? <UserDashboard /> : <Index />}
+                      {localStorage.getItem("userRole") === "user" ? 
+                        <UserDashboard /> : 
+                        <Index />
+                      }
+                    </div>
+                  </div>
+                </ProtectedRoute>
+              } />
+              
+              <Route path="/user-dashboard" element={
+                <ProtectedRoute>
+                  <div className="flex flex-col min-h-screen">
+                    <TopNavbar />
+                    <div className="flex-grow">
+                      <UserDashboard />
                     </div>
                   </div>
                 </ProtectedRoute>
