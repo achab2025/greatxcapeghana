@@ -13,6 +13,7 @@ import NotFound from "./pages/NotFound";
 import Login from "./pages/Login";
 import ProtectedRoute from "./components/layout/ProtectedRoute";
 import TopNavbar from "./components/layout/TopNavbar";
+import UserDashboard from "./pages/UserDashboard";
 
 // Placeholder pages for new routes
 import Reports from "./pages/Reports";
@@ -43,7 +44,7 @@ const App = () => {
                   <div className="flex flex-col min-h-screen">
                     <TopNavbar />
                     <div className="flex-grow">
-                      <Index />
+                      {localStorage.getItem("userRole") === "user" ? <UserDashboard /> : <Index />}
                     </div>
                   </div>
                 </ProtectedRoute>
