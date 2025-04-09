@@ -41,17 +41,17 @@ const UserDashboard = () => {
                   <div key={booking.id} className="p-4 bg-olive-light/10 rounded-lg border border-olive/10">
                     <div className="flex justify-between items-start">
                       <div>
-                        <h3 className="font-medium text-olive-dark">{booking.house}</h3>
+                        <h3 className="font-medium text-olive-dark">{booking.houseName}</h3>
                         <p className="text-sm text-olive/70">
-                          {new Date(booking.checkIn).toLocaleDateString()} - {new Date(booking.checkOut).toLocaleDateString()}
+                          {new Date(booking.checkInDate).toLocaleDateString()} - {new Date(booking.checkOutDate).toLocaleDateString()}
                         </p>
                       </div>
                       <span className={`text-xs px-2 py-1 rounded-full ${
-                        booking.status === 'confirmed' ? 'bg-green-100 text-green-800' :
-                        booking.status === 'pending' ? 'bg-yellow-100 text-yellow-800' :
+                        booking.bookingStatus === 'confirmed' ? 'bg-green-100 text-green-800' :
+                        booking.bookingStatus === 'pending' ? 'bg-yellow-100 text-yellow-800' :
                         'bg-red-100 text-red-800'
                       }`}>
-                        {booking.status.charAt(0).toUpperCase() + booking.status.slice(1)}
+                        {booking.bookingStatus.charAt(0).toUpperCase() + booking.bookingStatus.slice(1)}
                       </span>
                     </div>
                   </div>
