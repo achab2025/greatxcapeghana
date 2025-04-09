@@ -21,6 +21,11 @@ const ProtectedRoute = ({ children }: ProtectedRouteProps) => {
     localStorage.setItem("userRole", "user"); // Default to user role if missing
   }
 
+  // Force redirect to user dashboard if role is user and trying to access admin routes
+  if (userRole === "user" && location.pathname === "/" && !location.pathname.includes("user-dashboard")) {
+    return <Navigate to="/user-dashboard" replace />;
+  }
+
   return <>{children}</>;
 };
 

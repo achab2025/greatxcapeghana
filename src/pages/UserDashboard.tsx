@@ -1,5 +1,5 @@
 
-import React from 'react';
+import React, { useEffect } from 'react';
 import { bookings, dashboardSummary } from '@/data/mockData';
 import DashboardHeader from '@/components/dashboard/DashboardHeader';
 import StatusCardGrid from '@/components/dashboard/StatusCardGrid';
@@ -7,6 +7,8 @@ import OccupancyRateChart from '@/components/dashboard/OccupancyRateChart';
 import RecentBookings from '@/components/dashboard/RecentBookings';
 import UpcomingCheckins from '@/components/dashboard/UpcomingCheckins';
 import RecentMessages from '@/components/dashboard/RecentMessages';
+import CheckoutAlerts from '@/components/dashboard/CheckoutAlerts';
+import { useNavigate } from 'react-router-dom';
 
 const occupancyData = [
   { name: 'Jan', rate: 65 },
@@ -25,10 +27,23 @@ const recentMessages = [
 ];
 
 const UserDashboard = () => {
+  const navigate = useNavigate();
+  
+  useEffect(() => {
+    // Ensure we're redirected to the user dashboard if we're a user
+    const userRole = localStorage.getItem("userRole");
+    if (userRole !== "user") {
+      navigate("/");
+    }
+  }, [navigate]);
+
   return (
     <div className="flex flex-col min-h-screen bg-gradient-to-br from-olive-light/10 to-olive/10 relative">
       <div className="flex-1 p-8 z-10 text-olive-dark">
         <DashboardHeader userRole="user" />
+        
+        {/* Checkout alerts appear at the top of the dashboard for visibility */}
+        <CheckoutAlerts bookings={bookings} />
         
         <StatusCardGrid dashboardSummary={dashboardSummary} />
         
