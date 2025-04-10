@@ -13,6 +13,7 @@ import NotFound from "./pages/NotFound";
 import Login from "./pages/Login";
 import ProtectedRoute from "./components/layout/ProtectedRoute";
 import TopNavbar from "./components/layout/TopNavbar";
+import UserNavbar from "./components/layout/UserNavbar";
 import UserDashboard from "./pages/UserDashboard";
 
 // Placeholder pages for new routes
@@ -53,7 +54,7 @@ const App = () => {
               <Route path="/user-dashboard" element={
                 <ProtectedRoute>
                   <div className="flex flex-col min-h-screen">
-                    <TopNavbar />
+                    <UserNavbar />
                     <div className="flex-grow">
                       <UserDashboard />
                     </div>
@@ -64,7 +65,7 @@ const App = () => {
               <Route path="/bookings" element={
                 <ProtectedRoute>
                   <div className="flex flex-col min-h-screen">
-                    <TopNavbar />
+                    {localStorage.getItem("userRole") === "user" ? <UserNavbar /> : <TopNavbar />}
                     <div className="flex-grow">
                       <Bookings />
                     </div>
@@ -75,7 +76,7 @@ const App = () => {
               <Route path="/houses" element={
                 <ProtectedRoute>
                   <div className="flex flex-col min-h-screen">
-                    <TopNavbar />
+                    {localStorage.getItem("userRole") === "user" ? <UserNavbar /> : <TopNavbar />}
                     <div className="flex-grow">
                       <Houses />
                     </div>
@@ -97,7 +98,7 @@ const App = () => {
               <Route path="/payments" element={
                 <ProtectedRoute>
                   <div className="flex flex-col min-h-screen">
-                    <TopNavbar />
+                    {localStorage.getItem("userRole") === "user" ? <UserNavbar /> : <TopNavbar />}
                     <div className="flex-grow">
                       <Payments />
                     </div>
@@ -119,7 +120,7 @@ const App = () => {
               <Route path="/messages" element={
                 <ProtectedRoute>
                   <div className="flex flex-col min-h-screen">
-                    <TopNavbar />
+                    {localStorage.getItem("userRole") === "user" ? <UserNavbar /> : <TopNavbar />}
                     <div className="flex-grow">
                       <Messages />
                     </div>
@@ -130,7 +131,7 @@ const App = () => {
               <Route path="/settings" element={
                 <ProtectedRoute>
                   <div className="flex flex-col min-h-screen">
-                    <TopNavbar />
+                    {localStorage.getItem("userRole") === "user" ? <UserNavbar /> : <TopNavbar />}
                     <div className="flex-grow">
                       <Settings />
                     </div>
