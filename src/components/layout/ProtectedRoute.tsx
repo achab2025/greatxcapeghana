@@ -1,5 +1,5 @@
 
-import React, { useEffect } from "react";
+import React from "react";
 import { Navigate, useLocation } from "react-router-dom";
 
 interface ProtectedRouteProps {
@@ -22,7 +22,7 @@ const ProtectedRoute = ({ children }: ProtectedRouteProps) => {
   }
 
   // Force redirect to user dashboard if role is user and trying to access admin routes
-  if (userRole === "user" && location.pathname === "/" && !location.pathname.includes("user-dashboard")) {
+  if (userRole === "user" && location.pathname === "/") {
     return <Navigate to="/user-dashboard" replace />;
   }
 

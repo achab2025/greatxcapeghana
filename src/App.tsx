@@ -1,4 +1,3 @@
-
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
@@ -44,10 +43,7 @@ const App = () => {
                   <div className="flex flex-col min-h-screen">
                     <TopNavbar />
                     <div className="flex-grow">
-                      {localStorage.getItem("userRole") === "user" ? 
-                        <Navigate to="/user-dashboard" replace /> : 
-                        <Index />
-                      }
+                      <Index />
                     </div>
                   </div>
                 </ProtectedRoute>
