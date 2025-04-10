@@ -11,7 +11,7 @@ import { useNavigate } from 'react-router-dom';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
-import { CalendarIcon, CreditCardIcon, MessageSquareIcon, HomeIcon, BellIcon } from 'lucide-react';
+import { CalendarIcon, CreditCardIcon, MessageSquareIcon, HomeIcon, BellIcon, LogOutIcon } from 'lucide-react';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 
 const recentMessages = [
@@ -36,11 +36,27 @@ const UserDashboard = () => {
   
   // Filter payments to show only user's payments
   const userPayments = payments.slice(0, 3);
+  
+  const handleLogout = () => {
+    localStorage.removeItem("isAuthenticated");
+    localStorage.removeItem("userRole");
+    navigate('/login');
+  };
 
   return (
     <div className="flex flex-col min-h-screen bg-gradient-to-br from-olive-light/10 to-olive/10 relative">
       <div className="flex-1 p-8 z-10 text-olive-dark">
-        <DashboardHeader userRole="user" />
+        <div className="flex justify-between items-center mb-6">
+          <DashboardHeader userRole="user" />
+          <Button 
+            variant="outline" 
+            onClick={handleLogout}
+            className="flex items-center gap-2 bg-white border-olive/20 hover:bg-olive/10"
+          >
+            <LogOutIcon className="h-4 w-4" />
+            Log Out
+          </Button>
+        </div>
         
         {/* Checkout alerts appear at the top of the dashboard for visibility */}
         <CheckoutAlerts bookings={bookings} />
