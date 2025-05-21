@@ -1,3 +1,4 @@
+
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
@@ -51,11 +52,10 @@ const App = () => {
                 </ProtectedRoute>
               } />
               
-              {/* User routes with user navigation */}
+              {/* User dashboard without navigation bar */}
               <Route path="/user-dashboard" element={
                 <ProtectedRoute>
                   <div className="flex flex-col min-h-screen">
-                    <UserNavbar />
                     <div className="flex-grow">
                       <UserDashboard />
                     </div>

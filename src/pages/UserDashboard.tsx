@@ -1,6 +1,6 @@
 
 import React, { useEffect } from 'react';
-import { bookings, payments } from '@/data/mockData';
+import { bookings, payments, houses } from '@/data/mockData';
 import { useNavigate } from 'react-router-dom';
 import RecentBookings from '@/components/dashboard/RecentBookings';
 import RecentMessages from '@/components/dashboard/RecentMessages';
@@ -10,6 +10,7 @@ import UserQuickActions from '@/components/user-dashboard/UserQuickActions';
 import UserStatusCards from '@/components/user-dashboard/UserStatusCards';
 import UserStayCard from '@/components/user-dashboard/UserStayCard';
 import UserPaymentsCard from '@/components/user-dashboard/UserPaymentsCard';
+import UserHousesSection from '@/components/user-dashboard/UserHousesSection';
 
 const recentMessages = [
   { id: '1', name: 'Host Support', content: 'Your early check-in request has been approved.' },
@@ -51,6 +52,12 @@ const UserDashboard = () => {
           userPayments={userPayments} 
           messageCount={recentMessages.length} 
         />
+        
+        {/* Houses section */}
+        <div className="mb-8">
+          <h2 className="text-2xl font-semibold mb-4">Our Houses</h2>
+          <UserHousesSection houses={houses} />
+        </div>
         
         {/* Main dashboard content */}
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8">
