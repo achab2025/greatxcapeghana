@@ -7,6 +7,13 @@ import HouseSelect from '@/components/bookings/form/HouseSelect';
 import DateRangeFields from '@/components/bookings/form/DateRangeFields';
 import { Booking } from '@/lib/types';
 import { toast } from '@/components/ui/use-toast';
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 
 interface UserBookingFormProps {
   booking?: Booking;
@@ -45,11 +52,21 @@ const UserBookingForm = ({ booking, onSubmit, onCancel }: UserBookingFormProps) 
               <FormItem>
                 <FormLabel className="text-slate-800">Select Accommodation</FormLabel>
                 <FormControl>
-                  <HouseSelect 
-                    value={field.value} 
-                    onChange={field.onChange} 
-                    houses={availableHouses}
-                  />
+                  <Select 
+                    onValueChange={field.onChange} 
+                    defaultValue={field.value}
+                  >
+                    <SelectTrigger>
+                      <SelectValue placeholder="Select a house" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      {availableHouses.map(house => (
+                        <SelectItem key={house.id} value={house.id}>
+                          {house.name} (${house.pricePerNight}/night)
+                        </SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
                 </FormControl>
               </FormItem>
             )}
