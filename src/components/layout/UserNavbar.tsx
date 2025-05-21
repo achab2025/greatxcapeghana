@@ -44,10 +44,10 @@ const UserNavbar = () => {
   return (
     <>
       {/* Desktop Navigation */}
-      <div className="bg-[#5B8C51] border-b border-olive-light/20 shadow-sm fixed w-full top-0 z-50">
+      <div className="bg-white border-b border-slate-200 shadow-sm fixed w-full top-0 z-50">
         <div className="container mx-auto flex items-center justify-between py-3 px-4">
           <div className="flex items-center">
-            <h2 className="text-xl font-bold text-white mr-8">
+            <h2 className="text-xl font-bold text-slate-800 mr-8">
               Great Xcape Ghana
             </h2>
             
@@ -60,8 +60,8 @@ const UserNavbar = () => {
                       className={cn(
                         "flex items-center gap-2 px-4 py-2 text-sm font-medium rounded-md transition-colors",
                         location.pathname === item.path
-                          ? "bg-olive-light/20 text-white"
-                          : "text-olive-light/80 hover:bg-olive-light/10 hover:text-white"
+                          ? "bg-slate-100 text-slate-900"
+                          : "text-slate-600 hover:bg-slate-50 hover:text-slate-900"
                       )}
                     >
                       {item.icon}
@@ -76,7 +76,7 @@ const UserNavbar = () => {
           <div className="hidden md:flex items-center gap-4">
             <Button
               variant="ghost"
-              className="text-white flex items-center gap-2 hover:bg-olive-light/10"
+              className="text-slate-600 flex items-center gap-2 hover:bg-slate-50 hover:text-slate-900"
             >
               <UserIcon size={16} />
               My Account
@@ -84,7 +84,7 @@ const UserNavbar = () => {
 
             <Button 
               variant="ghost" 
-              className="text-olive-light/80 hover:bg-olive-light/10 hover:text-white"
+              className="text-slate-600 hover:bg-slate-50 hover:text-slate-900"
               onClick={handleLogout}
             >
               <LogOutIcon size={16} className="mr-2" />
@@ -96,7 +96,7 @@ const UserNavbar = () => {
           <div className="md:hidden">
             <Button 
               variant="ghost"
-              className="text-white" 
+              className="text-slate-800" 
               onClick={toggleMobileMenu}
             >
               {mobileMenuOpen ? <XIcon size={24} /> : <MenuIcon size={24} />}
@@ -107,7 +107,7 @@ const UserNavbar = () => {
       
       {/* Mobile Navigation Menu */}
       {mobileMenuOpen && (
-        <div className="md:hidden fixed inset-0 z-40 pt-16 bg-[#5B8C51]">
+        <div className="md:hidden fixed inset-0 z-40 pt-16 bg-white">
           <div className="p-4 overflow-y-auto">
             <ul className="space-y-2">
               {menuItems.map((item) => (
@@ -116,8 +116,8 @@ const UserNavbar = () => {
                     to={item.path}
                     className={`flex items-center p-3 text-sm font-medium rounded-md transition-colors ${
                       location.pathname === item.path
-                        ? 'bg-olive-light/20 text-white'
-                        : 'text-olive-light/80 hover:bg-olive-light/10 hover:text-white'
+                        ? 'bg-slate-100 text-slate-900'
+                        : 'text-slate-600 hover:bg-slate-50 hover:text-slate-900'
                     }`}
                     onClick={() => setMobileMenuOpen(false)}
                   >
@@ -129,17 +129,17 @@ const UserNavbar = () => {
               <li>
                 <Link
                   to="/settings"
-                  className="flex items-center p-3 text-sm font-medium rounded-md transition-colors text-olive-light/80 hover:bg-olive-light/10 hover:text-white"
+                  className="flex items-center p-3 text-sm font-medium rounded-md transition-colors text-slate-600 hover:bg-slate-50 hover:text-slate-900"
                   onClick={() => setMobileMenuOpen(false)}
                 >
                   <span className="mr-3"><UserIcon size={18} /></span>
                   My Account
                 </Link>
               </li>
-              <li className="pt-4 mt-4 border-t border-olive-light/20">
+              <li className="pt-4 mt-4 border-t border-slate-200">
                 <Button 
                   variant="ghost" 
-                  className="w-full flex items-center justify-center transition-colors text-olive-light/80 hover:bg-olive-light/10 hover:text-white"
+                  className="w-full flex items-center justify-center transition-colors text-slate-600 hover:bg-slate-50 hover:text-slate-900"
                   onClick={handleLogout}
                 >
                   <LogOutIcon size={16} className="mr-2" />

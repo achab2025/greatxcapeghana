@@ -1,7 +1,8 @@
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import BookingTable from '@/components/bookings/BookingTable';
 import BookingForm from '@/components/bookings/BookingForm';
+import UserBookingFormDialog from '@/components/user-bookings/UserBookingFormDialog';
 import { bookings } from '@/data/mockData';
 import { Booking } from '@/lib/types';
 import { Button } from '@/components/ui/button';
@@ -13,6 +14,23 @@ const Bookings = () => {
   const [bookingsList, setBookingsList] = useState<Booking[]>(bookings);
   const [isFormOpen, setIsFormOpen] = useState(false);
   const [currentBooking, setCurrentBooking] = useState<Booking | undefined>(undefined);
+  const [userRole, setUserRole] = useState<string | null>(null);
+  
+  useEffect(() => {
+    // Get the user role from localStorage
+    const role = localStorage.getItem("userRole");
+    setUserRole(role);
+    
+    // Filter bookings based on role
+    if (role === "user") {
+      // In a real app, you would filter by userId
+      // For now, just show the first few bookings as an example
+      setBookingsList(bookings.slice(0, 5));
+    } else {
+      // Admin sees all bookings
+      setBookingsList(bookings);
+    }
+  }, []);
   
   const handleViewBooking = (id: string) => {
     const booking = bookingsList.find(b => b.id === id);
@@ -61,7 +79,9 @@ const Bookings = () => {
       setBookingsList([...bookingsList, data]);
       toast({
         title: "Booking Created",
-        description: "A new booking has been created successfully.",
+        description: userRole === "user" 
+          ? "Your booking request has been submitted successfully."
+          : "A new booking has been created successfully.",
       });
     }
     setIsFormOpen(false);
@@ -71,23 +91,38 @@ const Bookings = () => {
     setIsFormOpen(false);
   };
 
+  const isUser = userRole === "user";
+
   return (
-    <div className="flex flex-col min-h-screen bg-gradient-to-br from-olive-light/10 to-olive/10 relative">
-      <div className="flex-1 p-8 z-10 text-olive-dark">
+    <div className="flex flex-col min-h-screen bg-gradient-to-br from-slate-50 to-slate-100 relative">
+      <div className="flex-1 p-8 z-10">
         <div className="flex justify-between items-center mb-8">
           <div>
-            <h1 className="text-3xl font-bold">Bookings</h1>
-            <p className="text-olive-dark/70">Manage your bookings across all houses.</p>
-            <div className="h-1 w-20 bg-gradient-to-r from-olive to-olive-light rounded-full mt-4"></div>
+            <h1 className="text-3xl font-bold text-slate-800">
+              {isUser ? "My Bookings" : "All Bookings"}
+            </h1>
+            <p className="text-slate-600">
+              {isUser 
+                ? "View and manage your accommodation bookings." 
+                : "Manage bookings across all houses."
+              }
+            </p>
+            <div className="h-1 w-20 bg-gradient-to-r from-blue-600 to-blue-400 rounded-full mt-4"></div>
           </div>
           
-          <Button onClick={handleCreateBooking} className="bg-olive hover:bg-olive-light text-white transition-colors">
+          <Button 
+            onClick={handleCreateBooking} 
+            className={isUser 
+              ? "bg-blue-600 hover:bg-blue-700 text-white transition-colors" 
+              : "bg-olive hover:bg-olive-light text-white transition-colors"
+            }
+          >
             <PlusIcon size={16} className="mr-2" />
-            New Booking
+            {isUser ? "Request Booking" : "New Booking"}
           </Button>
         </div>
         
-        <div className="bg-white rounded-xl shadow-md border border-olive/10 overflow-hidden">
+        <div className={`bg-white rounded-xl shadow-md border ${isUser ? 'border-blue-100' : 'border-olive/10'} overflow-hidden`}>
           <BookingTable 
             bookings={bookingsList}
             onViewBooking={handleViewBooking}
@@ -96,20 +131,29 @@ const Bookings = () => {
           />
         </div>
         
-        <Dialog open={isFormOpen} onOpenChange={setIsFormOpen}>
-          <DialogContent className="sm:max-w-[600px] bg-white border border-olive/20">
-            <DialogHeader>
-              <DialogTitle className="text-olive-dark">
-                {currentBooking ? 'Edit Booking' : 'Create New Booking'}
-              </DialogTitle>
-            </DialogHeader>
-            <BookingForm 
-              booking={currentBooking}
-              onSubmit={handleFormSubmit}
-              onCancel={handleFormCancel}
-            />
-          </DialogContent>
-        </Dialog>
+        {isUser ? (
+          <UserBookingFormDialog
+            open={isFormOpen}
+            onOpenChange={setIsFormOpen}
+            booking={currentBooking}
+            onSubmit={handleFormSubmit}
+          />
+        ) : (
+          <Dialog open={isFormOpen} onOpenChange={setIsFormOpen}>
+            <DialogContent className="sm:max-w-[600px] bg-white border border-olive/20">
+              <DialogHeader>
+                <DialogTitle className="text-olive-dark">
+                  {currentBooking ? 'Edit Booking' : 'Create New Booking'}
+                </DialogTitle>
+              </DialogHeader>
+              <BookingForm 
+                booking={currentBooking}
+                onSubmit={handleFormSubmit}
+                onCancel={handleFormCancel}
+              />
+            </DialogContent>
+          </Dialog>
+        )}
       </div>
     </div>
   );
