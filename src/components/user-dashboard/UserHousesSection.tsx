@@ -100,7 +100,7 @@ const UserHousesSection = ({ houses }: UserHousesSectionProps) => {
       {selectedHouse && (
         <UserBookingFormDialog
           open={bookingDialogOpen}
-          onClose={() => setBookingDialogOpen(false)}
+          onOpenChange={setBookingDialogOpen}
           onSubmit={handleBookingSubmit}
           defaultHouseId={selectedHouse.id}
         />
