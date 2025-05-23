@@ -9,24 +9,27 @@ interface UserBookingFormDialogProps {
   onOpenChange: (open: boolean) => void;
   onSubmit: (data: Booking) => void;
   defaultHouseId?: string;
+  booking?: Booking;  // Add this optional prop to match usage in Bookings.tsx
 }
 
 const UserBookingFormDialog = ({ 
   open, 
   onOpenChange, 
   onSubmit,
-  defaultHouseId 
+  defaultHouseId,
+  booking
 }: UserBookingFormDialogProps) => {
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent className="sm:max-w-[550px] bg-white">
         <DialogHeader>
           <DialogTitle className="text-xl font-semibold text-slate-800">
-            Request a New Booking
+            {booking ? 'Edit Booking' : 'Request a New Booking'}
           </DialogTitle>
         </DialogHeader>
         <UserBookingForm
           defaultHouseId={defaultHouseId}
+          booking={booking}  // Pass the booking prop to the form
           onSubmit={onSubmit}
           onCancel={() => onOpenChange(false)}
         />
