@@ -17,11 +17,12 @@ import {
 
 interface UserBookingFormProps {
   booking?: Booking;
+  defaultHouseId?: string;  // Added this prop to match the usage in UserBookingFormDialog
   onSubmit: (data: any) => void;
   onCancel: () => void;
 }
 
-const UserBookingForm = ({ booking, onSubmit, onCancel }: UserBookingFormProps) => {
+const UserBookingForm = ({ booking, defaultHouseId, onSubmit, onCancel }: UserBookingFormProps) => {
   const { form, availableHouses, handleSubmit } = useBookingForm((data) => {
     // Set user-specific default values
     const enhancedData = {
