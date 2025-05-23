@@ -7,6 +7,7 @@ import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import Login from "./pages/Login";
 import NotFound from "./pages/NotFound";
 import ProtectedRoute from "./components/layout/ProtectedRoute";
+import Landing from "./pages/Landing";
 
 // Import routes from separate files
 import { adminRoutes } from "./routes/adminRoutes";
@@ -31,6 +32,7 @@ const App = () => {
           <div className="bg-slate-50 min-h-screen">
             <Routes>
               {/* Public Routes */}
+              <Route path="/" element={<Landing />} />
               <Route path="/login" element={<Login />} />
               
               {/* Admin Routes */}
