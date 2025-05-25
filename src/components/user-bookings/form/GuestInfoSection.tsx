@@ -33,7 +33,7 @@ const GuestInfoSection = ({ guestForm }: GuestInfoSectionProps) => {
               className="border-blue-200 focus:border-blue-400"
             />
             {errors.firstName && (
-              <p className="text-sm text-red-600">{errors.firstName.message}</p>
+              <p className="text-sm text-red-600">{String(errors.firstName?.message || '')}</p>
             )}
           </div>
           <div className="space-y-2">
@@ -47,7 +47,7 @@ const GuestInfoSection = ({ guestForm }: GuestInfoSectionProps) => {
               className="border-blue-200 focus:border-blue-400"
             />
             {errors.lastName && (
-              <p className="text-sm text-red-600">{errors.lastName.message}</p>
+              <p className="text-sm text-red-600">{String(errors.lastName?.message || '')}</p>
             )}
           </div>
         </div>
@@ -69,7 +69,7 @@ const GuestInfoSection = ({ guestForm }: GuestInfoSectionProps) => {
             className="border-blue-200 focus:border-blue-400"
           />
           {errors.email && (
-            <p className="text-sm text-red-600">{errors.email.message}</p>
+            <p className="text-sm text-red-600">{String(errors.email?.message || '')}</p>
           )}
         </div>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -84,7 +84,7 @@ const GuestInfoSection = ({ guestForm }: GuestInfoSectionProps) => {
               className="border-blue-200 focus:border-blue-400"
             />
             {errors.phone && (
-              <p className="text-sm text-red-600">{errors.phone.message}</p>
+              <p className="text-sm text-red-600">{String(errors.phone?.message || '')}</p>
             )}
           </div>
           <div className="space-y-2">
