@@ -1,13 +1,32 @@
 
-import React from 'react';
+import React, { useState } from 'react';
 import { houses } from '@/data/mockData';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
 import { BedIcon, DollarSignIcon, ArrowRightIcon } from 'lucide-react';
 import { Badge } from '@/components/ui/badge';
 import { Link } from 'react-router-dom';
+import UserBookingFormDialog from '@/components/user-bookings/UserBookingFormDialog';
+import { toast } from '@/components/ui/use-toast';
 
 const Landing = () => {
+  const [showBookingDialog, setShowBookingDialog] = useState(false);
+  const [selectedHouseId, setSelectedHouseId] = useState<string>('');
+
+  const handleBookNow = (houseId: string) => {
+    setSelectedHouseId(houseId);
+    setShowBookingDialog(true);
+  };
+
+  const handleBookingSubmit = (data: any) => {
+    console.log('New booking:', data);
+    // In a real app, this would save to database
+    toast({
+      title: "Booking Confirmed!",
+      description: `Your booking for ${data.houseName} has been confirmed.`,
+    });
+  };
+
   return (
     <div className="min-h-screen bg-gradient-to-b from-olive-50/50 to-olive-100/70">
       {/* Hero Section */}
@@ -101,13 +120,11 @@ const Landing = () => {
                 </CardContent>
                 <CardFooter>
                   <Button 
-                    asChild
+                    onClick={() => handleBookNow(house.id)}
                     className="w-full bg-olive hover:bg-olive-dark text-white"
                     disabled={house.status !== 'available'}
                   >
-                    <Link to={house.status === 'available' ? `/houses` : "#"}>
-                      {house.status === 'available' ? 'Book Now' : 'Not Available'}
-                    </Link>
+                    {house.status === 'available' ? 'Book Now' : 'Not Available'}
                   </Button>
                 </CardFooter>
               </Card>
@@ -175,6 +192,14 @@ const Landing = () => {
           </div>
         </div>
       </footer>
+
+      {/* Booking Dialog */}
+      <UserBookingFormDialog
+        open={showBookingDialog}
+        onOpenChange={setShowBookingDialog}
+        defaultHouseId={selectedHouseId}
+        onSubmit={handleBookingSubmit}
+      />
     </div>
   );
 };

@@ -23,6 +23,26 @@ const Login = () => {
   useEffect(() => {
     // Start animation when component mounts
     setIsAnimating(true);
+    
+    // Check for temporary credentials from booking
+    const tempUsername = localStorage.getItem('tempUsername');
+    const tempPassword = localStorage.getItem('tempPassword');
+    
+    if (tempUsername && tempPassword) {
+      setUsername(tempUsername);
+      setPassword(tempPassword);
+      setActiveTab('user');
+      
+      // Clear temporary credentials
+      localStorage.removeItem('tempUsername');
+      localStorage.removeItem('tempPassword');
+      
+      // Show message to user
+      toast({
+        title: "Auto-filled credentials",
+        description: "Your login credentials have been auto-filled. Click login to continue.",
+      });
+    }
   }, []);
 
   const handleLogin = (e: React.FormEvent, role: string) => {
@@ -36,9 +56,15 @@ const Login = () => {
       if (role === "user" && username === "user" && password === "user") {
         isAuthenticated = true;
         localStorage.setItem("userRole", "user");
+        localStorage.setItem("userId", "user1");
       } else if (role === "admin" && username === "admin" && password === "admin") {
         isAuthenticated = true;
         localStorage.setItem("userRole", "admin");
+      } else if (role === "user" && username.startsWith("guest") && password.length === 8) {
+        // Support for generated guest credentials
+        isAuthenticated = true;
+        localStorage.setItem("userRole", "user");
+        localStorage.setItem("userId", username);
       }
       
       if (isAuthenticated) {
@@ -55,7 +81,7 @@ const Login = () => {
         toast({
           variant: "destructive",
           title: "Login failed",
-          description: `Invalid ${role} credentials. Try ${role}/${role}`
+          description: `Invalid ${role} credentials. Try ${role}/${role} or use your booking credentials.`
         });
       }
       setIsLoading(false);
@@ -188,6 +214,9 @@ const Login = () => {
                   
                   <div className="text-sm text-center text-olive-dark/70 mt-4 animate-pulse">
                     <p>User credentials: user / user</p>
+                    <p className="text-xs text-olive-dark/50 mt-1">
+                      Or use the credentials from your booking receipt
+                    </p>
                   </div>
                 </form>
               </TabsContent>
