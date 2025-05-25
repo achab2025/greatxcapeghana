@@ -3,19 +3,26 @@ import React, { useState } from 'react';
 import { houses } from '@/data/mockData';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
-import { BedIcon, DollarSignIcon, ArrowRightIcon } from 'lucide-react';
+import { BedIcon, DollarSignIcon, ArrowRightIcon, InfoIcon } from 'lucide-react';
 import { Badge } from '@/components/ui/badge';
 import { Link } from 'react-router-dom';
 import UserBookingFormDialog from '@/components/user-bookings/UserBookingFormDialog';
+import HouseDetailDialog from '@/components/user-bookings/HouseDetailDialog';
 import { toast } from '@/components/ui/use-toast';
 
 const Landing = () => {
   const [showBookingDialog, setShowBookingDialog] = useState(false);
+  const [showHouseDetail, setShowHouseDetail] = useState(false);
   const [selectedHouseId, setSelectedHouseId] = useState<string>('');
 
   const handleBookNow = (houseId: string) => {
     setSelectedHouseId(houseId);
     setShowBookingDialog(true);
+  };
+
+  const handleViewDetails = (houseId: string) => {
+    setSelectedHouseId(houseId);
+    setShowHouseDetail(true);
   };
 
   const handleBookingSubmit = (data: any) => {
@@ -69,12 +76,12 @@ const Landing = () => {
           
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             {houses.map((house) => (
-              <Card key={house.id} className="overflow-hidden transition-all duration-300 hover:shadow-lg border border-olive/10">
-                <div className="relative h-48 bg-olive-light/20">
+              <Card key={house.id} className="overflow-hidden transition-all duration-300 hover:shadow-lg border border-olive/10 group">
+                <div className="relative h-48 bg-olive-light/20 overflow-hidden">
                   <img 
                     src={house.imageUrl} 
                     alt={house.name} 
-                    className="w-full h-full object-cover" 
+                    className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105" 
                   />
                   <div className="absolute top-3 right-3">
                     {house.status === 'available' ? (
@@ -85,10 +92,21 @@ const Landing = () => {
                       <Badge className="bg-amber-500 hover:bg-amber-600">Maintenance</Badge>
                     )}
                   </div>
+                  <div className="absolute top-3 left-3">
+                    <Button
+                      size="sm"
+                      variant="outline"
+                      className="bg-white/90 border-olive/20 text-olive hover:bg-white"
+                      onClick={() => handleViewDetails(house.id)}
+                    >
+                      <InfoIcon className="mr-1" size={14} />
+                      Details
+                    </Button>
+                  </div>
                 </div>
                 <CardHeader>
                   <CardTitle className="text-xl text-olive-dark">{house.name}</CardTitle>
-                  <p className="text-olive-dark/70">{house.description}</p>
+                  <p className="text-olive-dark/70 line-clamp-2">{house.description}</p>
                 </CardHeader>
                 <CardContent className="space-y-4">
                   <div className="flex justify-between">
@@ -103,25 +121,32 @@ const Landing = () => {
                   </div>
 
                   <div>
-                    <h4 className="text-sm font-medium mb-2">Amenities:</h4>
+                    <h4 className="text-sm font-medium mb-2">Top Amenities:</h4>
                     <div className="flex flex-wrap gap-1">
                       {house.amenities.slice(0, 3).map((amenity, index) => (
-                        <Badge key={index} variant="outline" className="text-xs">
+                        <Badge key={index} variant="outline" className="text-xs border-olive/30 text-olive">
                           {amenity}
                         </Badge>
                       ))}
                       {house.amenities.length > 3 && (
-                        <Badge variant="outline" className="text-xs">
+                        <Badge variant="outline" className="text-xs border-olive/30 text-olive">
                           +{house.amenities.length - 3} more
                         </Badge>
                       )}
                     </div>
                   </div>
                 </CardContent>
-                <CardFooter>
+                <CardFooter className="gap-2">
+                  <Button 
+                    variant="outline"
+                    className="flex-1 border-olive text-olive hover:bg-olive hover:text-white"
+                    onClick={() => handleViewDetails(house.id)}
+                  >
+                    View Details
+                  </Button>
                   <Button 
                     onClick={() => handleBookNow(house.id)}
-                    className="w-full bg-olive hover:bg-olive-dark text-white"
+                    className="flex-1 bg-olive hover:bg-olive-dark text-white"
                     disabled={house.status !== 'available'}
                   >
                     {house.status === 'available' ? 'Book Now' : 'Not Available'}
@@ -199,6 +224,13 @@ const Landing = () => {
         onOpenChange={setShowBookingDialog}
         defaultHouseId={selectedHouseId}
         onSubmit={handleBookingSubmit}
+      />
+
+      {/* House Detail Dialog */}
+      <HouseDetailDialog
+        open={showHouseDetail}
+        onOpenChange={setShowHouseDetail}
+        houseId={selectedHouseId}
       />
     </div>
   );
