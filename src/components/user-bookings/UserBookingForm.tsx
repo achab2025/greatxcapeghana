@@ -30,11 +30,26 @@ const UserBookingForm = ({ booking, defaultHouseId, onSubmit, onCancel }: UserBo
       email: '',
       phone: '',
       address: ''
-    }
+    },
+    mode: 'onChange'
   });
 
   const { form, availableHouses, handleSubmit } = useBookingForm((bookingData) => {
     const guestData = guestForm.getValues();
+    const isGuestFormValid = guestForm.formState.isValid && 
+      guestData.firstName && 
+      guestData.lastName && 
+      guestData.email && 
+      guestData.phone;
+    
+    if (!isGuestFormValid) {
+      toast({
+        title: "Please fill in all required guest information",
+        description: "First name, last name, email, and phone are required.",
+        variant: "destructive"
+      });
+      return;
+    }
     
     // Generate random login credentials
     const username = `${guestData.firstName.toLowerCase()}${Date.now()}`;
@@ -83,6 +98,14 @@ const UserBookingForm = ({ booking, defaultHouseId, onSubmit, onCancel }: UserBo
     setShowHouseDetail(true);
   };
 
+  const isFormValid = selectedHouse && 
+                     nights > 0 && 
+                     guestForm.formState.isValid &&
+                     guestForm.watch('firstName') &&
+                     guestForm.watch('lastName') &&
+                     guestForm.watch('email') &&
+                     guestForm.watch('phone');
+
   return (
     <>
       <div className="space-y-8 max-h-[80vh] overflow-y-auto">
@@ -129,7 +152,7 @@ const UserBookingForm = ({ booking, defaultHouseId, onSubmit, onCancel }: UserBo
               <Button 
                 type="submit"
                 className="bg-gradient-to-r from-blue-600 to-green-600 hover:from-blue-700 hover:to-green-700 text-white px-8 py-3 text-lg font-medium"
-                disabled={!selectedHouse || nights <= 0 || !guestForm.formState.isValid}
+                disabled={!isFormValid}
               >
                 Confirm Booking
               </Button>
