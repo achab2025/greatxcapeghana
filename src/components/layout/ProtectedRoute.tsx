@@ -4,9 +4,10 @@ import { Navigate, useLocation } from "react-router-dom";
 
 interface ProtectedRouteProps {
   children: React.ReactNode;
+  requiredRole?: string;
 }
 
-const ProtectedRoute = ({ children }: ProtectedRouteProps) => {
+const ProtectedRoute = ({ children, requiredRole }: ProtectedRouteProps) => {
   const location = useLocation();
   const isAuthenticated = localStorage.getItem("isAuthenticated") === "true";
   const userRole = localStorage.getItem("userRole");
@@ -21,8 +22,17 @@ const ProtectedRoute = ({ children }: ProtectedRouteProps) => {
     localStorage.setItem("userRole", "user"); // Default to user role if missing
   }
 
-  // Force redirect to user dashboard if role is user and trying to access admin routes
-  if (userRole === "user" && location.pathname === "/") {
+  // If a specific role is required and user doesn't have it, redirect appropriately
+  if (requiredRole && userRole !== requiredRole) {
+    if (userRole === "user") {
+      return <Navigate to="/user-dashboard" replace />;
+    } else if (userRole === "admin") {
+      return <Navigate to="/" replace />;
+    }
+  }
+
+  // Role-based redirects for root path
+  if (location.pathname === "/" && userRole === "user") {
     return <Navigate to="/user-dashboard" replace />;
   }
 

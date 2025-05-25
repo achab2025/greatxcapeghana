@@ -16,10 +16,10 @@ import Settings from '@/pages/Settings';
 
 export const adminRoutes = [
   <Route 
-    key="admin-index"
-    path="/" 
+    key="admin-dashboard"
+    path="/admin-dashboard" 
     element={
-      <ProtectedRoute>
+      <ProtectedRoute requiredRole="admin">
         <AdminLayout>
           <Index />
         </AdminLayout>
@@ -27,10 +27,32 @@ export const adminRoutes = [
     } 
   />,
   <Route 
-    key="admin-guests"
-    path="/guests" 
+    key="admin-houses"
+    path="/admin/houses" 
     element={
-      <ProtectedRoute>
+      <ProtectedRoute requiredRole="admin">
+        <AdminLayout>
+          <Houses />
+        </AdminLayout>
+      </ProtectedRoute>
+    } 
+  />,
+  <Route 
+    key="admin-bookings"
+    path="/admin/bookings" 
+    element={
+      <ProtectedRoute requiredRole="admin">
+        <AdminLayout>
+          <Bookings />
+        </AdminLayout>
+      </ProtectedRoute>
+    } 
+  />,
+  <Route 
+    key="admin-guests"
+    path="/admin/guests" 
+    element={
+      <ProtectedRoute requiredRole="admin">
         <AdminLayout>
           <Guests />
         </AdminLayout>
@@ -38,12 +60,45 @@ export const adminRoutes = [
     } 
   />,
   <Route 
-    key="admin-reports"
-    path="/reports" 
+    key="admin-payments"
+    path="/admin/payments" 
     element={
-      <ProtectedRoute>
+      <ProtectedRoute requiredRole="admin">
+        <AdminLayout>
+          <Payments />
+        </AdminLayout>
+      </ProtectedRoute>
+    } 
+  />,
+  <Route 
+    key="admin-reports"
+    path="/admin/reports" 
+    element={
+      <ProtectedRoute requiredRole="admin">
         <AdminLayout>
           <Reports />
+        </AdminLayout>
+      </ProtectedRoute>
+    } 
+  />,
+  <Route 
+    key="admin-messages"
+    path="/admin/messages" 
+    element={
+      <ProtectedRoute requiredRole="admin">
+        <AdminLayout>
+          <Messages />
+        </AdminLayout>
+      </ProtectedRoute>
+    } 
+  />,
+  <Route 
+    key="admin-settings"
+    path="/admin/settings" 
+    element={
+      <ProtectedRoute requiredRole="admin">
+        <AdminLayout>
+          <Settings />
         </AdminLayout>
       </ProtectedRoute>
     } 

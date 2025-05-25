@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
@@ -8,6 +7,7 @@ import { Label } from "@/components/ui/label";
 import { toast } from "@/hooks/use-toast";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { LockIcon, UserIcon, ShieldIcon, KeyIcon } from "lucide-react";
+import { useAuth } from "@/contexts/AuthContext";
 
 const Login = () => {
   // User credentials state
@@ -20,7 +20,19 @@ const Login = () => {
   const [isAnimating, setIsAnimating] = useState(false);
   const navigate = useNavigate();
 
+  const { login, isAuthenticated, userRole } = useAuth();
+
   useEffect(() => {
+    // Redirect if already authenticated
+    if (isAuthenticated) {
+      if (userRole === "admin") {
+        navigate("/");
+      } else {
+        navigate("/user-dashboard");
+      }
+      return;
+    }
+
     // Start animation when component mounts
     setIsAnimating(true);
     
@@ -43,40 +55,24 @@ const Login = () => {
         description: "Your login credentials have been auto-filled. Click login to continue.",
       });
     }
-  }, []);
+  }, [isAuthenticated, userRole, navigate]);
 
-  const handleLogin = (e: React.FormEvent, role: string) => {
+  const handleLogin = async (e: React.FormEvent, role: string) => {
     e.preventDefault();
     setIsLoading(true);
 
-    // Simple authentication - in a real app, this would validate against a backend
-    setTimeout(() => {
-      let isAuthenticated = false;
+    try {
+      const success = await login(username, password, role);
       
-      if (role === "user" && username === "user" && password === "user") {
-        isAuthenticated = true;
-        localStorage.setItem("userRole", "user");
-        localStorage.setItem("userId", "user1");
-      } else if (role === "admin" && username === "admin" && password === "admin") {
-        isAuthenticated = true;
-        localStorage.setItem("userRole", "admin");
-      } else if (role === "user" && username.startsWith("guest") && password.length === 8) {
-        // Support for generated guest credentials
-        isAuthenticated = true;
-        localStorage.setItem("userRole", "user");
-        localStorage.setItem("userId", username);
-      }
-      
-      if (isAuthenticated) {
-        // Store authentication state
-        localStorage.setItem("isAuthenticated", "true");
+      if (success) {
+        if (role === "user") {
+          localStorage.setItem("userId", username.startsWith("guest") ? username : "user1");
+        }
         
         toast({
           title: "Login successful",
           description: `Welcome to Great Xcape Ghana Ltd. management system as ${role}.`
         });
-        
-        navigate("/");
       } else {
         toast({
           variant: "destructive",
@@ -84,8 +80,15 @@ const Login = () => {
           description: `Invalid ${role} credentials. Try ${role}/${role} or use your booking credentials.`
         });
       }
+    } catch (error) {
+      toast({
+        variant: "destructive",
+        title: "Login error",
+        description: "An error occurred during login. Please try again."
+      });
+    } finally {
       setIsLoading(false);
-    }, 1000);
+    }
   };
 
   const handleTabChange = (value: string) => {

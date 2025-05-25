@@ -1,5 +1,6 @@
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { houses } from '@/data/mockData';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
@@ -14,6 +15,21 @@ const Landing = () => {
   const [showBookingDialog, setShowBookingDialog] = useState(false);
   const [showHouseDetail, setShowHouseDetail] = useState(false);
   const [selectedHouseId, setSelectedHouseId] = useState<string>('');
+  const navigate = useNavigate();
+
+  // Check authentication status and redirect if needed
+  useEffect(() => {
+    const isAuthenticated = localStorage.getItem("isAuthenticated") === "true";
+    const userRole = localStorage.getItem("userRole");
+    
+    if (isAuthenticated) {
+      if (userRole === "admin") {
+        navigate("/");
+      } else if (userRole === "user") {
+        navigate("/user-dashboard");
+      }
+    }
+  }, [navigate]);
 
   const handleBookNow = (houseId: string) => {
     setSelectedHouseId(houseId);
@@ -60,14 +76,12 @@ const Landing = () => {
           </div>
         </div>
 
-        {/* Background decorations */}
         <div className="absolute top-0 left-0 w-full h-full overflow-hidden z-0">
           <div className="absolute -top-24 -right-24 w-96 h-96 rounded-full bg-olive/10 blur-3xl"></div>
           <div className="absolute top-1/2 -left-48 w-96 h-96 rounded-full bg-olive/5 blur-3xl"></div>
         </div>
       </section>
 
-      {/* Featured Houses Section */}
       <section className="py-16 bg-white/50 backdrop-blur-sm">
         <div className="container mx-auto px-4">
           <h2 className="text-3xl font-bold mb-12 text-center text-olive-dark">
@@ -170,7 +184,6 @@ const Landing = () => {
         </div>
       </section>
 
-      {/* Call to Action */}
       <section className="py-16 bg-olive text-white">
         <div className="container mx-auto px-4 text-center">
           <h2 className="text-3xl font-bold mb-6">Ready for Your Next Getaway?</h2>
@@ -188,7 +201,6 @@ const Landing = () => {
         </div>
       </section>
 
-      {/* Footer */}
       <footer className="bg-olive-dark text-white/80 py-12">
         <div className="container mx-auto px-4">
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
@@ -218,7 +230,6 @@ const Landing = () => {
         </div>
       </footer>
 
-      {/* Booking Dialog */}
       <UserBookingFormDialog
         open={showBookingDialog}
         onOpenChange={setShowBookingDialog}
@@ -226,7 +237,6 @@ const Landing = () => {
         onSubmit={handleBookingSubmit}
       />
 
-      {/* House Detail Dialog */}
       <HouseDetailDialog
         open={showHouseDetail}
         onOpenChange={setShowHouseDetail}
