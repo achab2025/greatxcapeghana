@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { houses } from '@/data/mockData';
@@ -9,12 +8,14 @@ import { Badge } from '@/components/ui/badge';
 import { Link } from 'react-router-dom';
 import UserBookingFormDialog from '@/components/user-bookings/UserBookingFormDialog';
 import HouseDetailDialog from '@/components/user-bookings/HouseDetailDialog';
+import WordPressBookingIntegration from '@/components/wordpress/WordPressBookingIntegration';
 import { toast } from '@/components/ui/use-toast';
 
 const Landing = () => {
   const [showBookingDialog, setShowBookingDialog] = useState(false);
   const [showHouseDetail, setShowHouseDetail] = useState(false);
   const [selectedHouseId, setSelectedHouseId] = useState<string>('');
+  const [showWordPressSection, setShowWordPressSection] = useState(false);
   const navigate = useNavigate();
 
   // Check authentication status and redirect if needed
@@ -63,7 +64,7 @@ const Landing = () => {
               Experience the perfect getaway in our beautifully curated vacation homes. 
               Each property offers a unique atmosphere and premium amenities.
             </p>
-            <div className="mt-8">
+            <div className="mt-8 space-x-4">
               <Button
                 asChild
                 className="bg-olive hover:bg-olive-dark text-white px-8 py-6 text-lg rounded-md"
@@ -71,6 +72,13 @@ const Landing = () => {
                 <Link to="/houses">
                   Browse All Houses <ArrowRightIcon className="ml-2" size={20} />
                 </Link>
+              </Button>
+              <Button
+                onClick={() => setShowWordPressSection(!showWordPressSection)}
+                variant="outline"
+                className="border-olive text-olive hover:bg-olive hover:text-white px-8 py-6 text-lg rounded-md"
+              >
+                {showWordPressSection ? 'Hide' : 'Show'} WordPress Houses
               </Button>
             </div>
           </div>
@@ -82,6 +90,16 @@ const Landing = () => {
         </div>
       </section>
 
+      {/* WordPress Houses Section */}
+      {showWordPressSection && (
+        <section className="py-16 bg-white/70 backdrop-blur-sm border-t border-olive/10">
+          <div className="container mx-auto px-4">
+            <WordPressBookingIntegration />
+          </div>
+        </section>
+      )}
+
+      {/* Local Houses Section */}
       <section className="py-16 bg-white/50 backdrop-blur-sm">
         <div className="container mx-auto px-4">
           <h2 className="text-3xl font-bold mb-12 text-center text-olive-dark">
