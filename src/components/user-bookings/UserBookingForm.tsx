@@ -6,13 +6,16 @@ import { useBookingForm } from '@/components/bookings/form/useBookingForm';
 import { Booking } from '@/lib/types';
 import { toast } from '@/components/ui/use-toast';
 import { useForm } from 'react-hook-form';
+import { useBookingState } from '@/hooks/useBookingState';
+import { useBookingValidation } from '@/hooks/useBookingValidation';
+import { usePaymentHandling } from '@/hooks/usePaymentHandling';
 import HouseDetailDialog from './HouseDetailDialog';
 import GuestInfoSection from './form/GuestInfoSection';
 import HouseSelectionSection from './form/HouseSelectionSection';
 import DateSelectionSection from './form/DateSelectionSection';
 import BookingSummarySection from './form/BookingSummarySection';
 import ExtraServicesSection from './form/ExtraServicesSection';
-import PayPalButton from '../payments/PayPalButton';
+import PaymentSection from './form/PaymentSection';
 
 interface UserBookingFormProps {
   booking?: Booking;
@@ -22,12 +25,19 @@ interface UserBookingFormProps {
 }
 
 const UserBookingForm = ({ booking, defaultHouseId, onSubmit, onCancel }: UserBookingFormProps) => {
-  const [showHouseDetail, setShowHouseDetail] = React.useState(false);
-  const [selectedHouseForDetail, setSelectedHouseForDetail] = React.useState<string>('');
-  const [extraServices, setExtraServices] = React.useState<any[]>([]);
-  const [extraServicesTotal, setExtraServicesTotal] = React.useState(0);
-  const [showPayment, setShowPayment] = React.useState(false);
-  const [bookingData, setBookingData] = React.useState<any>(null);
+  const {
+    showHouseDetail,
+    setShowHouseDetail,
+    selectedHouseForDetail,
+    extraServices,
+    extraServicesTotal,
+    showPayment,
+    setShowPayment,
+    bookingData,
+    setBookingData,
+    handleViewDetails,
+    handleExtraServicesChange
+  } = useBookingState();
 
   const guestForm = useForm({
     defaultValues: {
@@ -87,6 +97,9 @@ const UserBookingForm = ({ booking, defaultHouseId, onSubmit, onCancel }: UserBo
   const checkOutDate = form.watch('checkOutDate');
   const totalAmount = form.watch('totalAmount');
 
+  const { isFormValid } = useBookingValidation(selectedHouse, nights, totalAmount, guestForm);
+  const { handlePaymentSuccess, handlePaymentError, handleBackToBooking } = usePaymentHandling(onSubmit, setShowPayment);
+
   // Set default house if provided
   useEffect(() => {
     if (defaultHouseId && !form.watch('houseId')) {
@@ -129,97 +142,20 @@ const UserBookingForm = ({ booking, defaultHouseId, onSubmit, onCancel }: UserBo
     return 0;
   }, [checkInDate, checkOutDate]);
 
-  const handleViewDetails = (houseId: string) => {
-    setSelectedHouseForDetail(houseId);
-    setShowHouseDetail(true);
-  };
-
-  const handleExtraServicesChange = (services: any[], total: number) => {
-    setExtraServices(services);
-    setExtraServicesTotal(total);
-    console.log(`Extra services total: $${total}`);
-  };
-
-  const handlePaymentSuccess = (details: any) => {
-    const finalBookingData = {
-      ...bookingData,
-      paymentStatus: 'paid',
-      paymentDetails: details
-    };
-    
-    onSubmit(finalBookingData);
-    toast({
-      title: "Payment Successful!",
-      description: "Your booking has been confirmed and paid. Check your receipt for login credentials.",
-    });
-  };
-
-  const handlePaymentError = (error: any) => {
-    toast({
-      title: "Payment Failed",
-      description: "There was an issue processing your payment. Please try again.",
-      variant: "destructive"
-    });
-    console.error('PayPal Error:', error);
-  };
-
-  const isFormValid = selectedHouse && 
-                     nights > 0 && 
-                     totalAmount > 0 &&
-                     guestForm.formState.isValid &&
-                     guestForm.watch('firstName') &&
-                     guestForm.watch('lastName') &&
-                     guestForm.watch('email') &&
-                     guestForm.watch('phone');
-
   const finalTotal = totalAmount + extraServicesTotal;
 
   if (showPayment && bookingData) {
     return (
-      <div className="space-y-6 max-h-[80vh] overflow-y-auto">
-        <div className="text-center">
-          <h3 className="text-2xl font-bold text-slate-800 mb-2">Complete Your Payment</h3>
-          <p className="text-slate-600">
-            Total Amount: <span className="font-bold text-green-600">${finalTotal.toFixed(2)}</span>
-          </p>
-        </div>
-
-        <div className="bg-slate-50 p-4 rounded-lg">
-          <h4 className="font-semibold mb-2">Booking Summary:</h4>
-          <div className="space-y-1 text-sm">
-            <div className="flex justify-between">
-              <span>Accommodation ({nights} nights)</span>
-              <span>${totalAmount.toFixed(2)}</span>
-            </div>
-            {extraServices.map(service => (
-              <div key={service.id} className="flex justify-between">
-                <span>{service.name}</span>
-                <span>${service.price.toFixed(2)}</span>
-              </div>
-            ))}
-            <div className="border-t pt-2 flex justify-between font-semibold">
-              <span>Total</span>
-              <span>${finalTotal.toFixed(2)}</span>
-            </div>
-          </div>
-        </div>
-
-        <PayPalButton
-          amount={finalTotal}
-          onSuccess={handlePaymentSuccess}
-          onError={handlePaymentError}
-          disabled={!isFormValid}
-        />
-
-        <Button 
-          type="button" 
-          variant="outline" 
-          onClick={() => setShowPayment(false)}
-          className="w-full"
-        >
-          Back to Booking Details
-        </Button>
-      </div>
+      <PaymentSection
+        finalTotal={finalTotal}
+        nights={nights}
+        totalAmount={totalAmount}
+        extraServices={extraServices}
+        onPaymentSuccess={(details) => handlePaymentSuccess(details, bookingData)}
+        onPaymentError={handlePaymentError}
+        onBack={handleBackToBooking}
+        isFormValid={isFormValid}
+      />
     );
   }
 
