@@ -97,6 +97,18 @@ const UserBookingForm = ({ booking, defaultHouseId, onSubmit, onCancel }: UserBo
   const checkOutDate = form.watch('checkOutDate');
   const totalAmount = form.watch('totalAmount');
 
+  // Calculate nights first - before using it in validation
+  const nights = React.useMemo(() => {
+    if (checkInDate && checkOutDate) {
+      const start = new Date(checkInDate);
+      const end = new Date(checkOutDate);
+      const diffTime = end.getTime() - start.getTime();
+      const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+      return diffDays > 0 ? diffDays : 0;
+    }
+    return 0;
+  }, [checkInDate, checkOutDate]);
+
   const { isFormValid } = useBookingValidation(selectedHouse, nights, totalAmount, guestForm);
   const { handlePaymentSuccess, handlePaymentError, handleBackToBooking } = usePaymentHandling(onSubmit, setShowPayment);
 
@@ -129,18 +141,6 @@ const UserBookingForm = ({ booking, defaultHouseId, onSubmit, onCancel }: UserBo
       }
     }
   }, [form.watch('houseId'), form.watch('checkInDate'), form.watch('checkOutDate'), availableHouses, form]);
-
-  // Calculate nights
-  const nights = React.useMemo(() => {
-    if (checkInDate && checkOutDate) {
-      const start = new Date(checkInDate);
-      const end = new Date(checkOutDate);
-      const diffTime = end.getTime() - start.getTime();
-      const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
-      return diffDays > 0 ? diffDays : 0;
-    }
-    return 0;
-  }, [checkInDate, checkOutDate]);
 
   const finalTotal = totalAmount + extraServicesTotal;
 
