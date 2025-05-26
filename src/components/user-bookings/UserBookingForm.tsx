@@ -87,6 +87,36 @@ const UserBookingForm = ({ booking, defaultHouseId, onSubmit, onCancel }: UserBo
   const checkOutDate = form.watch('checkOutDate');
   const totalAmount = form.watch('totalAmount');
 
+  // Set default house if provided
+  useEffect(() => {
+    if (defaultHouseId && !form.watch('houseId')) {
+      form.setValue('houseId', defaultHouseId);
+    }
+  }, [defaultHouseId, form]);
+
+  // Automatic price calculation when house or dates change
+  useEffect(() => {
+    const houseId = form.watch('houseId');
+    const checkIn = form.watch('checkInDate');
+    const checkOut = form.watch('checkOutDate');
+    
+    if (houseId && checkIn && checkOut) {
+      const house = availableHouses.find(h => h.id === houseId);
+      if (house) {
+        const startDate = new Date(checkIn);
+        const endDate = new Date(checkOut);
+        const timeDiff = endDate.getTime() - startDate.getTime();
+        const nightsCount = Math.ceil(timeDiff / (1000 * 3600 * 24));
+        
+        if (nightsCount > 0) {
+          const baseTotal = house.pricePerNight * nightsCount;
+          form.setValue('totalAmount', baseTotal);
+          console.log(`Price calculation: ${nightsCount} nights × $${house.pricePerNight} = $${baseTotal}`);
+        }
+      }
+    }
+  }, [form.watch('houseId'), form.watch('checkInDate'), form.watch('checkOutDate'), availableHouses, form]);
+
   // Calculate nights
   const nights = React.useMemo(() => {
     if (checkInDate && checkOutDate) {
@@ -107,6 +137,7 @@ const UserBookingForm = ({ booking, defaultHouseId, onSubmit, onCancel }: UserBo
   const handleExtraServicesChange = (services: any[], total: number) => {
     setExtraServices(services);
     setExtraServicesTotal(total);
+    console.log(`Extra services total: $${total}`);
   };
 
   const handlePaymentSuccess = (details: any) => {
@@ -134,11 +165,14 @@ const UserBookingForm = ({ booking, defaultHouseId, onSubmit, onCancel }: UserBo
 
   const isFormValid = selectedHouse && 
                      nights > 0 && 
+                     totalAmount > 0 &&
                      guestForm.formState.isValid &&
                      guestForm.watch('firstName') &&
                      guestForm.watch('lastName') &&
                      guestForm.watch('email') &&
                      guestForm.watch('phone');
+
+  const finalTotal = totalAmount + extraServicesTotal;
 
   if (showPayment && bookingData) {
     return (
@@ -146,7 +180,7 @@ const UserBookingForm = ({ booking, defaultHouseId, onSubmit, onCancel }: UserBo
         <div className="text-center">
           <h3 className="text-2xl font-bold text-slate-800 mb-2">Complete Your Payment</h3>
           <p className="text-slate-600">
-            Total Amount: <span className="font-bold text-green-600">${(totalAmount + extraServicesTotal).toFixed(2)}</span>
+            Total Amount: <span className="font-bold text-green-600">${finalTotal.toFixed(2)}</span>
           </p>
         </div>
 
@@ -165,13 +199,13 @@ const UserBookingForm = ({ booking, defaultHouseId, onSubmit, onCancel }: UserBo
             ))}
             <div className="border-t pt-2 flex justify-between font-semibold">
               <span>Total</span>
-              <span>${(totalAmount + extraServicesTotal).toFixed(2)}</span>
+              <span>${finalTotal.toFixed(2)}</span>
             </div>
           </div>
         </div>
 
         <PayPalButton
-          amount={totalAmount + extraServicesTotal}
+          amount={finalTotal}
           onSuccess={handlePaymentSuccess}
           onError={handlePaymentError}
           disabled={!isFormValid}
@@ -198,45 +232,24 @@ const UserBookingForm = ({ booking, defaultHouseId, onSubmit, onCancel }: UserBo
         {/* Booking Details Section */}
         <Form {...form}>
           <form onSubmit={handleSubmit} className="space-y-6">
-            {/* House Selection - only show if no house is selected */}
-            {!selectedHouse && (
-              <HouseSelectionSection
+            {/* House Selection */}
+            <HouseSelectionSection
+              form={form}
+              availableHouses={availableHouses}
+              selectedHouse={selectedHouse}
+              defaultHouseId={defaultHouseId}
+              onViewDetails={handleViewDetails}
+            />
+
+            {/* Date Selection - only show when house is selected */}
+            {selectedHouse && (
+              <DateSelectionSection
                 form={form}
-                availableHouses={availableHouses}
-                selectedHouse={selectedHouse}
-                defaultHouseId={defaultHouseId}
-                onViewDetails={handleViewDetails}
+                nights={nights}
               />
             )}
 
-            {/* Selected House Summary - show when house is selected */}
-            {selectedHouse && (
-              <div className="bg-green-50 p-4 rounded-lg border border-green-200">
-                <div className="flex items-center justify-between">
-                  <div>
-                    <h3 className="font-semibold text-green-800">{selectedHouse.name}</h3>
-                    <p className="text-sm text-green-600">${selectedHouse.pricePerNight}/night • Max {selectedHouse.maxOccupancy} guests</p>
-                  </div>
-                  <Button
-                    type="button"
-                    variant="outline"
-                    size="sm"
-                    onClick={() => form.setValue('houseId', '')}
-                    className="border-green-300 text-green-700 hover:bg-green-100"
-                  >
-                    Change House
-                  </Button>
-                </div>
-              </div>
-            )}
-
-            {/* Date Selection */}
-            <DateSelectionSection
-              form={form}
-              nights={nights}
-            />
-
-            {/* Extra Services */}
+            {/* Extra Services - only show when house and dates are selected */}
             {selectedHouse && nights > 0 && (
               <ExtraServicesSection
                 form={form}
@@ -244,12 +257,12 @@ const UserBookingForm = ({ booking, defaultHouseId, onSubmit, onCancel }: UserBo
               />
             )}
 
-            {/* Booking Summary */}
-            {selectedHouse && nights > 0 && (
+            {/* Booking Summary - only show when we have all required info */}
+            {selectedHouse && nights > 0 && totalAmount > 0 && (
               <BookingSummarySection
                 selectedHouse={selectedHouse}
                 nights={nights}
-                totalAmount={totalAmount + extraServicesTotal}
+                totalAmount={finalTotal}
               />
             )}
 
@@ -268,7 +281,7 @@ const UserBookingForm = ({ booking, defaultHouseId, onSubmit, onCancel }: UserBo
                 className="bg-gradient-to-r from-blue-600 to-green-600 hover:from-blue-700 hover:to-green-700 text-white px-8 py-3 text-lg font-medium"
                 disabled={!isFormValid}
               >
-                Proceed to Payment
+                Proceed to Payment ({finalTotal > 0 ? `$${finalTotal.toFixed(2)}` : 'Calculate Total'})
               </Button>
             </div>
           </form>
