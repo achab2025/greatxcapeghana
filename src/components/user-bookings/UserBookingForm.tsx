@@ -88,6 +88,7 @@ const UserBookingForm = ({ booking, defaultHouseId, onSubmit, onCancel }: UserBo
       paymentStatus: 'pending',
     };
     
+    console.log('Setting booking data for payment:', enhancedData);
     setBookingData(enhancedData);
     setShowPayment(true);
   }, booking);
@@ -95,7 +96,7 @@ const UserBookingForm = ({ booking, defaultHouseId, onSubmit, onCancel }: UserBo
   const selectedHouse = availableHouses.find(h => h.id === form.watch('houseId'));
   const checkInDate = form.watch('checkInDate');
   const checkOutDate = form.watch('checkOutDate');
-  const totalAmount = form.watch('totalAmount');
+  const totalAmount = form.watch('totalAmount') || 0;
 
   // Calculate nights first - before using it in validation
   const nights = React.useMemo(() => {
@@ -217,7 +218,7 @@ const UserBookingForm = ({ booking, defaultHouseId, onSubmit, onCancel }: UserBo
                 className="bg-gradient-to-r from-blue-600 to-green-600 hover:from-blue-700 hover:to-green-700 text-white px-8 py-3 text-lg font-medium"
                 disabled={!isFormValid}
               >
-                Proceed to Payment ({finalTotal > 0 ? `$${finalTotal.toFixed(2)}` : 'Calculate Total'})
+                Proceed to Payment {finalTotal > 0 ? `($${finalTotal.toFixed(2)})` : '(Calculate Total)'}
               </Button>
             </div>
           </form>
