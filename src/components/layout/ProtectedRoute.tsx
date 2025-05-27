@@ -22,18 +22,15 @@ const ProtectedRoute = ({ children, requiredRole }: ProtectedRouteProps) => {
     localStorage.setItem("userRole", "user"); // Default to user role if missing
   }
 
-  // If a specific role is required and user doesn't have it, redirect appropriately
-  if (requiredRole && userRole !== requiredRole) {
-    if (userRole === "user") {
-      return <Navigate to="/user-dashboard" replace />;
-    } else if (userRole === "admin") {
-      return <Navigate to="/" replace />;
-    }
-  }
+  const currentUserRole = userRole || "user";
 
-  // Role-based redirects for root path
-  if (location.pathname === "/" && userRole === "user") {
-    return <Navigate to="/user-dashboard" replace />;
+  // If a specific role is required and user doesn't have it, redirect appropriately
+  if (requiredRole && currentUserRole !== requiredRole) {
+    if (currentUserRole === "user") {
+      return <Navigate to="/user-dashboard" replace />;
+    } else if (currentUserRole === "admin") {
+      return <Navigate to="/admin-dashboard" replace />;
+    }
   }
 
   return <>{children}</>;

@@ -3,7 +3,7 @@ import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import { AuthProvider } from "./contexts/AuthContext";
 import Login from "./pages/Login";
 import NotFound from "./pages/NotFound";
@@ -26,6 +26,19 @@ const queryClient = new QueryClient({
 });
 
 const App = () => {
+  const isAuthenticated = localStorage.getItem("isAuthenticated") === "true";
+  const userRole = localStorage.getItem("userRole");
+
+  const getDefaultRoute = () => {
+    if (!isAuthenticated) {
+      return "/landing";
+    }
+    if (userRole === "admin") {
+      return "/admin-dashboard";
+    }
+    return "/user-dashboard";
+  };
+
   return (
     <BrowserRouter>
       <AuthProvider>
@@ -49,11 +62,7 @@ const App = () => {
                 {/* Default route - redirect based on authentication */}
                 <Route 
                   path="/" 
-                  element={
-                    <ProtectedRoute>
-                      <Landing />
-                    </ProtectedRoute>
-                  } 
+                  element={<Navigate to={getDefaultRoute()} replace />}
                 />
                 
                 {/* Fallback Route */}
