@@ -26,9 +26,9 @@ const UserNavbar = () => {
   
   const menuItems = [
     { path: '/user-dashboard', icon: <HomeIcon size={18} />, title: 'Dashboard' },
-    { path: '/bookings', icon: <CalendarIcon size={18} />, title: 'My Bookings' },
-    { path: '/payments', icon: <CreditCardIcon size={18} />, title: 'Payments' },
-    { path: '/messages', icon: <MessageSquareIcon size={18} />, title: 'Messages' },
+    { path: '/user/bookings', icon: <CalendarIcon size={18} />, title: 'My Bookings' },
+    { path: '/user/payments', icon: <CreditCardIcon size={18} />, title: 'Payments' },
+    { path: '/user/messages', icon: <MessageSquareIcon size={18} />, title: 'Messages' },
   ];
 
   const handleLogout = () => {
@@ -77,6 +77,7 @@ const UserNavbar = () => {
             <Button
               variant="ghost"
               className="text-slate-600 flex items-center gap-2 hover:bg-slate-50 hover:text-slate-900"
+              onClick={() => navigate('/user/settings')}
             >
               <UserIcon size={16} />
               My Account
@@ -128,7 +129,7 @@ const UserNavbar = () => {
               ))}
               <li>
                 <Link
-                  to="/settings"
+                  to="/user/settings"
                   className="flex items-center p-3 text-sm font-medium rounded-md transition-colors text-slate-600 hover:bg-slate-50 hover:text-slate-900"
                   onClick={() => setMobileMenuOpen(false)}
                 >

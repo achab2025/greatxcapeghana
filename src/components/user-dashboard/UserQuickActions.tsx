@@ -19,7 +19,7 @@ const UserQuickActions = () => {
       </Button>
       <Button 
         variant="outline" 
-        onClick={() => navigate("/bookings")}
+        onClick={() => navigate("/user/bookings")}
         className="flex flex-col h-24 items-center justify-center bg-white border-olive/20 hover:bg-olive/10"
       >
         <CalendarIcon className="h-6 w-6 mb-2 text-olive-dark" />
@@ -27,7 +27,7 @@ const UserQuickActions = () => {
       </Button>
       <Button 
         variant="outline" 
-        onClick={() => navigate("/payments")}
+        onClick={() => navigate("/user/payments")}
         className="flex flex-col h-24 items-center justify-center bg-white border-olive/20 hover:bg-olive/10"
       >
         <CreditCardIcon className="h-6 w-6 mb-2 text-olive-dark" />
@@ -35,7 +35,7 @@ const UserQuickActions = () => {
       </Button>
       <Button 
         variant="outline" 
-        onClick={() => navigate("/messages")}
+        onClick={() => navigate("/user/messages")}
         className="flex flex-col h-24 items-center justify-center bg-white border-olive/20 hover:bg-olive/10"
       >
         <MessageSquareIcon className="h-6 w-6 mb-2 text-olive-dark" />

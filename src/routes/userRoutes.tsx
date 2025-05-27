@@ -17,9 +17,53 @@ export const userRoutes = [
     key="user-dashboard"
     path="/user-dashboard" 
     element={
-      <ProtectedRoute>
+      <ProtectedRoute requiredRole="user">
         <UserLayout showNavbar={false}>
           <UserDashboard />
+        </UserLayout>
+      </ProtectedRoute>
+    } 
+  />,
+  <Route 
+    key="user-bookings"
+    path="/user/bookings" 
+    element={
+      <ProtectedRoute requiredRole="user">
+        <UserLayout>
+          <Bookings />
+        </UserLayout>
+      </ProtectedRoute>
+    } 
+  />,
+  <Route 
+    key="user-payments"
+    path="/user/payments" 
+    element={
+      <ProtectedRoute requiredRole="user">
+        <UserLayout>
+          <Payments />
+        </UserLayout>
+      </ProtectedRoute>
+    } 
+  />,
+  <Route 
+    key="user-messages"
+    path="/user/messages" 
+    element={
+      <ProtectedRoute requiredRole="user">
+        <UserLayout>
+          <Messages />
+        </UserLayout>
+      </ProtectedRoute>
+    } 
+  />,
+  <Route 
+    key="user-settings"
+    path="/user/settings" 
+    element={
+      <ProtectedRoute requiredRole="user">
+        <UserLayout>
+          <Settings />
         </UserLayout>
       </ProtectedRoute>
     } 
