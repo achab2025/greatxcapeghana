@@ -18,10 +18,16 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   
   // Check if user is authenticated on initial load
   useEffect(() => {
-    const authStatus = localStorage.getItem("isAuthenticated");
-    const role = localStorage.getItem("userRole");
-    setIsAuthenticated(authStatus === "true");
-    setUserRole(role);
+    try {
+      const authStatus = localStorage.getItem("isAuthenticated");
+      const role = localStorage.getItem("userRole");
+      setIsAuthenticated(authStatus === "true");
+      setUserRole(role);
+    } catch (error) {
+      console.error("Error accessing localStorage in AuthContext:", error);
+      setIsAuthenticated(false);
+      setUserRole(null);
+    }
   }, []);
   
   const login = async (username: string, password: string, role: string) => {
@@ -36,30 +42,42 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
     }
     
     if (isValid) {
-      localStorage.setItem("isAuthenticated", "true");
-      localStorage.setItem("userRole", role);
-      setIsAuthenticated(true);
-      setUserRole(role);
-      
-      // Redirect based on role
-      if (role === "admin") {
-        navigate("/");
-      } else {
-        navigate("/user-dashboard");
+      try {
+        localStorage.setItem("isAuthenticated", "true");
+        localStorage.setItem("userRole", role);
+        setIsAuthenticated(true);
+        setUserRole(role);
+        
+        // Redirect based on role
+        if (role === "admin") {
+          navigate("/");
+        } else {
+          navigate("/user-dashboard");
+        }
+        
+        return true;
+      } catch (error) {
+        console.error("Error setting localStorage in login:", error);
+        return false;
       }
-      
-      return true;
     }
     return false;
   };
   
   const logout = () => {
-    localStorage.removeItem("isAuthenticated");
-    localStorage.removeItem("userRole");
-    localStorage.removeItem("userId");
-    setIsAuthenticated(false);
-    setUserRole(null);
-    navigate("/login");
+    try {
+      localStorage.removeItem("isAuthenticated");
+      localStorage.removeItem("userRole");
+      localStorage.removeItem("userId");
+      setIsAuthenticated(false);
+      setUserRole(null);
+      navigate("/login");
+    } catch (error) {
+      console.error("Error clearing localStorage in logout:", error);
+      setIsAuthenticated(false);
+      setUserRole(null);
+      navigate("/login");
+    }
   };
   
   return (

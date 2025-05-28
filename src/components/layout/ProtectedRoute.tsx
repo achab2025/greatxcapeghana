@@ -9,8 +9,17 @@ interface ProtectedRouteProps {
 
 const ProtectedRoute = ({ children, requiredRole }: ProtectedRouteProps) => {
   const location = useLocation();
-  const isAuthenticated = localStorage.getItem("isAuthenticated") === "true";
-  const userRole = localStorage.getItem("userRole");
+  
+  let isAuthenticated = false;
+  let userRole = null;
+  
+  try {
+    isAuthenticated = localStorage.getItem("isAuthenticated") === "true";
+    userRole = localStorage.getItem("userRole");
+  } catch (error) {
+    console.error("Error accessing localStorage in ProtectedRoute:", error);
+    return <Navigate to="/login" state={{ from: location }} replace />;
+  }
 
   // If user is not authenticated, redirect to login page
   if (!isAuthenticated) {
@@ -19,7 +28,12 @@ const ProtectedRoute = ({ children, requiredRole }: ProtectedRouteProps) => {
 
   // Ensure userRole is set if authenticated but somehow missing
   if (!userRole && isAuthenticated) {
-    localStorage.setItem("userRole", "user"); // Default to user role if missing
+    try {
+      localStorage.setItem("userRole", "user"); // Default to user role if missing
+      userRole = "user";
+    } catch (error) {
+      console.error("Error setting default userRole:", error);
+    }
   }
 
   const currentUserRole = userRole || "user";

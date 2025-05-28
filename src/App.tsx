@@ -4,6 +4,7 @@ import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
+import { useState, useEffect } from "react";
 import { AuthProvider } from "./contexts/AuthContext";
 import Login from "./pages/Login";
 import NotFound from "./pages/NotFound";
@@ -26,18 +27,36 @@ const queryClient = new QueryClient({
 });
 
 const App = () => {
-  const isAuthenticated = localStorage.getItem("isAuthenticated") === "true";
-  const userRole = localStorage.getItem("userRole");
+  const [isLoading, setIsLoading] = useState(true);
+  const [defaultRoute, setDefaultRoute] = useState("/landing");
 
-  const getDefaultRoute = () => {
-    if (!isAuthenticated) {
-      return "/landing";
+  useEffect(() => {
+    try {
+      const isAuthenticated = localStorage.getItem("isAuthenticated") === "true";
+      const userRole = localStorage.getItem("userRole");
+
+      if (!isAuthenticated) {
+        setDefaultRoute("/landing");
+      } else if (userRole === "admin") {
+        setDefaultRoute("/admin-dashboard");
+      } else {
+        setDefaultRoute("/user-dashboard");
+      }
+    } catch (error) {
+      console.error("Error accessing localStorage:", error);
+      setDefaultRoute("/landing");
+    } finally {
+      setIsLoading(false);
     }
-    if (userRole === "admin") {
-      return "/admin-dashboard";
-    }
-    return "/user-dashboard";
-  };
+  }, []);
+
+  if (isLoading) {
+    return (
+      <div className="flex items-center justify-center min-h-screen bg-slate-50">
+        <div className="text-lg">Loading...</div>
+      </div>
+    );
+  }
 
   return (
     <BrowserRouter>
@@ -62,7 +81,7 @@ const App = () => {
                 {/* Default route - redirect based on authentication */}
                 <Route 
                   path="/" 
-                  element={<Navigate to={getDefaultRoute()} replace />}
+                  element={<Navigate to={defaultRoute} replace />}
                 />
                 
                 {/* Fallback Route */}
