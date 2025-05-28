@@ -57,12 +57,25 @@ const UserBookingForm = ({
   const {
     form,
     availableHouses,
-    handleSubmit
-  } = useBookingForm(data => {
+    handleSubmit: originalHandleSubmit
+  } = useBookingForm((data) => {
+    console.log('Form submission triggered with data:', data);
+    
     const guestData = guestForm.getValues();
+    console.log('Guest data:', guestData);
+    
     const isGuestFormValid = guestData.firstName && guestData.lastName && guestData.email && guestData.phone;
     
+    console.log('Guest form validation:', {
+      firstName: !!guestData.firstName,
+      lastName: !!guestData.lastName,
+      email: !!guestData.email,
+      phone: !!guestData.phone,
+      isGuestFormValid
+    });
+    
     if (!isGuestFormValid) {
+      console.log('Guest form validation failed');
       toast({
         title: "Please fill in all required guest information",
         description: "First name, last name, email, and phone are required.",
@@ -94,6 +107,7 @@ const UserBookingForm = ({
     
     console.log('Setting booking data for payment:', enhancedData);
     setBookingData(enhancedData);
+    console.log('Setting showPayment to true');
     setShowPayment(true);
   }, booking);
 
@@ -125,7 +139,8 @@ const UserBookingForm = ({
     totalAmount,
     isGuestFormValid,
     guestData,
-    isFormValid
+    isFormValid,
+    showPayment
   });
 
   const {
@@ -133,6 +148,22 @@ const UserBookingForm = ({
     handlePaymentError,
     handleBackToBooking
   } = usePaymentHandling(onSubmit, setShowPayment);
+
+  // Custom form submit handler with additional logging
+  const handleFormSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    console.log('Form submit handler triggered');
+    console.log('Current form validity:', isFormValid);
+    console.log('Show payment state:', showPayment);
+    
+    if (!isFormValid) {
+      console.log('Form is not valid, preventing submission');
+      return;
+    }
+    
+    console.log('Calling original handle submit');
+    originalHandleSubmit(e);
+  };
 
   // Set default house if provided
   useEffect(() => {
@@ -167,6 +198,7 @@ const UserBookingForm = ({
   const finalTotal = totalAmount + extraServicesTotal;
 
   if (showPayment && bookingData) {
+    console.log('Rendering payment section with data:', bookingData);
     return <PaymentSection 
       finalTotal={finalTotal} 
       nights={nights} 
@@ -187,7 +219,7 @@ const UserBookingForm = ({
 
         {/* Booking Details Section */}
         <Form {...form}>
-          <form onSubmit={handleSubmit} className="space-y-6">
+          <form onSubmit={handleFormSubmit} className="space-y-6">
             {/* House Selection */}
             <HouseSelectionSection 
               form={form} 
@@ -233,6 +265,13 @@ const UserBookingForm = ({
                 type="submit" 
                 disabled={!isFormValid} 
                 className="bg-gradient-to-r from-blue-600 to-green-600 hover:from-blue-700 hover:to-green-700 text-white px-8 py-3 text-lg font-medium"
+                onClick={(e) => {
+                  console.log('Button clicked, form valid:', isFormValid);
+                  if (!isFormValid) {
+                    e.preventDefault();
+                    console.log('Button click prevented due to invalid form');
+                  }
+                }}
               >
                 Proceed to Payment {finalTotal > 0 ? `($${finalTotal.toFixed(2)})` : '(Calculate Total)'}
               </Button>
