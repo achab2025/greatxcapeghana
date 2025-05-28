@@ -1,4 +1,3 @@
-
 import React, { useEffect } from 'react';
 import { Form } from '@/components/ui/form';
 import { Button } from '@/components/ui/button';
@@ -16,15 +15,18 @@ import DateSelectionSection from './form/DateSelectionSection';
 import BookingSummarySection from './form/BookingSummarySection';
 import ExtraServicesSection from './form/ExtraServicesSection';
 import PaymentSection from './form/PaymentSection';
-
 interface UserBookingFormProps {
   booking?: Booking;
   defaultHouseId?: string;
   onSubmit: (data: any) => void;
   onCancel: () => void;
 }
-
-const UserBookingForm = ({ booking, defaultHouseId, onSubmit, onCancel }: UserBookingFormProps) => {
+const UserBookingForm = ({
+  booking,
+  defaultHouseId,
+  onSubmit,
+  onCancel
+}: UserBookingFormProps) => {
   const {
     showHouseDetail,
     setShowHouseDetail,
@@ -38,7 +40,6 @@ const UserBookingForm = ({ booking, defaultHouseId, onSubmit, onCancel }: UserBo
     handleViewDetails,
     handleExtraServicesChange
   } = useBookingState();
-
   const guestForm = useForm({
     defaultValues: {
       firstName: '',
@@ -49,15 +50,13 @@ const UserBookingForm = ({ booking, defaultHouseId, onSubmit, onCancel }: UserBo
     },
     mode: 'onChange'
   });
-
-  const { form, availableHouses, handleSubmit } = useBookingForm((data) => {
+  const {
+    form,
+    availableHouses,
+    handleSubmit
+  } = useBookingForm(data => {
     const guestData = guestForm.getValues();
-    const isGuestFormValid = guestForm.formState.isValid && 
-      guestData.firstName && 
-      guestData.lastName && 
-      guestData.email && 
-      guestData.phone;
-    
+    const isGuestFormValid = guestForm.formState.isValid && guestData.firstName && guestData.lastName && guestData.email && guestData.phone;
     if (!isGuestFormValid) {
       toast({
         title: "Please fill in all required guest information",
@@ -66,12 +65,11 @@ const UserBookingForm = ({ booking, defaultHouseId, onSubmit, onCancel }: UserBo
       });
       return;
     }
-    
+
     // Generate random login credentials
     const username = `${guestData.firstName.toLowerCase()}${Date.now()}`;
     const password = Math.random().toString(36).slice(-8);
     const guestId = `guest_${Date.now()}`;
-    
     const enhancedData = {
       ...data,
       guestId,
@@ -85,14 +83,12 @@ const UserBookingForm = ({ booking, defaultHouseId, onSubmit, onCancel }: UserBo
       extraServicesTotal,
       totalAmount: data.totalAmount + extraServicesTotal,
       bookingStatus: 'confirmed',
-      paymentStatus: 'pending',
+      paymentStatus: 'pending'
     };
-    
     console.log('Setting booking data for payment:', enhancedData);
     setBookingData(enhancedData);
     setShowPayment(true);
   }, booking);
-
   const selectedHouse = availableHouses.find(h => h.id === form.watch('houseId'));
   const checkInDate = form.watch('checkInDate');
   const checkOutDate = form.watch('checkOutDate');
@@ -109,9 +105,14 @@ const UserBookingForm = ({ booking, defaultHouseId, onSubmit, onCancel }: UserBo
     }
     return 0;
   }, [checkInDate, checkOutDate]);
-
-  const { isFormValid } = useBookingValidation(selectedHouse, nights, totalAmount, guestForm);
-  const { handlePaymentSuccess, handlePaymentError, handleBackToBooking } = usePaymentHandling(onSubmit, setShowPayment);
+  const {
+    isFormValid
+  } = useBookingValidation(selectedHouse, nights, totalAmount, guestForm);
+  const {
+    handlePaymentSuccess,
+    handlePaymentError,
+    handleBackToBooking
+  } = usePaymentHandling(onSubmit, setShowPayment);
 
   // Set default house if provided
   useEffect(() => {
@@ -125,7 +126,6 @@ const UserBookingForm = ({ booking, defaultHouseId, onSubmit, onCancel }: UserBo
     const houseId = form.watch('houseId');
     const checkIn = form.watch('checkInDate');
     const checkOut = form.watch('checkOutDate');
-    
     if (houseId && checkIn && checkOut) {
       const house = availableHouses.find(h => h.id === houseId);
       if (house) {
@@ -133,7 +133,6 @@ const UserBookingForm = ({ booking, defaultHouseId, onSubmit, onCancel }: UserBo
         const endDate = new Date(checkOut);
         const timeDiff = endDate.getTime() - startDate.getTime();
         const nightsCount = Math.ceil(timeDiff / (1000 * 3600 * 24));
-        
         if (nightsCount > 0) {
           const baseTotal = house.pricePerNight * nightsCount;
           form.setValue('totalAmount', baseTotal);
@@ -142,26 +141,11 @@ const UserBookingForm = ({ booking, defaultHouseId, onSubmit, onCancel }: UserBo
       }
     }
   }, [form.watch('houseId'), form.watch('checkInDate'), form.watch('checkOutDate'), availableHouses, form]);
-
   const finalTotal = totalAmount + extraServicesTotal;
-
   if (showPayment && bookingData) {
-    return (
-      <PaymentSection
-        finalTotal={finalTotal}
-        nights={nights}
-        totalAmount={totalAmount}
-        extraServices={extraServices}
-        onPaymentSuccess={(details) => handlePaymentSuccess(details, bookingData)}
-        onPaymentError={handlePaymentError}
-        onBack={handleBackToBooking}
-        isFormValid={isFormValid}
-      />
-    );
+    return <PaymentSection finalTotal={finalTotal} nights={nights} totalAmount={totalAmount} extraServices={extraServices} onPaymentSuccess={details => handlePaymentSuccess(details, bookingData)} onPaymentError={handlePaymentError} onBack={handleBackToBooking} isFormValid={isFormValid} />;
   }
-
-  return (
-    <>
+  return <>
       <div className="space-y-8 max-h-[80vh] overflow-y-auto">
         {/* Guest Information Section */}
         <GuestInfoSection guestForm={guestForm} />
@@ -170,54 +154,23 @@ const UserBookingForm = ({ booking, defaultHouseId, onSubmit, onCancel }: UserBo
         <Form {...form}>
           <form onSubmit={handleSubmit} className="space-y-6">
             {/* House Selection */}
-            <HouseSelectionSection
-              form={form}
-              availableHouses={availableHouses}
-              selectedHouse={selectedHouse}
-              defaultHouseId={defaultHouseId}
-              onViewDetails={handleViewDetails}
-            />
+            <HouseSelectionSection form={form} availableHouses={availableHouses} selectedHouse={selectedHouse} defaultHouseId={defaultHouseId} onViewDetails={handleViewDetails} />
 
             {/* Date Selection - only show when house is selected */}
-            {selectedHouse && (
-              <DateSelectionSection
-                form={form}
-                nights={nights}
-              />
-            )}
+            {selectedHouse && <DateSelectionSection form={form} nights={nights} />}
 
             {/* Extra Services - only show when house and dates are selected */}
-            {selectedHouse && nights > 0 && (
-              <ExtraServicesSection
-                form={form}
-                onServicesChange={handleExtraServicesChange}
-              />
-            )}
+            {selectedHouse && nights > 0 && <ExtraServicesSection form={form} onServicesChange={handleExtraServicesChange} />}
 
             {/* Booking Summary - only show when we have all required info */}
-            {selectedHouse && nights > 0 && totalAmount > 0 && (
-              <BookingSummarySection
-                selectedHouse={selectedHouse}
-                nights={nights}
-                totalAmount={finalTotal}
-              />
-            )}
+            {selectedHouse && nights > 0 && totalAmount > 0 && <BookingSummarySection selectedHouse={selectedHouse} nights={nights} totalAmount={finalTotal} />}
 
             {/* Action Buttons */}
             <div className="flex items-center justify-end space-x-4 pt-6 border-t">
-              <Button 
-                type="button" 
-                variant="outline" 
-                onClick={onCancel}
-                className="border-slate-300 text-slate-700 hover:bg-slate-50 px-8"
-              >
+              <Button type="button" variant="outline" onClick={onCancel} className="border-slate-300 text-slate-700 hover:bg-slate-50 px-8">
                 Cancel
               </Button>
-              <Button 
-                type="submit"
-                className="bg-gradient-to-r from-blue-600 to-green-600 hover:from-blue-700 hover:to-green-700 text-white px-8 py-3 text-lg font-medium"
-                disabled={!isFormValid}
-              >
+              <Button type="submit" disabled={!isFormValid} className="bg-gradient-to-r from-blue-600 to-green-600 hover:from-blue-700 hover:to-green-700 text-white px-8 py-3 text-lg font-medium bg-olive-DEFAULT">
                 Proceed to Payment {finalTotal > 0 ? `($${finalTotal.toFixed(2)})` : '(Calculate Total)'}
               </Button>
             </div>
@@ -225,13 +178,7 @@ const UserBookingForm = ({ booking, defaultHouseId, onSubmit, onCancel }: UserBo
         </Form>
       </div>
 
-      <HouseDetailDialog
-        open={showHouseDetail}
-        onOpenChange={setShowHouseDetail}
-        houseId={selectedHouseForDetail}
-      />
-    </>
-  );
+      <HouseDetailDialog open={showHouseDetail} onOpenChange={setShowHouseDetail} houseId={selectedHouseForDetail} />
+    </>;
 };
-
 export default UserBookingForm;
