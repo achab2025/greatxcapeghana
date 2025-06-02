@@ -10,6 +10,7 @@ import Login from "./pages/Login";
 import NotFound from "./pages/NotFound";
 import ProtectedRoute from "./components/layout/ProtectedRoute";
 import Landing from "./pages/Landing";
+import WordPressGuide from "./pages/WordPressGuide";
 
 // Import routes from separate files
 import { adminRoutes } from "./routes/adminRoutes";

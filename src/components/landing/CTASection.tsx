@@ -2,7 +2,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
-import { LogInIcon, ArrowRightIcon } from 'lucide-react';
+import { LogInIcon, ArrowRightIcon, ExternalLinkIcon } from 'lucide-react';
 
 const CTASection = () => {
   return (
@@ -24,7 +24,7 @@ const CTASection = () => {
           Your dream vacation is just one click away.
         </p>
         
-        <div className="flex flex-col sm:flex-row gap-6 justify-center mb-12">
+        <div className="flex flex-col sm:flex-row gap-6 justify-center mb-8">
           <Button 
             asChild
             size="lg"
@@ -44,6 +44,21 @@ const CTASection = () => {
             <Link to="/houses">
               <ArrowRightIcon className="mr-3" size={24} />
               Explore More
+            </Link>
+          </Button>
+        </div>
+
+        {/* WordPress Integration Link */}
+        <div className="mb-12">
+          <Button 
+            asChild
+            size="lg"
+            variant="outline"
+            className="border-2 border-white/50 text-white hover:bg-white/10 px-8 py-4 text-lg rounded-xl shadow-lg transition-all duration-300"
+          >
+            <Link to="/wordpress-guide">
+              <ExternalLinkIcon className="mr-3" size={20} />
+              Embed in WordPress
             </Link>
           </Button>
         </div>
