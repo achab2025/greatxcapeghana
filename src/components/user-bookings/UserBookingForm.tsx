@@ -59,14 +59,14 @@ const UserBookingForm = ({
     availableHouses,
     handleSubmit: originalHandleSubmit
   } = useBookingForm((data) => {
-    console.log('Form submission triggered with data:', data);
+    console.log('🚀 BOOKING FORM: Form submission triggered with data:', data);
     
     const guestData = guestForm.getValues();
-    console.log('Guest data:', guestData);
+    console.log('👤 BOOKING FORM: Guest data:', guestData);
     
     const isGuestFormValid = guestData.firstName && guestData.lastName && guestData.email && guestData.phone;
     
-    console.log('Guest form validation:', {
+    console.log('✅ BOOKING FORM: Guest form validation:', {
       firstName: !!guestData.firstName,
       lastName: !!guestData.lastName,
       email: !!guestData.email,
@@ -75,7 +75,7 @@ const UserBookingForm = ({
     });
     
     if (!isGuestFormValid) {
-      console.log('Guest form validation failed');
+      console.log('❌ BOOKING FORM: Guest form validation failed - showing toast');
       toast({
         title: "Please fill in all required guest information",
         description: "First name, last name, email, and phone are required.",
@@ -105,10 +105,11 @@ const UserBookingForm = ({
       paymentStatus: 'pending'
     };
     
-    console.log('Setting booking data for payment:', enhancedData);
+    console.log('💾 BOOKING FORM: Setting booking data for payment:', enhancedData);
     setBookingData(enhancedData);
-    console.log('Setting showPayment to true');
+    console.log('💳 BOOKING FORM: Setting showPayment to true');
     setShowPayment(true);
+    console.log('🎯 BOOKING FORM: Form submission completed successfully');
   }, booking);
 
   const selectedHouse = availableHouses.find(h => h.id === form.watch('houseId'));
@@ -133,12 +134,16 @@ const UserBookingForm = ({
   const isGuestFormValid = !!(guestData.firstName && guestData.lastName && guestData.email && guestData.phone);
   const isFormValid = !!(selectedHouse && nights > 0 && totalAmount > 0 && isGuestFormValid);
 
-  console.log('Form validation:', {
+  console.log('📊 BOOKING FORM: Current state validation:', {
     selectedHouse: !!selectedHouse,
+    selectedHouseId: selectedHouse?.id,
     nights,
     totalAmount,
     isGuestFormValid,
-    guestData,
+    guestFirstName: guestData.firstName,
+    guestLastName: guestData.lastName,
+    guestEmail: guestData.email,
+    guestPhone: guestData.phone,
     isFormValid,
     showPayment
   });
@@ -152,17 +157,32 @@ const UserBookingForm = ({
   // Custom form submit handler with additional logging
   const handleFormSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    console.log('Form submit handler triggered');
-    console.log('Current form validity:', isFormValid);
-    console.log('Show payment state:', showPayment);
+    console.log('🔥 FORM SUBMIT: Form submit handler triggered');
+    console.log('🔥 FORM SUBMIT: Current form validity:', isFormValid);
+    console.log('🔥 FORM SUBMIT: Show payment state:', showPayment);
+    console.log('🔥 FORM SUBMIT: Selected house:', selectedHouse?.name);
+    console.log('🔥 FORM SUBMIT: Nights:', nights);
+    console.log('🔥 FORM SUBMIT: Total amount:', totalAmount);
+    console.log('🔥 FORM SUBMIT: Guest data valid:', isGuestFormValid);
     
     if (!isFormValid) {
-      console.log('Form is not valid, preventing submission');
+      console.log('🚫 FORM SUBMIT: Form is not valid, preventing submission');
+      console.log('🚫 FORM SUBMIT: Validation details:', {
+        hasHouse: !!selectedHouse,
+        hasNights: nights > 0,
+        hasAmount: totalAmount > 0,
+        hasGuestData: isGuestFormValid
+      });
       return;
     }
     
-    console.log('Calling original handle submit');
-    originalHandleSubmit(e);
+    console.log('✅ FORM SUBMIT: Form is valid, calling original handle submit');
+    try {
+      originalHandleSubmit(e);
+      console.log('✅ FORM SUBMIT: Original handle submit called successfully');
+    } catch (error) {
+      console.error('❌ FORM SUBMIT: Error in original handle submit:', error);
+    }
   };
 
   // Set default house if provided
@@ -189,7 +209,7 @@ const UserBookingForm = ({
         if (nightsCount > 0) {
           const baseTotal = house.pricePerNight * nightsCount;
           form.setValue('totalAmount', baseTotal);
-          console.log(`Price calculation: ${nightsCount} nights × $${house.pricePerNight} = $${baseTotal}`);
+          console.log(`💰 PRICE CALC: ${nightsCount} nights × $${house.pricePerNight} = $${baseTotal}`);
         }
       }
     }
@@ -197,8 +217,10 @@ const UserBookingForm = ({
 
   const finalTotal = totalAmount + extraServicesTotal;
 
+  console.log('🎨 RENDER: Component rendering with showPayment:', showPayment, 'and bookingData:', !!bookingData);
+
   if (showPayment && bookingData) {
-    console.log('Rendering payment section with data:', bookingData);
+    console.log('💳 RENDER: Rendering payment section with data:', bookingData);
     return <PaymentSection 
       finalTotal={finalTotal} 
       nights={nights} 
@@ -210,6 +232,8 @@ const UserBookingForm = ({
       isFormValid={isFormValid} 
     />;
   }
+
+  console.log('📝 RENDER: Rendering booking form');
 
   return (
     <>
@@ -266,10 +290,13 @@ const UserBookingForm = ({
                 disabled={!isFormValid} 
                 className="bg-gradient-to-r from-blue-600 to-green-600 hover:from-blue-700 hover:to-green-700 text-white px-8 py-3 text-lg font-medium"
                 onClick={(e) => {
-                  console.log('Button clicked, form valid:', isFormValid);
+                  console.log('🖱️ BUTTON CLICK: Button clicked, form valid:', isFormValid);
+                  console.log('🖱️ BUTTON CLICK: Button disabled state:', !isFormValid);
                   if (!isFormValid) {
                     e.preventDefault();
-                    console.log('Button click prevented due to invalid form');
+                    console.log('🚫 BUTTON CLICK: Button click prevented due to invalid form');
+                  } else {
+                    console.log('✅ BUTTON CLICK: Button click proceeding');
                   }
                 }}
               >
