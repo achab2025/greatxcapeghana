@@ -3,18 +3,41 @@ import React, { useState, useEffect } from 'react';
 import BookingTable from '@/components/bookings/BookingTable';
 import BookingForm from '@/components/bookings/BookingForm';
 import UserBookingFormDialog from '@/components/user-bookings/UserBookingFormDialog';
+import BookingFilters from '@/components/bookings/BookingFilters';
+import BookingStats from '@/components/bookings/BookingStats';
+import BookingActions from '@/components/bookings/BookingActions';
 import { bookings } from '@/data/mockData';
 import { Booking } from '@/lib/types';
 import { Button } from '@/components/ui/button';
 import { PlusIcon } from 'lucide-react';
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog';
 import { toast } from '@/components/ui/use-toast';
+import { useBookingFilters } from '@/hooks/useBookingFilters';
 
 const Bookings = () => {
   const [bookingsList, setBookingsList] = useState<Booking[]>(bookings);
   const [isFormOpen, setIsFormOpen] = useState(false);
   const [currentBooking, setCurrentBooking] = useState<Booking | undefined>(undefined);
   const [userRole, setUserRole] = useState<string | null>(null);
+  const [selectedBookings, setSelectedBookings] = useState<string[]>([]);
+  
+  const {
+    searchTerm,
+    setSearchTerm,
+    statusFilter,
+    setStatusFilter,
+    paymentFilter,
+    setPaymentFilter,
+    dateFrom,
+    setDateFrom,
+    dateTo,
+    setDateTo,
+    sortBy,
+    setSortBy,
+    activeFiltersCount,
+    filteredAndSortedBookings,
+    clearFilters
+  } = useBookingFilters(bookingsList);
   
   useEffect(() => {
     // Get the user role from localStorage
@@ -53,6 +76,7 @@ const Bookings = () => {
   const handleDeleteBooking = (id: string) => {
     // In a real app, you'd want a confirmation dialog
     setBookingsList(bookingsList.filter(b => b.id !== id));
+    setSelectedBookings(selectedBookings.filter(bid => bid !== id));
     toast({
       title: "Booking Deleted",
       description: "The booking has been deleted successfully.",
@@ -91,6 +115,76 @@ const Bookings = () => {
     setIsFormOpen(false);
   };
 
+  const handleSelectAll = (checked: boolean) => {
+    if (checked) {
+      setSelectedBookings(filteredAndSortedBookings.map(b => b.id));
+    } else {
+      setSelectedBookings([]);
+    }
+  };
+
+  const handleSelectBooking = (id: string, checked: boolean) => {
+    if (checked) {
+      setSelectedBookings([...selectedBookings, id]);
+    } else {
+      setSelectedBookings(selectedBookings.filter(bid => bid !== id));
+    }
+  };
+
+  const handleBulkStatusUpdate = (status: string) => {
+    setBookingsList(bookingsList.map(booking => 
+      selectedBookings.includes(booking.id) 
+        ? { ...booking, bookingStatus: status }
+        : booking
+    ));
+    setSelectedBookings([]);
+    toast({
+      title: "Bookings Updated",
+      description: `${selectedBookings.length} bookings updated to ${status}.`,
+    });
+  };
+
+  const handleBulkPaymentUpdate = (status: string) => {
+    setBookingsList(bookingsList.map(booking => 
+      selectedBookings.includes(booking.id) 
+        ? { ...booking, paymentStatus: status }
+        : booking
+    ));
+    setSelectedBookings([]);
+    toast({
+      title: "Payment Status Updated",
+      description: `${selectedBookings.length} bookings updated to ${status}.`,
+    });
+  };
+
+  const handleExportBookings = () => {
+    const csvContent = [
+      ['Guest Name', 'House', 'Check-in', 'Check-out', 'Amount', 'Status', 'Payment'],
+      ...filteredAndSortedBookings.map(booking => [
+        booking.guestName,
+        booking.houseName,
+        booking.checkInDate,
+        booking.checkOutDate,
+        booking.totalAmount.toString(),
+        booking.bookingStatus,
+        booking.paymentStatus
+      ])
+    ].map(row => row.join(',')).join('\n');
+
+    const blob = new Blob([csvContent], { type: 'text/csv' });
+    const url = window.URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = `bookings-${new Date().toISOString().split('T')[0]}.csv`;
+    a.click();
+    window.URL.revokeObjectURL(url);
+    
+    toast({
+      title: "Export Complete",
+      description: "Bookings have been exported successfully.",
+    });
+  };
+
   const isUser = userRole === "user";
 
   return (
@@ -121,13 +215,47 @@ const Bookings = () => {
             {isUser ? "Request Booking" : "New Booking"}
           </Button>
         </div>
+
+        {!isUser && <BookingStats bookings={bookingsList} />}
+
+        <BookingFilters
+          searchTerm={searchTerm}
+          onSearchChange={setSearchTerm}
+          statusFilter={statusFilter}
+          onStatusFilterChange={setStatusFilter}
+          paymentFilter={paymentFilter}
+          onPaymentFilterChange={setPaymentFilter}
+          dateFrom={dateFrom}
+          dateTo={dateTo}
+          onDateFromChange={setDateFrom}
+          onDateToChange={setDateTo}
+          sortBy={sortBy}
+          onSortByChange={setSortBy}
+          onClearFilters={clearFilters}
+          activeFiltersCount={activeFiltersCount}
+        />
+
+        {!isUser && (
+          <BookingActions
+            selectedBookings={selectedBookings}
+            onSelectAll={handleSelectAll}
+            onSelectBooking={handleSelectBooking}
+            onBulkStatusUpdate={handleBulkStatusUpdate}
+            onBulkPaymentUpdate={handleBulkPaymentUpdate}
+            onExportBookings={handleExportBookings}
+            bookings={filteredAndSortedBookings}
+          />
+        )}
         
         <div className={`bg-white rounded-xl shadow-md border ${isUser ? 'border-blue-100' : 'border-olive/10'} overflow-hidden`}>
           <BookingTable 
-            bookings={bookingsList}
+            bookings={filteredAndSortedBookings}
             onViewBooking={handleViewBooking}
             onEditBooking={handleEditBooking}
             onDeleteBooking={handleDeleteBooking}
+            selectedBookings={selectedBookings}
+            onSelectBooking={handleSelectBooking}
+            showSelection={!isUser}
           />
         </div>
         
