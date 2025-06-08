@@ -1,3 +1,4 @@
+
 import React from 'react';
 import { BrowserRouter, Routes, Route, Outlet } from 'react-router-dom';
 import Landing from './pages/Landing';
@@ -12,7 +13,7 @@ import Messages from './pages/Messages';
 import Reports from './pages/Reports';
 import Settings from './pages/Settings';
 import NotFound from './pages/NotFound';
-import ProtectedRoute from './components/auth/ProtectedRoute';
+import ProtectedRoute from './components/layout/ProtectedRoute';
 import AdminLayout from './components/layout/AdminLayout';
 import UserLayout from './components/layout/UserLayout';
 import UserDashboard from './pages/UserDashboard';

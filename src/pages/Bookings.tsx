@@ -134,7 +134,7 @@ const Bookings = () => {
   const handleBulkStatusUpdate = (status: string) => {
     setBookingsList(bookingsList.map(booking => 
       selectedBookings.includes(booking.id) 
-        ? { ...booking, bookingStatus: status }
+        ? { ...booking, bookingStatus: status as Booking['bookingStatus'] }
         : booking
     ));
     setSelectedBookings([]);
