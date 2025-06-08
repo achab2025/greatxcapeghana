@@ -1,101 +1,58 @@
+import React from 'react';
+import { BrowserRouter, Routes, Route, Outlet } from 'react-router-dom';
+import Landing from './pages/Landing';
+import Login from './pages/Login';
+import WordPressGuide from './pages/WordPressGuide';
+import Index from './pages/Index';
+import Bookings from './pages/Bookings';
+import Houses from './pages/Houses';
+import Guests from './pages/Guests';
+import Payments from './pages/Payments';
+import Messages from './pages/Messages';
+import Reports from './pages/Reports';
+import Settings from './pages/Settings';
+import NotFound from './pages/NotFound';
+import ProtectedRoute from './components/auth/ProtectedRoute';
+import AdminLayout from './components/layout/AdminLayout';
+import UserLayout from './components/layout/UserLayout';
+import UserDashboard from './pages/UserDashboard';
+import CheckInOut from './pages/CheckInOut';
 
-import { Toaster } from "@/components/ui/toaster";
-import { Toaster as Sonner } from "@/components/ui/sonner";
-import { TooltipProvider } from "@/components/ui/tooltip";
-import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
-import { useState, useEffect } from "react";
-import { AuthProvider } from "./contexts/AuthContext";
-import Login from "./pages/Login";
-import NotFound from "./pages/NotFound";
-import ProtectedRoute from "./components/layout/ProtectedRoute";
-import Landing from "./pages/Landing";
-import WordPressGuide from "./pages/WordPressGuide";
-
-// Import routes from separate files
-import { adminRoutes } from "./routes/adminRoutes";
-import { userRoutes } from "./routes/userRoutes";
-import { sharedRoutes } from "./routes/sharedRoutes";
-
-// Create a new QueryClient instance
-const queryClient = new QueryClient({
-  defaultOptions: {
-    queries: {
-      retry: false,
-      refetchOnWindowFocus: false,
-    },
-  },
-});
-
-const App = () => {
-  const [isLoading, setIsLoading] = useState(true);
-  const [defaultRoute, setDefaultRoute] = useState("/landing");
-
-  useEffect(() => {
-    try {
-      const isAuthenticated = localStorage.getItem("isAuthenticated") === "true";
-      const userRole = localStorage.getItem("userRole");
-
-      if (!isAuthenticated) {
-        setDefaultRoute("/landing");
-      } else if (userRole === "admin") {
-        setDefaultRoute("/admin-dashboard");
-      } else {
-        setDefaultRoute("/user-dashboard");
-      }
-    } catch (error) {
-      console.error("Error accessing localStorage:", error);
-      setDefaultRoute("/landing");
-    } finally {
-      setIsLoading(false);
-    }
-  }, []);
-
-  if (isLoading) {
-    return (
-      <div className="flex items-center justify-center min-h-screen bg-slate-50">
-        <div className="text-lg">Loading...</div>
-      </div>
-    );
-  }
-
+function App() {
   return (
     <BrowserRouter>
-      <AuthProvider>
-        <QueryClientProvider client={queryClient}>
-          <TooltipProvider>
-            <div className="bg-slate-50 min-h-screen">
-              <Routes>
-                {/* Public Routes */}
-                <Route path="/landing" element={<Landing />} />
-                <Route path="/login" element={<Login />} />
-                
-                {/* Admin Routes (protected) */}
-                {adminRoutes}
-                
-                {/* User Routes (protected) */}
-                {userRoutes}
-                
-                {/* Shared Routes (based on user role) */}
-                {sharedRoutes}
-                
-                {/* Default route - redirect based on authentication */}
-                <Route 
-                  path="/" 
-                  element={<Navigate to={defaultRoute} replace />}
-                />
-                
-                {/* Fallback Route */}
-                <Route path="*" element={<NotFound />} />
-              </Routes>
-              <Toaster />
-              <Sonner />
-            </div>
-          </TooltipProvider>
-        </QueryClientProvider>
-      </AuthProvider>
+      <Routes>
+        {/* Public routes */}
+        <Route path="/" element={<Landing />} />
+        <Route path="/login" element={<Login />} />
+        <Route path="/wordpress-guide" element={<WordPressGuide />} />
+        
+        {/* Protected routes */}
+        <Route element={<ProtectedRoute />}>
+          {/* Admin routes */}
+          <Route element={<AdminLayout><Outlet /></AdminLayout>}>
+            <Route path="/dashboard" element={<Index />} />
+            <Route path="/bookings" element={<Bookings />} />
+            <Route path="/checkinout" element={<CheckInOut />} />
+            <Route path="/houses" element={<Houses />} />
+            <Route path="/guests" element={<Guests />} />
+            <Route path="/payments" element={<Payments />} />
+            <Route path="/messages" element={<Messages />} />
+            <Route path="/reports" element={<Reports />} />
+            <Route path="/settings" element={<Settings />} />
+          </Route>
+          
+          {/* User routes */}
+          <Route element={<UserLayout><Outlet /></UserLayout>}>
+            <Route path="/user-dashboard" element={<UserDashboard />} />
+          </Route>
+        </Route>
+        
+        {/* Catch all route */}
+        <Route path="*" element={<NotFound />} />
+      </Routes>
     </BrowserRouter>
   );
-};
+}
 
 export default App;

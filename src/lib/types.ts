@@ -1,4 +1,3 @@
-
 export interface Booking {
   id: string;
   guestId: string;
@@ -8,7 +7,7 @@ export interface Booking {
   checkInDate: string;
   checkOutDate: string;
   totalAmount: number;
-  bookingStatus: string;
+  bookingStatus: 'confirmed' | 'checked-in' | 'completed' | 'canceled';
   paymentStatus: string;
   createdAt?: string;
 }
