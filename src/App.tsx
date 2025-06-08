@@ -1,4 +1,5 @@
 
+
 import React from 'react';
 import { BrowserRouter, Routes, Route, Outlet } from 'react-router-dom';
 import Landing from './pages/Landing';
@@ -29,7 +30,7 @@ function App() {
         <Route path="/wordpress-guide" element={<WordPressGuide />} />
         
         {/* Protected routes */}
-        <Route element={<ProtectedRoute />}>
+        <Route element={<ProtectedRoute><Outlet /></ProtectedRoute>}>
           {/* Admin routes */}
           <Route element={<AdminLayout><Outlet /></AdminLayout>}>
             <Route path="/dashboard" element={<Index />} />
