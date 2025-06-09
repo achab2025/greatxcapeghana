@@ -5,7 +5,7 @@ import { House, Guest, Booking, Payment, DashboardSummary } from '../lib/types';
 export const houses: House[] = [
   {
     id: 'h1',
-    name: 'Lakeside Villa',
+    name: 'House One',
     description: 'Beautiful villa with panoramic lake views and private dock.',
     maxOccupancy: 6,
     pricePerNight: 350,
@@ -15,7 +15,7 @@ export const houses: House[] = [
   },
   {
     id: 'h2',
-    name: 'Mountain Retreat',
+    name: 'House Two',
     description: 'Cozy cabin nestled in the mountains with stunning forest views.',
     maxOccupancy: 4,
     pricePerNight: 275,
@@ -25,7 +25,7 @@ export const houses: House[] = [
   },
   {
     id: 'h3',
-    name: 'Garden Cottage',
+    name: 'House Three',
     description: 'Charming cottage surrounded by lush gardens and a small pond.',
     maxOccupancy: 2,
     pricePerNight: 225,
