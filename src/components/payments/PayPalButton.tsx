@@ -44,7 +44,7 @@ const PayPalButton = ({ amount, onSuccess, onError, disabled }: PayPalButtonProp
   }, [onError]);
 
   useEffect(() => {
-    if (paypalLoaded && paypalRef.current && amount > 0) {
+    if (paypalLoaded && paypalRef.current && amount > 0 && !disabled) {
       // Clear previous PayPal buttons
       paypalRef.current.innerHTML = '';
 
@@ -69,7 +69,8 @@ const PayPalButton = ({ amount, onSuccess, onError, disabled }: PayPalButtonProp
             onSuccess({
               ...details,
               orderID: data.orderID,
-              payerID: data.payerID
+              payerID: data.payerID,
+              amount: amount
             });
           });
         },
@@ -85,11 +86,12 @@ const PayPalButton = ({ amount, onSuccess, onError, disabled }: PayPalButtonProp
           layout: 'vertical',
           color: 'blue',
           shape: 'rect',
-          label: 'paypal'
+          label: 'paypal',
+          height: 40
         }
       }).render(paypalRef.current);
     }
-  }, [paypalLoaded, amount, onSuccess, onError]);
+  }, [paypalLoaded, amount, onSuccess, onError, disabled]);
 
   if (isLoading) {
     return (
@@ -112,7 +114,10 @@ const PayPalButton = ({ amount, onSuccess, onError, disabled }: PayPalButtonProp
       <div className="mb-4 p-4 bg-yellow-50 border border-yellow-200 rounded-lg">
         <p className="text-sm text-yellow-800">
           <strong>Demo Mode:</strong> This is a PayPal sandbox environment for testing. 
-          Use test credentials to complete the payment.
+          Use test credentials or your PayPal sandbox account to complete the payment.
+        </p>
+        <p className="text-xs text-yellow-700 mt-2">
+          Test Amount: ${amount.toFixed(2)}
         </p>
       </div>
       <div 

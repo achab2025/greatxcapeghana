@@ -21,19 +21,19 @@ const ActionButtons = ({ isFormValid, finalTotal, onCancel, onSubmit }: ActionBu
         Cancel
       </Button>
       <Button 
-        type="submit" 
+        type="button"
         disabled={!isFormValid} 
-        className="bg-gradient-to-r from-blue-600 to-green-600 hover:from-blue-700 hover:to-green-700 text-white px-8 py-3 text-lg font-medium"
+        className="bg-gradient-to-r from-blue-600 to-green-600 hover:from-blue-700 hover:to-green-700 text-white px-8 py-3 text-lg font-medium disabled:opacity-50 disabled:cursor-not-allowed"
         onClick={(e) => {
           console.log('🖱️ BUTTON CLICK: Button clicked, form valid:', isFormValid);
-          console.log('🖱️ BUTTON CLICK: Button disabled state:', !isFormValid);
+          console.log('🖱️ BUTTON CLICK: Final total:', finalTotal);
           if (!isFormValid) {
             e.preventDefault();
             console.log('🚫 BUTTON CLICK: Button click prevented due to invalid form');
-          } else {
-            console.log('✅ BUTTON CLICK: Button click proceeding');
-            onSubmit(e);
+            return;
           }
+          console.log('✅ BUTTON CLICK: Button click proceeding to payment');
+          onSubmit(e);
         }}
       >
         Proceed to Payment {finalTotal > 0 ? `($${finalTotal.toFixed(2)})` : '(Calculate Total)'}

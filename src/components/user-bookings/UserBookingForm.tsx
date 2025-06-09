@@ -104,7 +104,7 @@ const UserBookingForm = ({
     
     console.log('✅ FORM SUBMIT: Form is valid, calling original handle submit');
     try {
-      originalHandleSubmit(e);
+      originalHandleSubmit();
       console.log('✅ FORM SUBMIT: Original handle submit called successfully');
     } catch (error) {
       console.error('❌ FORM SUBMIT: Error in original handle submit:', error);
