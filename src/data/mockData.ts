@@ -1,4 +1,3 @@
-
 import { House, Guest, Booking, Payment, DashboardSummary } from '../lib/types';
 
 // Mock Houses
@@ -11,7 +10,7 @@ export const houses: House[] = [
     pricePerNight: 350,
     amenities: ['Lake View', 'Hot Tub', 'Fireplace', 'Wi-Fi', 'Kitchen'],
     status: 'available',
-    imageUrl: '/placeholder.svg'
+    imageUrl: 'https://images.unsplash.com/photo-1564013799919-ab600027ffc6?auto=format&fit=crop&w=800&q=80'
   },
   {
     id: 'h2',
@@ -21,7 +20,7 @@ export const houses: House[] = [
     pricePerNight: 275,
     amenities: ['Mountain View', 'Deck', 'Wood Stove', 'Wi-Fi', 'Hiking Trails'],
     status: 'booked',
-    imageUrl: '/placeholder.svg'
+    imageUrl: 'https://images.unsplash.com/photo-1449824913935-59a10b8d2000?auto=format&fit=crop&w=800&q=80'
   },
   {
     id: 'h3',
@@ -31,7 +30,7 @@ export const houses: House[] = [
     pricePerNight: 225,
     amenities: ['Garden', 'Patio', 'BBQ', 'Wi-Fi', 'Breakfast Included'],
     status: 'maintenance',
-    imageUrl: '/placeholder.svg'
+    imageUrl: 'https://images.unsplash.com/photo-1520637836862-4d197d17c90a?auto=format&fit=crop&w=800&q=80'
   }
 ];
 
