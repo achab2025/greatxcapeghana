@@ -7,7 +7,7 @@ interface UserLayoutProps {
   showNavbar?: boolean;
 }
 
-const UserLayout = ({ children, showNavbar = true }: UserLayoutProps) => {
+const UserLayout = ({ children, showNavbar = false }: UserLayoutProps) => {
   return (
     <div className="flex flex-col min-h-screen">
       {showNavbar && <UserNavbar />}
