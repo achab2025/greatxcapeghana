@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { ArrowLeftIcon } from 'lucide-react';
 import WordPressEmbedGuide from '@/components/wordpress/WordPressEmbedGuide';
+import ElementorEmbedCode from '@/components/wordpress/ElementorEmbedCode';
 
 const WordPressGuide = () => {
   return (
@@ -27,7 +28,10 @@ const WordPressGuide = () => {
           </p>
         </div>
         
-        <WordPressEmbedGuide />
+        <div className="space-y-12">
+          <ElementorEmbedCode />
+          <WordPressEmbedGuide />
+        </div>
       </div>
     </div>
   );
