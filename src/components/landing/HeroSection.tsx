@@ -18,48 +18,7 @@ const HeroSection = ({
       }}></div>
       </div>
 
-      <div className="container mx-auto px-6 text-center relative z-10">
-        
-        <p className="text-xl md:text-2xl text-olive-dark mb-12 max-w-4xl mx-auto leading-relaxed">
-          Discover your perfect getaway at our luxury vacation homes. 
-          Experience comfort, elegance, and unforgettable memories in the heart of paradise.
-        </p>
-        
-        <div className="flex flex-col sm:flex-row gap-6 justify-center mb-16">
-          <Button asChild size="lg" className="bg-olive hover:bg-olive-dark text-white px-12 py-8 text-xl rounded-2xl shadow-2xl transform hover:scale-105 transition-all duration-500">
-            <Link to="/login">
-              <LogInIcon className="mr-3" size={24} />
-              Start Your Journey
-            </Link>
-          </Button>
-          <Button asChild size="lg" variant="outline" className="border-2 border-olive text-olive hover:bg-olive hover:text-white px-12 py-8 text-xl rounded-2xl shadow-xl transform hover:scale-105 transition-all duration-500" onClick={() => setShowWordPressSection(!showWordPressSection)}>
-            <span>
-              <ArrowRightIcon className="mr-3" size={24} />
-              Explore Houses
-            </span>
-          </Button>
-        </div>
-
-        {/* Trust indicators */}
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-8 max-w-4xl mx-auto text-olive-dark">
-          <div className="text-center">
-            <div className="text-3xl font-bold mb-2">3</div>
-            <div className="text-olive/80">Luxury Homes</div>
-          </div>
-          <div className="text-center">
-            <div className="text-3xl font-bold mb-2">500+</div>
-            <div className="text-olive/80">Happy Guests</div>
-          </div>
-          <div className="text-center">
-            <div className="text-3xl font-bold mb-2">24/7</div>
-            <div className="text-olive/80">Support</div>
-          </div>
-          <div className="text-center">
-            <div className="text-3xl font-bold mb-2">5★</div>
-            <div className="text-olive/80">Rating</div>
-          </div>
-        </div>
-      </div>
+      
     </section>;
 };
 export default HeroSection;
