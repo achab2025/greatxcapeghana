@@ -1,3 +1,4 @@
+
 import { House, Guest, Booking, Payment, DashboardSummary } from '../lib/types';
 
 // Mock Houses
@@ -29,7 +30,7 @@ export const houses: House[] = [
     maxOccupancy: 2,
     pricePerNight: 225,
     amenities: ['Garden', 'Patio', 'BBQ', 'Wi-Fi', 'Breakfast Included'],
-    status: 'maintenance',
+    status: 'available',
     imageUrl: 'https://images.unsplash.com/photo-1721322800607-8c38375eef04?auto=format&fit=crop&w=800&q=80'
   }
 ];
