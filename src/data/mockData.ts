@@ -30,7 +30,7 @@ export const houses: House[] = [
     pricePerNight: 225,
     amenities: ['Garden', 'Patio', 'BBQ', 'Wi-Fi', 'Breakfast Included'],
     status: 'maintenance',
-    imageUrl: 'https://images.unsplash.com/photo-1520637836862-4d197d17c90a?auto=format&fit=crop&w=800&q=80'
+    imageUrl: 'https://images.unsplash.com/photo-1721322800607-8c38375eef04?auto=format&fit=crop&w=800&q=80'
   }
 ];
 
