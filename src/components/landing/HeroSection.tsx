@@ -10,13 +10,6 @@ const HeroSection = ({
   showWordPressSection,
   setShowWordPressSection
 }: HeroSectionProps) => {
-  return <section className="min-h-screen bg-gradient-to-br from-olive-50 to-olive-100 flex items-center justify-center relative overflow-hidden">
-      {/* Background pattern */}
-      <div className="absolute inset-0 opacity-10">
-        
-      </div>
-
-      
-    </section>;
+  return;
 };
 export default HeroSection;
