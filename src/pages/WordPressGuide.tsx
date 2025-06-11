@@ -19,15 +19,6 @@ const WordPressGuide = () => {
           </Button>
         </div>
         
-        <div className="text-center mb-8">
-          <h1 className="text-4xl font-bold text-slate-800 mb-4">
-            WordPress Integration Guide
-          </h1>
-          <p className="text-xl text-slate-600">
-            Learn how to embed your house booking system into your WordPress site
-          </p>
-        </div>
-        
         <div className="space-y-12">
           <ElementorEmbedCode />
           <WordPressEmbedGuide />
