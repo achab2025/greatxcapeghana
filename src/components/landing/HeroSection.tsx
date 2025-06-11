@@ -2,7 +2,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
-import { LogInIcon, ArrowRightIcon } from 'lucide-react';
+import { Home, Calendar } from 'lucide-react';
 
 interface HeroSectionProps {
   showWordPressSection: boolean;
@@ -14,37 +14,40 @@ const HeroSection = ({
   setShowWordPressSection
 }: HeroSectionProps) => {
   return (
-    <section className="py-24 bg-gradient-to-br from-olive-50 to-white relative overflow-hidden">
-      <div className="container mx-auto px-6 text-center">
-        <h1 className="text-5xl md:text-7xl font-bold mb-8 text-olive-dark leading-tight">
-          Welcome to 
-          <span className="block text-olive">House Haven</span>
-        </h1>
-        <p className="text-xl md:text-2xl mb-12 max-w-3xl mx-auto text-olive-dark/70 leading-relaxed">
-          Discover extraordinary homes for your perfect getaway. 
-          Book stunning properties with ease and create unforgettable memories.
-        </p>
-        
-        <div className="flex flex-col sm:flex-row gap-6 justify-center">
-          <Button 
-            asChild
-            size="lg"
-            className="bg-olive hover:bg-olive-dark text-white px-12 py-8 text-xl rounded-2xl shadow-xl transform hover:scale-105 transition-all duration-500"
-          >
-            <Link to="/login">
-              <LogInIcon className="mr-3" size={24} />
-              Start Booking
-            </Link>
-          </Button>
-          <Button 
-            onClick={() => setShowWordPressSection(!showWordPressSection)}
-            size="lg"
-            variant="outline"
-            className="border-2 border-olive text-olive hover:bg-olive hover:text-white px-12 py-8 text-xl rounded-2xl shadow-lg transform hover:scale-105 transition-all duration-500"
-          >
-            <ArrowRightIcon className="mr-3" size={24} />
-            View Houses
-          </Button>
+    <section className="py-16 bg-white relative">
+      <div className="container mx-auto px-6">
+        <div className="max-w-4xl mx-auto text-center">
+          <div className="mb-8">
+            <h1 className="text-4xl md:text-5xl font-light mb-6 text-slate-800 tracking-tight">
+              Premium House Rentals
+            </h1>
+            <p className="text-lg md:text-xl text-slate-600 leading-relaxed max-w-2xl mx-auto">
+              Discover exceptional properties for your perfect stay. 
+              Experience luxury, comfort, and unforgettable moments.
+            </p>
+          </div>
+          
+          <div className="flex flex-col sm:flex-row gap-4 justify-center max-w-md mx-auto">
+            <Button 
+              asChild
+              size="lg"
+              className="bg-slate-900 hover:bg-slate-800 text-white px-8 py-6 text-base font-medium rounded-lg shadow-sm transition-all duration-200 hover:shadow-md"
+            >
+              <Link to="/login">
+                <Home className="mr-2" size={20} />
+                Book Now
+              </Link>
+            </Button>
+            <Button 
+              onClick={() => setShowWordPressSection(!showWordPressSection)}
+              size="lg"
+              variant="outline"
+              className="border-slate-300 text-slate-700 hover:bg-slate-50 px-8 py-6 text-base font-medium rounded-lg transition-all duration-200"
+            >
+              <Calendar className="mr-2" size={20} />
+              View Properties
+            </Button>
+          </div>
         </div>
       </div>
     </section>
