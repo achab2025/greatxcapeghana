@@ -1,27 +1,9 @@
 
 import React from 'react';
 import { Button } from '@/components/ui/button';
-import { CodeIcon, ZapIcon, CheckCircleIcon, PlayCircleIcon, CopyIcon } from 'lucide-react';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { toast } from '@/components/ui/use-toast';
+import { CodeIcon, ZapIcon, CheckCircleIcon, PlayCircleIcon } from 'lucide-react';
 
 const WordPressGuide = () => {
-  const embedCode = `<iframe 
-  src="https://your-app-name.lovable.app" 
-  width="100%" 
-  height="100vh" 
-  frameborder="0" 
-  style="border: none;">
-</iframe>`;
-
-  const copyEmbedCode = () => {
-    navigator.clipboard.writeText(embedCode);
-    toast({
-      title: "Embed Code Copied!",
-      description: "Paste this code into your WordPress page editor.",
-    });
-  };
-
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-50 via-white to-blue-50 overflow-hidden">
       {/* Hero Section */}
@@ -32,7 +14,7 @@ const WordPressGuide = () => {
         
         {/* Content */}
         <div className="relative z-10 flex-1 flex flex-col justify-center px-6 py-12">
-          <div className="max-w-7xl mx-auto w-full">
+          <div className="max-w-5xl mx-auto w-full">
             {/* Header */}
             <div className="text-center mb-16">
               <div className="inline-flex items-center px-6 py-3 rounded-full bg-gradient-to-r from-blue-50 to-purple-50 border border-blue-200 text-blue-700 text-sm font-medium mb-8">
@@ -56,116 +38,79 @@ const WordPressGuide = () => {
               </p>
             </div>
 
-            {/* Main Content Grid */}
-            <div className="grid lg:grid-cols-2 gap-12 items-start">
-              {/* Left Column - Features */}
-              <div className="space-y-8">
-                <div className="grid gap-6">
-                  <div className="bg-white/80 backdrop-blur-sm border border-white/20 rounded-2xl p-6 shadow-lg hover:shadow-xl transition-all duration-300">
-                    <div className="flex items-start gap-4">
-                      <div className="w-12 h-12 bg-gradient-to-br from-blue-500 to-blue-600 rounded-xl flex items-center justify-center flex-shrink-0">
-                        <CodeIcon className="w-6 h-6 text-white" />
-                      </div>
-                      <div>
-                        <h3 className="text-xl font-semibold text-slate-900 mb-2">Simple Integration</h3>
-                        <p className="text-slate-600">Copy and paste one line of code. No technical skills required.</p>
-                      </div>
-                    </div>
+            {/* Features Grid - Now Full Width */}
+            <div className="grid md:grid-cols-3 gap-8 mb-12">
+              <div className="bg-white/80 backdrop-blur-sm border border-white/20 rounded-2xl p-8 shadow-lg hover:shadow-xl transition-all duration-300">
+                <div className="flex flex-col items-center text-center">
+                  <div className="w-16 h-16 bg-gradient-to-br from-blue-500 to-blue-600 rounded-xl flex items-center justify-center mb-6">
+                    <CodeIcon className="w-8 h-8 text-white" />
                   </div>
-                  
-                  <div className="bg-white/80 backdrop-blur-sm border border-white/20 rounded-2xl p-6 shadow-lg hover:shadow-xl transition-all duration-300">
-                    <div className="flex items-start gap-4">
-                      <div className="w-12 h-12 bg-gradient-to-br from-purple-500 to-purple-600 rounded-xl flex items-center justify-center flex-shrink-0">
-                        <ZapIcon className="w-6 h-6 text-white" />
-                      </div>
-                      <div>
-                        <h3 className="text-xl font-semibold text-slate-900 mb-2">Lightning Fast</h3>
-                        <p className="text-slate-600">Optimized for speed with instant loading and smooth interactions.</p>
-                      </div>
-                    </div>
-                  </div>
-                  
-                  <div className="bg-white/80 backdrop-blur-sm border border-white/20 rounded-2xl p-6 shadow-lg hover:shadow-xl transition-all duration-300">
-                    <div className="flex items-start gap-4">
-                      <div className="w-12 h-12 bg-gradient-to-br from-green-500 to-green-600 rounded-xl flex items-center justify-center flex-shrink-0">
-                        <CheckCircleIcon className="w-6 h-6 text-white" />
-                      </div>
-                      <div>
-                        <h3 className="text-xl font-semibold text-slate-900 mb-2">Fully Responsive</h3>
-                        <p className="text-slate-600">Perfect on all devices with mobile-first design principles.</p>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-
-                <div className="flex flex-col sm:flex-row gap-4">
-                  <Button size="lg" className="bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white px-8 py-6 text-lg shadow-lg hover:shadow-xl transition-all duration-300">
-                    <PlayCircleIcon className="w-5 h-5 mr-2" />
-                    Start Integration
-                  </Button>
-                  <Button size="lg" variant="outline" className="border-slate-300 text-slate-700 hover:bg-slate-50 px-8 py-6 text-lg">
-                    View Documentation
-                  </Button>
+                  <h3 className="text-2xl font-semibold text-slate-900 mb-4">Simple Integration</h3>
+                  <p className="text-slate-600 text-lg">Copy and paste one line of code. No technical skills required.</p>
                 </div>
               </div>
+              
+              <div className="bg-white/80 backdrop-blur-sm border border-white/20 rounded-2xl p-8 shadow-lg hover:shadow-xl transition-all duration-300">
+                <div className="flex flex-col items-center text-center">
+                  <div className="w-16 h-16 bg-gradient-to-br from-purple-500 to-purple-600 rounded-xl flex items-center justify-center mb-6">
+                    <ZapIcon className="w-8 h-8 text-white" />
+                  </div>
+                  <h3 className="text-2xl font-semibold text-slate-900 mb-4">Lightning Fast</h3>
+                  <p className="text-slate-600 text-lg">Optimized for speed with instant loading and smooth interactions.</p>
+                </div>
+              </div>
+              
+              <div className="bg-white/80 backdrop-blur-sm border border-white/20 rounded-2xl p-8 shadow-lg hover:shadow-xl transition-all duration-300">
+                <div className="flex flex-col items-center text-center">
+                  <div className="w-16 h-16 bg-gradient-to-br from-green-500 to-green-600 rounded-xl flex items-center justify-center mb-6">
+                    <CheckCircleIcon className="w-8 h-8 text-white" />
+                  </div>
+                  <h3 className="text-2xl font-semibold text-slate-900 mb-4">Fully Responsive</h3>
+                  <p className="text-slate-600 text-lg">Perfect on all devices with mobile-first design principles.</p>
+                </div>
+              </div>
+            </div>
 
-              {/* Right Column - Embed Code */}
-              <div className="lg:sticky lg:top-6">
-                <Card className="bg-white/90 backdrop-blur-sm border-0 shadow-2xl">
-                  <CardHeader className="pb-4">
-                    <CardTitle className="flex items-center gap-3 text-2xl">
-                      <div className="w-8 h-8 bg-gradient-to-br from-slate-700 to-slate-900 rounded-lg flex items-center justify-center">
-                        <CodeIcon className="w-4 h-4 text-white" />
-                      </div>
-                      Embed Code
-                    </CardTitle>
-                  </CardHeader>
-                  <CardContent className="space-y-6">
-                    <div>
-                      <p className="text-slate-600 mb-4">
-                        Copy this code and paste it into your WordPress page editor:
-                      </p>
-                      
-                      <div className="bg-slate-900 text-green-400 p-6 rounded-xl font-mono text-sm overflow-x-auto border border-slate-200">
-                        <pre className="whitespace-pre-wrap">{embedCode}</pre>
-                      </div>
-                    </div>
-                    
-                    <Button onClick={copyEmbedCode} className="w-full bg-gradient-to-r from-green-600 to-emerald-600 hover:from-green-700 hover:to-emerald-700 py-6 text-lg shadow-lg">
-                      <CopyIcon className="w-5 h-5 mr-2" />
-                      Copy Embed Code
-                    </Button>
-                    
-                    <div className="bg-gradient-to-r from-blue-50 to-purple-50 p-6 rounded-xl border border-blue-200">
-                      <h4 className="font-semibold text-blue-800 mb-3 flex items-center gap-2">
-                        <CheckCircleIcon className="w-5 h-5" />
-                        Quick Setup Steps:
-                      </h4>
-                      <ol className="text-sm text-blue-700 space-y-2">
-                        <li className="flex items-start gap-2">
-                          <span className="bg-blue-200 text-blue-800 w-5 h-5 rounded-full flex items-center justify-center text-xs font-bold flex-shrink-0 mt-0.5">1</span>
-                          <span>Edit your WordPress page</span>
-                        </li>
-                        <li className="flex items-start gap-2">
-                          <span className="bg-blue-200 text-blue-800 w-5 h-5 rounded-full flex items-center justify-center text-xs font-bold flex-shrink-0 mt-0.5">2</span>
-                          <span>Switch to HTML/Text mode</span>
-                        </li>
-                        <li className="flex items-start gap-2">
-                          <span className="bg-blue-200 text-blue-800 w-5 h-5 rounded-full flex items-center justify-center text-xs font-bold flex-shrink-0 mt-0.5">3</span>
-                          <span>Paste the embed code</span>
-                        </li>
-                        <li className="flex items-start gap-2">
-                          <span className="bg-blue-200 text-blue-800 w-5 h-5 rounded-full flex items-center justify-center text-xs font-bold flex-shrink-0 mt-0.5">4</span>
-                          <span>Replace "your-app-name" with your URL</span>
-                        </li>
-                        <li className="flex items-start gap-2">
-                          <span className="bg-blue-200 text-blue-800 w-5 h-5 rounded-full flex items-center justify-center text-xs font-bold flex-shrink-0 mt-0.5">5</span>
-                          <span>Save and publish!</span>
-                        </li>
-                      </ol>
-                    </div>
-                  </CardContent>
-                </Card>
+            {/* Call to Action */}
+            <div className="text-center">
+              <div className="flex flex-col sm:flex-row gap-6 justify-center max-w-lg mx-auto mb-12">
+                <Button size="lg" className="bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white px-10 py-8 text-xl shadow-lg hover:shadow-xl transition-all duration-300">
+                  <PlayCircleIcon className="w-6 h-6 mr-3" />
+                  Start Integration
+                </Button>
+                <Button size="lg" variant="outline" className="border-slate-300 text-slate-700 hover:bg-slate-50 px-10 py-8 text-xl">
+                  View Documentation
+                </Button>
+              </div>
+
+              {/* Additional Info */}
+              <div className="bg-gradient-to-r from-blue-50 to-purple-50 p-8 rounded-2xl border border-blue-200 max-w-3xl mx-auto">
+                <h4 className="font-semibold text-blue-800 mb-4 flex items-center justify-center gap-3 text-xl">
+                  <CheckCircleIcon className="w-6 h-6" />
+                  Quick Setup in 5 Steps:
+                </h4>
+                <div className="grid sm:grid-cols-5 gap-4 text-sm text-blue-700">
+                  <div className="flex flex-col items-center text-center">
+                    <span className="bg-blue-200 text-blue-800 w-8 h-8 rounded-full flex items-center justify-center text-sm font-bold mb-2">1</span>
+                    <span>Edit WordPress page</span>
+                  </div>
+                  <div className="flex flex-col items-center text-center">
+                    <span className="bg-blue-200 text-blue-800 w-8 h-8 rounded-full flex items-center justify-center text-sm font-bold mb-2">2</span>
+                    <span>Switch to HTML mode</span>
+                  </div>
+                  <div className="flex flex-col items-center text-center">
+                    <span className="bg-blue-200 text-blue-800 w-8 h-8 rounded-full flex items-center justify-center text-sm font-bold mb-2">3</span>
+                    <span>Paste embed code</span>
+                  </div>
+                  <div className="flex flex-col items-center text-center">
+                    <span className="bg-blue-200 text-blue-800 w-8 h-8 rounded-full flex items-center justify-center text-sm font-bold mb-2">4</span>
+                    <span>Update your URL</span>
+                  </div>
+                  <div className="flex flex-col items-center text-center">
+                    <span className="bg-blue-200 text-blue-800 w-8 h-8 rounded-full flex items-center justify-center text-sm font-bold mb-2">5</span>
+                    <span>Save & publish!</span>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
